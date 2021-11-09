@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceResearch xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Folders>
+    <Folder>
+      <Name>Assets/R/Audios/Musics</Name>
+      <Packed>true</Packed>
+    </Folder>
+    <Folder>
+      <Name>Assets/R/Audios/Sounds</Name>
+      <Packed>true</Packed>
+    </Folder>
+    <Folder>
+      <Name>Assets/R/Audios/UISounds</Name>
+      <Packed>true</Packed>
+    </Folder>
+  </Folders>
+</ResourceResearch>

@@ -1,0 +1,1 @@
+{"list": [{"Id": 1, "GroupName": "Music", "AvoidBeingReplaced": true, "Mute": true, "Volume": 1.0, "AgentHelperCount": 2}, {"Id": 2, "GroupName": "Sound", "AvoidBeingReplaced": true, "Mute": true, "Volume": 1.0, "AgentHelperCount": 4}, {"Id": 3, "GroupName": "UISound", "AvoidBeingReplaced": true, "Mute": true, "Volume": 1.0, "AgentHelperCount": 4}]}

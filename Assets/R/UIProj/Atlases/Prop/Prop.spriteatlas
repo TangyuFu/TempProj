@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Prop
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 64b87f19f85040749be13a742bfc0923, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: cd154990ca019c64e8494b53238a0170, type: 3}
+  - {fileID: 21300000, guid: 2518f033d31605d45a139fae034b6ba5, type: 3}
+  - {fileID: 21300000, guid: 58a37cb4c9ce4854c9c06e0caafba8c4, type: 3}
+  - {fileID: 21300000, guid: 313a3ee4c5cfa214d914e81f08e447ba, type: 3}
+  - {fileID: 21300000, guid: 5b5f11a76da06ae4ba053565b3c334c3, type: 3}
+  - {fileID: 21300000, guid: eef358585503bc84899a01e491b10676, type: 3}
+  - {fileID: 21300000, guid: ecc79a9892ab9e2489a53021bdef2bb4, type: 3}
+  - {fileID: 21300000, guid: 3d05c009ed4f65e4b8feed2f6d7da42c, type: 3}
+  - {fileID: 21300000, guid: 2fc2a729df839e04f83e651fbebdb9e5, type: 3}
+  - {fileID: 21300000, guid: 036fc16a5a8e38740a09e63ec52b7a19, type: 3}
+  - {fileID: 21300000, guid: 10ef35aaf5e6b954899bb6fd9cdcb257, type: 3}
+  - {fileID: 21300000, guid: ecdcfc0ce23ad1944bf6157c46e5c24a, type: 3}
+  - {fileID: 21300000, guid: ec8575fcb8bee5c448e3d893219e4e90, type: 3}
+  - {fileID: 21300000, guid: 9ab7a15d759a0f7488dea5ab7034ae2b, type: 3}
+  - {fileID: 21300000, guid: 7d34632ea68200147a9000addc242349, type: 3}
+  - {fileID: 21300000, guid: a670220fe13e1f046b50e66aa9a3de3b, type: 3}
+  - {fileID: 21300000, guid: 96d1cfcf6f963934c878a3fd2494594e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Prop_1
+  - Prop_17
+  - Prop_4
+  - Prop_7
+  - Prop_3
+  - Prop_5
+  - Prop_10
+  - Prop_9
+  - Prop_15
+  - Prop_12
+  - Prop_13
+  - Prop_11
+  - Prop_6
+  - Prop_8
+  - Prop_14
+  - Prop_16
+  - Prop_2
+  m_RenderDataMap: {}
+  m_Tag: Prop
+  m_IsVariant: 0

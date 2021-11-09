@@ -1,0 +1,10 @@
+{
+    "LatestVersion": "0.0.1",
+    "InternalVersion": 1,
+    "ResourceVersion": 0,
+    "UpdateUrl": "http://10.0.2.70/hfs/",
+    "VersionListLength": 0,
+    "VersionListHashCode": 0,
+    "VersionListCompressedLength": 0,
+    "VersionListCompressedHashCode": 0
+}

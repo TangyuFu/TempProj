@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+	<Dictionary Language="Korean">
+		<String Key="Sys" Value="!&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥"/>
+		<String Key="Preset_10000001" Value="게임 명"/>
+		<String Key="Preset_10000002" Value="{0}.{1}.{2}.{3}"/>
+		<String Key="Preset_10000003" Value="{0}.{1}.{2}"/>
+		<String Key="Preset_10000004" Value="확인"/>
+		<String Key="Preset_10000005" Value="취소"/>
+		<String Key="Preset_10000006" Value="필수 업데이트"/>
+		<String Key="Preset_10000007" Value="끊어진 링크"/>
+		<String Key="Preset_10000008" Value="설정"/>
+		<String Key="Preset_10000009" Value="설정"/>
+		<String Key="Preset_10000010" Value="배경 음악"/>
+	</Dictionary>
+</Dictionaries>

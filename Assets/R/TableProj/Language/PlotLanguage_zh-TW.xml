@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+	<Dictionary Language="ChineseTraditional">
+		<String Key="Sys" Value="!&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥"/>
+		<String Key="Plot_10000001" Value="遊戲名"/>
+		<String Key="Plot_10000002" Value="{0}.{1}.{2}.{3}"/>
+		<String Key="Plot_10000003" Value="{0}.{1}.{2}"/>
+		<String Key="Plot_10000004" Value="確定"/>
+		<String Key="Plot_10000005" Value="取消"/>
+		<String Key="Plot_10000006" Value="更新"/>
+		<String Key="Plot_10000007" Value="中斷鏈接"/>
+		<String Key="Plot_10000008" Value="設置"/>
+		<String Key="Plot_10000009" Value="設置"/>
+		<String Key="Plot_10000010" Value="背景音樂"/>
+	</Dictionary>
+</Dictionaries>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+	<Dictionary Language="ChineseSimplified">
+		<String Key="Sys" Value="!&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥"/>
+		<String Key="Sys_10000001" Value="游戏名"/>
+		<String Key="Sys_10000002" Value="{0}.{1}.{2}.{3}"/>
+		<String Key="Sys_10000003" Value="{0}.{1}.{2}"/>
+		<String Key="Sys_10000004" Value="确定"/>
+		<String Key="Sys_10000005" Value="取消"/>
+		<String Key="Noti_10000001" Value="更新"/>
+		<String Key="Noti_10000002" Value="中断链接"/>
+		<String Key="Main_10000001" Value="设置"/>
+		<String Key="Setting_10000001" Value="设置"/>
+		<String Key="Setting_10000002" Value="背景音乐"/>
+		<String Key="Template_I18NValue_10000006" Value="一往而深"/>
+		<String Key="Template_I18NValue_10000001" Value="情不知所起"/>
+		<String Key="Setting_10000003" Value="音效"/>
+		<String Key="Setting_10000004" Value="UI音效"/>
+	</Dictionary>
+</Dictionaries>

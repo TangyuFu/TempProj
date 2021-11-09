@@ -1,0 +1,45 @@
+﻿-- $$ 工具自动生成，切勿删除！
+local FormBase = require("ui/formbase")
+
+local $PANEL_NAME$ = class("$PANEL_NAME$", FormBase)
+
+function $PANEL_NAME$:on_init()
+
+--  $INIT_COMPONENT_START$
+    
+--  $INIT_COMPONENT_END$
+
+--  $INIT_CLICK_START$
+    
+--  $INIT_CLICK_END$
+    
+    invoke(self, self.init)
+end
+
+function $PANEL_NAME$:on_deinit()
+    invoke(self, self.deinit)
+    
+--  $DEINIT_CLICK_START$
+        
+--  $DEINIT_CLICK_END$
+    
+--  $DEINIT_COMPONENT_START$
+    
+--  $DEINIT_COMPONENT_END$
+end
+
+-- $CLICK_INSERT_PLACEHOLDER$
+
+function $PANEL_NAME$:init()
+end
+
+function $PANEL_NAME$:deinit()
+end
+
+function $PANEL_NAME$:on_open(userdata)
+end
+
+function $PANEL_NAME$:on_close(is_shutdown, userdata)
+end
+
+return $PANEL_NAME$

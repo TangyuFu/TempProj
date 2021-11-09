@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+	<Dictionary Language="English">
+		<String Key="Sys" Value="!&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥"/>
+		<String Key="Sys_10000001" Value="Game Name"/>
+		<String Key="Sys_10000002" Value="{0}.{1}.{2}.{3}"/>
+		<String Key="Sys_10000003" Value="{0}.{1}.{2}"/>
+		<String Key="Sys_10000004" Value="OK"/>
+		<String Key="Sys_10000005" Value="CANCEL"/>
+		<String Key="Noti_10000001" Value="OUT OF DATE"/>
+		<String Key="Noti_10000002" Value="Disconnected"/>
+		<String Key="Main_10000001" Value="Settings"/>
+		<String Key="Setting_10000001" Value="Settings"/>
+		<String Key="Setting_10000002" Value="Background Music"/>
+		<String Key="Template_I18NValue_10000006" Value=""/>
+		<String Key="Template_I18NValue_10000001" Value=""/>
+		<String Key="Setting_10000003" Value="Sound"/>
+		<String Key="Setting_10000004" Value="UI Sound"/>
+	</Dictionary>
+</Dictionaries>

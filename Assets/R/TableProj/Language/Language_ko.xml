@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+	<Dictionary Language="Korean">
+		<String Key="Sys" Value="!&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥"/>
+		<String Key="Sys_10000001" Value="게임 명"/>
+		<String Key="Sys_10000002" Value="{0}.{1}.{2}.{3}"/>
+		<String Key="Sys_10000003" Value="{0}.{1}.{2}"/>
+		<String Key="Sys_10000004" Value="확인"/>
+		<String Key="Sys_10000005" Value="취소"/>
+		<String Key="Noti_10000001" Value="필수 업데이트"/>
+		<String Key="Noti_10000002" Value="끊어진 링크"/>
+		<String Key="Main_10000001" Value="설정"/>
+		<String Key="Setting_10000001" Value="설정"/>
+		<String Key="Setting_10000002" Value="배경 음악"/>
+		<String Key="Template_I18NValue_10000006" Value=""/>
+		<String Key="Template_I18NValue_10000001" Value=""/>
+		<String Key="Setting_10000003" Value="음향 효과"/>
+		<String Key="Setting_10000004" Value="음향 효과"/>
+	</Dictionary>
+</Dictionaries>

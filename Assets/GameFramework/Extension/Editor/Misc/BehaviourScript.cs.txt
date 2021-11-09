@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityGameFramework.Runtime;
+using UnityGameFramework.Runtime.Extension;
+
+namespace #NAMESPACE#
+{
+    public class #NAME# : WrappedMonoBehaviour
+    {
+        private void Awake()
+        {
+        }
+       
+        private void Start()
+        {
+        }
+        
+        private void Update()
+        {
+        }
+    }
+}

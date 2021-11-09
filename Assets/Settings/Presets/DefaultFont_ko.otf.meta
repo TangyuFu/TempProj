@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8c038f18ddfba7041ab5b6e137ede4ab
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - ClashRoyale
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: dfbf67c439fb76a41ba17635fea2c217, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

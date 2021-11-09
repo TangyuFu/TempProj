@@ -1,0 +1,10 @@
+{
+    "Version": "0.0.1",
+    "InternalVersion": 1,
+    "Channel": "Default",
+    "Url": "http://10.0.2.70/hfs/",
+    "WindowsAppUrl": "https://gameframework.cn",
+    "OSXAppUrl": "https://gameframework.cn",
+    "IOSAppUrl": "https://gameframework.cn",
+    "AndroidAppUrl": "https://gameframework.cn"
+}

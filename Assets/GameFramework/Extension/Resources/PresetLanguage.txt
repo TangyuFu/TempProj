@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+  <Dictionary Language="ChineseSimplified">
+    <String Key="10000001" Value="游戏名" />
+    <String Key="10000002" Value="{0}.{1}.{2}.{3}" />
+    <String Key="10000003" Value="{0}.{1}.{2}" />
+    <String Key="10000004" Value="确定" />
+    <String Key="10000005" Value="取消" />
+    <String Key="20000001" Value="更新" />
+  </Dictionary>
+  <Dictionary Language="ChineseTraditional">
+    <String Key="10000001" Value="遊戲名" />
+    <String Key="10000002" Value="{0}.{1}.{2}.{3}" />
+    <String Key="10000003" Value="{0}.{1}.{2}" />
+    <String Key="10000004" Value="確定" />
+    <String Key="10000005" Value="取消" />
+    <String Key="20000001" Value="更新" />
+  </Dictionary>
+  <Dictionary Language="English">
+    <String Key="10000001" Value="Game Name" />
+    <String Key="10000002" Value="{0}.{1}.{2}.{3}" />
+    <String Key="10000003" Value="{0}.{1}.{2}" />
+    <String Key="10000004" Value="OK" />
+    <String Key="10000005" Value="CANCEL" />
+    <String Key="20000001" Value="OUT OF DATE" />
+  </Dictionary>
+  <Dictionary Language="Korean">
+    <String Key="10000001" Value="게임 명" />
+    <String Key="10000002" Value="{0}.{1}.{2}.{3}" />
+    <String Key="10000003" Value="{0}.{1}.{2}" />
+    <String Key="10000004" Value="확인" />
+    <String Key="10000005" Value="취소" />
+    <String Key="20000001" Value="필수 업데이트" />
+  </Dictionary>
+</Dictionaries>

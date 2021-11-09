@@ -1,0 +1,3 @@
+1	abc\ndef
+2	ab"e"f
+3	ab'\c'

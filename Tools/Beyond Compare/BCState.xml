@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Produced by Beyond Compare 4 from Scooter Software -->
+<BCState Version="1" MinVersion="1">
+	<TBcState>
+		<FirstStartup Value="False"/>
+		<FormPositions>
+			<TViewFrame Value="186;194;1874;781"/>
+		</FormPositions>
+	</TBcState>
+	<TDirCompareState>
+		<LeftMRUSpecs>
+			<_0 Value="D:\TempProj\Assets\Puerts"/>
+		</LeftMRUSpecs>
+		<LogHeight Value="0"/>
+		<RightMRUSpecs>
+			<_0 Value="D:\puerts-master\unity\Assets\Puerts"/>
+		</RightMRUSpecs>
+		<ShowToolbar Value="False"/>
+	</TDirCompareState>
+	<THomeState>
+		<NewExpanded Value="True"/>
+		<SessionType Value="TDirCompareSession"/>
+	</THomeState>
+	<TTextCompareState>
+		<LeftMRUSpecs>
+			<_0 Value="D:\TempProj\Assets\Puerts\Src\Editor\U2018Compatible.cs"/>
+			<_1 Value="D:\TempProj\Assets\Puerts\Src\Editor\CJSImporter.cs"/>
+			<_2 Value="D:\TempProj\Assets\Puerts\Src\Utils.cs"/>
+			<_3 Value="D:\UnityGameFramework\Assets\Temp\Form\testform.lua"/>
+			<_4 Value="E:\UnityGameFramework\ProjectSettings\EditorSettings.asset"/>
+			<_5 Value="E:\UnityGameFramework\ProjectSettings\EditorBuildSettings.asset"/>
+			<_6 Value="E:\UnityGameFramework\ProjectSettings\DynamicsManager.asset"/>
+			<_7 Value="E:\UnityGameFramework\ProjectSettings\AudioManager.asset"/>
+			<_8 Value="E:\UnityGameFramework\Packages\manifest.json"/>
+		</LeftMRUSpecs>
+		<MRUFonts>
+			<_0 Value="Consolas;10"/>
+		</MRUFonts>
+		<RightMRUSpecs>
+			<_0 Value="D:\puerts-master\unity\Assets\Puerts\Src\Editor\U2018Compatible.cs"/>
+			<_1 Value="D:\puerts-master\unity\Assets\Puerts\Src\Editor\CJSImporter.cs"/>
+			<_2 Value="D:\puerts-master\unity\Assets\Puerts\Src\Utils.cs"/>
+			<_3 Value="D:\UnityGameFramework\Assets\Forms\testform.lua"/>
+			<_4 Value="F:\UnityGameFramework\ProjectSettings\EditorSettings.asset"/>
+			<_5 Value="F:\UnityGameFramework\ProjectSettings\EditorBuildSettings.asset"/>
+			<_6 Value="F:\UnityGameFramework\ProjectSettings\DynamicsManager.asset"/>
+			<_7 Value="F:\UnityGameFramework\ProjectSettings\AudioManager.asset"/>
+			<_8 Value="F:\UnityGameFramework\Packages\manifest.json"/>
+		</RightMRUSpecs>
+	</TTextCompareState>
+</BCState>

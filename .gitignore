@@ -1,0 +1,35 @@
+## Ignore all, put it in header.
+/*
+
+## Track unity project directories.
+!Assets/
+!ProjectSettings/
+!Packages/
+
+## Track tools directory.
+!Tools/
+
+## Track git files.
+!.gitignore
+!.keep
+!.submodule
+!README.md
+!git-pull.py
+!git-push.py
+!unity-build.py
+!unity-build-windows-dev.py
+
+## Ignore other repository directories.
+# TsProj
+# Assets/R/TableProj
+# Assets/R/TableProj.meta
+# Assets/R/EffectProj
+# Assets/R/EffectProj.meta
+# Assets/R/ModelProj
+# Assets/R/ModelProj.meta
+# Assets/R/UIProj
+# Assets/R/UIProj.meta
+
+## Ignore unity asset temp directory.
+Assets/Temp
+Assets/Temp.meta

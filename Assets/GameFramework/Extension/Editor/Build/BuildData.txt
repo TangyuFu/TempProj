@@ -1,0 +1,22 @@
+{
+    "Version": "0.0.1",
+    "InternalVersion": 1,
+    "Channel": "Default",
+    "ResourceVersion": 1,
+    "Url": "http://10.0.2.70/hfs/",
+    "VersionUrl": "http://10.0.2.70/hfs/Version_Windows_Default.txt",
+    "ResourceUrl": "http://10.0.2.70/hfs/Windows/0_0_1_1/",
+    "StandaloneWindowsAppUrl": "https://gameframework.cn",
+    "StandaloneOSXAppUrl": "https://gameframework.cn",
+    "iOSAppUrl": "https://gameframework.cn",
+    "AndroidAppUrl": "https://gameframework.cn",
+    "BuildTarget": 5,
+    "Released": false,
+    "KeystoreName": "Assets/GameFramework/Extension/Editor/Build/user.keystore",
+    "KeystorePass": "keystore",
+    "KeyaliasName": "keystore",
+    "KeyaliasPass": "keystore",
+    "Output": "Build/Player",
+    "DevelopmentBuildOptions": 2102017,
+    "ReleaseBuildOptions": 2621440
+}
