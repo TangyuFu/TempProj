@@ -15,16 +15,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormRecycleEventArgs Create(int formHash, int formId, object userData)
+        public static UIFormRecycleEventArgs Create(int uniqueId, int formId, object userData)
         {
             UIFormRecycleEventArgs uiFormRecycleEventArgs = ReferencePool.Acquire<UIFormRecycleEventArgs>();
-            uiFormRecycleEventArgs.FormHash = formHash;
+            uiFormRecycleEventArgs.UniqueId = uniqueId;
             uiFormRecycleEventArgs.FormId = formId;
             uiFormRecycleEventArgs.UserData = userData;
             return uiFormRecycleEventArgs;
@@ -32,7 +32,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
             UserData = null;
         }

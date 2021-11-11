@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
@@ -25,13 +25,13 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormDepthChangedEventArgs Create(int formHash, int formId, int uiGroupDepth,
+        public static UIFormDepthChangedEventArgs Create(int uniqueId, int formId, int uiGroupDepth,
             int depthInUIGroup,
             object userData)
         {
             UIFormDepthChangedEventArgs uiFormDepthChangedEventArgs =
                 ReferencePool.Acquire<UIFormDepthChangedEventArgs>();
-            uiFormDepthChangedEventArgs.FormHash = formHash;
+            uiFormDepthChangedEventArgs.UniqueId = uniqueId;
             uiFormDepthChangedEventArgs.FormId = formId;
             uiFormDepthChangedEventArgs.UIGroupDepth = uiGroupDepth;
             uiFormDepthChangedEventArgs.DepthInUIGroup = depthInUIGroup;
@@ -41,7 +41,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
             UIGroupDepth = 0;
             DepthInUIGroup = 0;

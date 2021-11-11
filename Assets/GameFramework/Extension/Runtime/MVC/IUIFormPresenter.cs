@@ -3,16 +3,35 @@
 namespace UnityGameFramework.Runtime.Extension
 {
     /// <summary>
-    /// UIForm 代表者；
+    /// UIForm 代表者接口；
     /// </summary>
     public interface IUIFormPresenter
     {
         /// <summary>
+        /// 界面唯一标识符。
+        /// </summary>
+        int UniqueId { get; }
+
+        /// <summary>
+        /// 界面 ID 。
+        /// </summary>
+        int FormId { get; }
+
+        /// <summary>
+        /// 界面根物体。
+        /// </summary>
+        GameObject Root { get; }
+
+        /// <summary>
         /// 初始化时调用。
         /// </summary>
-        /// <param name="target">目标游戏物体。</param>
+        /// <param name="uniqueId">界面唯一标识符。</param>
+        /// <param name="formId">界面 ID 。</param>
+        /// <param name="uiForm">界面。</param>
+        /// <param name="root">界面根物体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void OnInit(GameObject target, object userData);
+        void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root,
+            object userData);
 
         /// <summary>
         /// 反初始化时调用。

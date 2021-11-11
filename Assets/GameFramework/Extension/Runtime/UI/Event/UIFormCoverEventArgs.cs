@@ -15,16 +15,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormCoverEventArgs Create(int formHash, int formId, object userData)
+        public static UIFormCoverEventArgs Create(int uniqueId, int formId, object userData)
         {
             UIFormCoverEventArgs uiFormCoverEventArgs = ReferencePool.Acquire<UIFormCoverEventArgs>();
-            uiFormCoverEventArgs.FormHash = formHash;
+            uiFormCoverEventArgs.UniqueId = uniqueId;
             uiFormCoverEventArgs.FormId = formId;
             uiFormCoverEventArgs.UserData = userData;
             return uiFormCoverEventArgs;
@@ -32,7 +32,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
             UserData = null;
         }

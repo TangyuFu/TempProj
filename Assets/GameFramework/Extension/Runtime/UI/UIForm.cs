@@ -10,13 +10,28 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public sealed class UIForm : UIFormLogic
     {
-        private int m_FormHash;
+        private int m_UniqueId;
 
         private int m_FormId;
 
-        private RectTransform m_RectTransform;
+        private GameObject m_Root;
 
-        private CanvasRenderSorter m_CanvasRenderSorter;
+        private CanvasRenderSorter m_Sorter;
+
+        /// <summary>
+        /// 界面唯一标识符。
+        /// </summary>
+        public int UniqueId => m_UniqueId;
+
+        /// <summary>
+        /// 界面 ID 。
+        /// </summary>
+        private int FormId => m_FormId;
+
+        /// <summary>
+        /// 界面根物体。
+        /// </summary>
+        public GameObject Root => m_Root;
 
         /// <summary>
         /// 界面初始化。
@@ -26,17 +41,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnInit(userData);
 
-            m_RectTransform = GetComponent<RectTransform>();
-            m_FormHash = GetHashCode();
+            m_Root = gameObject;
+            m_UniqueId = GetHashCode();
             m_FormId = UIExtension.GetFormId(UIForm.UIFormAssetName);
 
-            GraphicRaycaster graphicRaycaster = gameObject.GetOrAddComponent<GraphicRaycaster>();
-            Canvas canvas = gameObject.GetOrAddComponent<Canvas>();
+            GraphicRaycaster graphicRaycaster = m_Root.GetOrAddComponent<GraphicRaycaster>();
+            Canvas canvas = m_Root.GetOrAddComponent<Canvas>();
             canvas.overrideSorting = true;
-            m_CanvasRenderSorter = gameObject.GetOrAddComponent<CanvasRenderSorter>();
-            m_CanvasRenderSorter.RenderSorterMode = RenderSorterMode.Relative;
+            m_Sorter = m_Root.GetOrAddComponent<CanvasRenderSorter>();
+            m_Sorter.RenderSorterMode = RenderSorterMode.Relative;
 
-            UIExtension.SetTransformFont(m_RectTransform);
+            UIExtension.SetTransformFont(m_Root);
 
             IDataTable<DRUIForm> dtUIForm = Entry.DataTable.GetDataTable<DRUIForm>();
             DRUIForm drUIForm = dtUIForm.GetDataRow(m_FormId);
@@ -46,7 +61,7 @@ namespace UnityGameFramework.Runtime.Extension
             }
 
             Entry.Event.FireNow(UIFormInitEventArgs.EventId,
-                UIFormInitEventArgs.Create(m_FormHash, m_FormId, this, gameObject, userData));
+                UIFormInitEventArgs.Create(m_UniqueId, m_FormId, this, m_Root, userData));
         }
 
         /// <summary>
@@ -55,7 +70,7 @@ namespace UnityGameFramework.Runtime.Extension
         public void OnDeinit()
         {
             Entry.Event.FireNow(UIFormDeinitEventArgs.EventId,
-                UIFormDeinitEventArgs.Create(m_FormHash, m_FormId, null));
+                UIFormDeinitEventArgs.Create(m_UniqueId, m_FormId, null));
         }
 
         /// <summary>
@@ -64,7 +79,7 @@ namespace UnityGameFramework.Runtime.Extension
         protected override void OnRecycle()
         {
             Entry.Event.FireNow(UIFormRecycleEventArgs.EventId,
-                UIFormRecycleEventArgs.Create(m_FormHash, m_FormId, null));
+                UIFormRecycleEventArgs.Create(m_UniqueId, m_FormId, null));
 
             base.OnRecycle();
         }
@@ -78,7 +93,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnOpen(userData);
 
             Entry.Event.FireNow(UIFormOpenEventArgs.EventId,
-                UIFormOpenEventArgs.Create(m_FormHash, m_FormId, userData));
+                UIFormOpenEventArgs.Create(m_UniqueId, m_FormId, userData));
         }
 
         /// <summary>
@@ -89,7 +104,7 @@ namespace UnityGameFramework.Runtime.Extension
         protected override void OnClose(bool isShutdown, object userData)
         {
             Entry.Event.FireNow(UIFormCloseEventArgs.EventId,
-                UIFormCloseEventArgs.Create(m_FormHash, m_FormId, isShutdown, userData));
+                UIFormCloseEventArgs.Create(m_UniqueId, m_FormId, isShutdown, userData));
 
             base.OnClose(isShutdown, userData);
         }
@@ -101,7 +116,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnPause();
 
-            Entry.Event.FireNow(UIFormPauseEventArgs.EventId, UIFormPauseEventArgs.Create(m_FormHash, m_FormId, null));
+            Entry.Event.FireNow(UIFormPauseEventArgs.EventId, UIFormPauseEventArgs.Create(m_UniqueId, m_FormId, null));
         }
 
         /// <summary>
@@ -112,7 +127,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnResume();
 
             Entry.Event.FireNow(UIFormResumeEventArgs.EventId,
-                UIFormResumeEventArgs.Create(m_FormHash, m_FormId, null));
+                UIFormResumeEventArgs.Create(m_UniqueId, m_FormId, null));
         }
 
         /// <summary>
@@ -122,7 +137,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnCover();
 
-            Entry.Event.FireNow(UIFormCoverEventArgs.EventId, UIFormCoverEventArgs.Create(m_FormHash, m_FormId, null));
+            Entry.Event.FireNow(UIFormCoverEventArgs.EventId, UIFormCoverEventArgs.Create(m_UniqueId, m_FormId, null));
         }
 
         /// <summary>
@@ -133,7 +148,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnReveal();
 
             Entry.Event.FireNow(UIFormRevealEventArgs.EventId,
-                UIFormRevealEventArgs.Create(m_FormHash, m_FormId, null));
+                UIFormRevealEventArgs.Create(m_UniqueId, m_FormId, null));
         }
 
         /// <summary>
@@ -145,7 +160,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnRefocus(userData);
 
             Entry.Event.FireNow(UIFormRefocusEventArgs.EventId,
-                UIFormRefocusEventArgs.Create(m_FormHash, m_FormId, userData));
+                UIFormRefocusEventArgs.Create(m_UniqueId, m_FormId, userData));
         }
 
         /// <summary>
@@ -170,7 +185,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnDepthChanged(uiGroupDepth, depthInUIGroup);
 
-            m_CanvasRenderSorter.RenderSorterOrder = depthInUIGroup;
+            m_Sorter.RenderSorterOrder = depthInUIGroup;
 
             // Entry.Event.FireNow(UIFormDepthChangedEventArgs.EventId,
             //     UIFormDepthChangedEventArgs.Create(m_FormHash, m_FormId, uiGroupDepth, depthInUIGroup, null));

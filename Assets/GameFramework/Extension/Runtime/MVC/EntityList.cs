@@ -45,7 +45,7 @@ namespace UnityGameFramework.Runtime.Extension
             }
 
             int siblingIndex = index - subSiblingCount;
-            Transform targetTransform = entityPresenter.Target.transform;
+            Transform targetTransform = entityPresenter.Root.transform;
             if (targetTransform.GetSiblingIndex() != siblingIndex)
             {
                 targetTransform.SetSiblingIndex(siblingIndex);

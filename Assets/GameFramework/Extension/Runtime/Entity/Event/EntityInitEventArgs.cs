@@ -16,38 +16,38 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int EntityHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int EntityId { get; private set; }
         
         public int EntityTypeId { get; private set; }
 
-        public EntityLogic Entity { get; private set; }
+        public Entity Entity { get; private set; }
 
-        public GameObject EntityGO { get; private set; }
+        public GameObject Root { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static EntityInitEventArgs Create(int entityHash, int entityId, int entityType, EntityLogic entity, GameObject entityGO,
+        public static EntityInitEventArgs Create(int uniqueId, int entityId, int entityType, Entity entity, GameObject root,
             object userData)
         {
             EntityInitEventArgs entityInitEventArgs = ReferencePool.Acquire<EntityInitEventArgs>();
-            entityInitEventArgs.EntityHash = entityHash;
+            entityInitEventArgs.UniqueId = uniqueId;
             entityInitEventArgs.EntityId = entityId;
             entityInitEventArgs.EntityTypeId = entityType;
             entityInitEventArgs.Entity = entity;
-            entityInitEventArgs.EntityGO = entityGO;
+            entityInitEventArgs.Root = root;
             entityInitEventArgs.UserData = userData;
             return entityInitEventArgs;
         }
 
         public override void Clear()
         {
-            EntityHash = default;
+            UniqueId = default;
             EntityId = default;
             EntityTypeId = default;
             Entity = default;
-            EntityGO = default;
+            Root = default;
             UserData = default;
         }
     }

@@ -3,26 +3,40 @@
 namespace UnityGameFramework.Runtime.Extension
 {
     /// <summary>
-    /// 实体代表者。
+    /// 实体代表者接口。
     /// </summary>
     public interface IEntityPresenter
     {
+        /// <summary>
+        /// 获取实体唯一标识符。
+        /// </summary>
+        int UniqueId { get; }
+
         /// <summary>
         /// 获取实体 Id。
         /// </summary>
         int EntityId { get; }
 
         /// <summary>
-        /// 实体代表者的目标物体。
+        /// 获取实体类型 ID 。
         /// </summary>
-        public GameObject Target { get; }
+        int EntityTypeId { get; }
 
         /// <summary>
-        /// 初始化时调用，
+        /// 获取实体代表者的根物体。
         /// </summary>
-        /// <param name="target">实体目标物体。</param>
+        GameObject Root { get; }
+        
+        /// <summary>
+        /// 初始化时调用。
+        /// </summary>
+        /// <param name="uniqueId">实体唯一标识符。</param>
+        /// <param name="entityId">实体 ID 。</param>
+        /// <param name="entity">实体。</param>
+        /// <param name="root">实体根物体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void OnInit(GameObject target, object userData);
+        void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
+            object userData);
 
         /// <summary>
         /// 反初始化时调用。

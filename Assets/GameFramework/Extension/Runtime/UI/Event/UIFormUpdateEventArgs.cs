@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
@@ -25,12 +25,12 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormUpdateEventArgs Create(int formHash, int formId, float elapseSeconds,
+        public static UIFormUpdateEventArgs Create(int uniqueId, int formId, float elapseSeconds,
             float realElapseSeconds,
             object userData)
         {
             UIFormUpdateEventArgs uiFormUpdateEventArgs = ReferencePool.Acquire<UIFormUpdateEventArgs>();
-            uiFormUpdateEventArgs.FormHash = formHash;
+            uiFormUpdateEventArgs.UniqueId = uniqueId;
             uiFormUpdateEventArgs.FormId = formId;
             uiFormUpdateEventArgs.ElapseSeconds = elapseSeconds;
             uiFormUpdateEventArgs.RealElapseSeconds = realElapseSeconds;
@@ -40,7 +40,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
             ElapseSeconds = 0f;
             RealElapseSeconds = 0f;

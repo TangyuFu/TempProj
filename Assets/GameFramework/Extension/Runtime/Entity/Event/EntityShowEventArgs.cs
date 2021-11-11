@@ -16,7 +16,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int EntityHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int EntityId { get; private set; }
 
@@ -26,11 +26,11 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static EntityShowEventArgs Create(int entityHash, int entityId, EntityLogic entity, GameObject entityGO,
+        public static EntityShowEventArgs Create(int uniqueId, int entityId, EntityLogic entity, GameObject entityGO,
             object userData)
         {
             EntityShowEventArgs entityShowEventArgs = ReferencePool.Acquire<EntityShowEventArgs>();
-            entityShowEventArgs.EntityHash = entityHash;
+            entityShowEventArgs.UniqueId = uniqueId;
             entityShowEventArgs.EntityId = entityId;
             entityShowEventArgs.Entity = entity;
             entityShowEventArgs.EntityGO = entityGO;
@@ -40,7 +40,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            EntityHash = default;
+            UniqueId = default;
             EntityId = default;
             Entity = default;
             EntityGO = default;

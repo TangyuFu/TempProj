@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityGameFramework.Runtime.Extension;
 
 namespace TempProj
 {
     [Identity((int) UIFormId.MainForm)]
-    public class MainPresenter : UIFormPresenter<MainView, MainProp>
+    public class MainPresenter : UIFormPresenter
     {
-        public override void OnInit(GameObject gameObject, object userData)
+        private GameObject m_GMBtn;
+        private GameObject m_SettingBtn;
+        private GameObject m_PropBtn;
+        
+        public override void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root, object userData)
         {
-            base.OnInit(gameObject, userData);
+            base.OnInit(uniqueId, formId, uiForm, root, userData);
 
-            m_View.GMClicked = OpenGMForm;
-            m_View.SettingClicked = OpenSettingForm;
-            m_View.BackpackClicked = OpenBackpackForm;
+            m_GMBtn = root.transform.Find("GMBtn").gameObject;
+            m_SettingBtn = root.transform.Find("SettingBtn").gameObject;
+            m_PropBtn = root.transform.Find("PropBtn").gameObject;
+            
+            UIClickTrigger.Get(m_GMBtn).onClick.AddListener(OpenGMForm);
+            UIClickTrigger.Get(m_SettingBtn).onClick.AddListener(OpenSettingForm);
+            UIClickTrigger.Get(m_PropBtn).onClick.AddListener(OpenPropForm);
         }
 
         public override void OnDeinit()
@@ -20,17 +29,17 @@ namespace TempProj
             base.OnDeinit();
         }
         
-        private void OpenGMForm()
+        private void OpenGMForm(GameObject go)
         {
             Entry.UI.OpenUIForm(UIFormId.GMForm);
         }
 
-        private void OpenSettingForm()
+        private void OpenSettingForm(GameObject go)
         {
             Entry.UI.OpenUIForm(UIFormId.SettingForm);
         }
 
-        private void OpenBackpackForm()
+        private void OpenPropForm(GameObject go)
         {
             Entry.UI.OpenUIForm(UIFormId.BackpackForm);
         }

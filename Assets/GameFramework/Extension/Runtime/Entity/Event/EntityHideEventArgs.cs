@@ -15,19 +15,19 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
+        public int UniqueId { get; private set; }
+        
         public int EntityId { get; private set; }
-
-        public int EntityHash { get; private set; }
 
         public bool IsShutdown { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static EntityHideEventArgs Create(int entityHash, int entityId, bool isShutdown, object userData)
+        public static EntityHideEventArgs Create(int uniqueId, int entityId, bool isShutdown, object userData)
         {
             EntityHideEventArgs entityHideEventArgs = ReferencePool.Acquire<EntityHideEventArgs>();
             entityHideEventArgs.EntityId = entityId;
-            entityHideEventArgs.EntityHash = entityHash;
+            entityHideEventArgs.UniqueId = uniqueId;
             entityHideEventArgs.UserData = userData;
             entityHideEventArgs.IsShutdown = isShutdown;
             return entityHideEventArgs;
@@ -36,7 +36,7 @@ namespace UnityGameFramework.Runtime.Extension
         public override void Clear()
         {
             EntityId = default;
-            EntityHash = default;
+            UniqueId = default;
             IsShutdown = default;
             UserData = default;
         }

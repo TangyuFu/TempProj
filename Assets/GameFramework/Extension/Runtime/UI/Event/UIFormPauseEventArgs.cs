@@ -15,17 +15,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
         public object UserData { get; private set; }
 
 
-        public static UIFormPauseEventArgs Create(int formHash, int formId, object userData)
+        public static UIFormPauseEventArgs Create(int uniqueId, int formId, object userData)
         {
             UIFormPauseEventArgs uiFormPauseEventArgs = ReferencePool.Acquire<UIFormPauseEventArgs>();
-            uiFormPauseEventArgs.FormHash = formHash;
+            uiFormPauseEventArgs.UniqueId = uniqueId;
             uiFormPauseEventArgs.FormId = formId;
             uiFormPauseEventArgs.UserData = userData;
             return uiFormPauseEventArgs;
@@ -33,7 +33,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
             UserData = null;
         }

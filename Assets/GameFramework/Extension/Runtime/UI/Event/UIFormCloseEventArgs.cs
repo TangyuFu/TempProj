@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
@@ -23,10 +23,10 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormCloseEventArgs Create(int formHash, int formId, bool isShutdown, object userData)
+        public static UIFormCloseEventArgs Create(int uniqueId, int formId, bool isShutdown, object userData)
         {
             UIFormCloseEventArgs uiFormCloseEventArgs = ReferencePool.Acquire<UIFormCloseEventArgs>();
-            uiFormCloseEventArgs.FormHash = formHash;
+            uiFormCloseEventArgs.UniqueId = uniqueId;
             uiFormCloseEventArgs.FormId = formId;
             uiFormCloseEventArgs.IsShutdown = isShutdown;
             uiFormCloseEventArgs.UserData = userData;
@@ -36,7 +36,7 @@ namespace UnityGameFramework.Runtime.Extension
         public override void Clear()
         {
             FormId = 0;
-            FormHash = 0;
+            UniqueId = 0;
             IsShutdown = false;
             UserData = null;
         }

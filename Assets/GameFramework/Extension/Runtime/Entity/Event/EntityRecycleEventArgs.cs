@@ -15,21 +15,21 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int EntityHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int EntityId { get; private set; }
 
-        public static EntityRecycleEventArgs Create(int entityHash, int entityId)
+        public static EntityRecycleEventArgs Create(int uniqueId, int entityId)
         {
             EntityRecycleEventArgs entityRecycleEventArgs = ReferencePool.Acquire<EntityRecycleEventArgs>();
-            entityRecycleEventArgs.EntityHash = entityHash;
+            entityRecycleEventArgs.UniqueId = uniqueId;
             entityRecycleEventArgs.EntityId = entityId;
             return entityRecycleEventArgs;
         }
 
         public override void Clear()
         {
-            EntityHash = default;
+            UniqueId = default;
             EntityId = default;
         }
     }

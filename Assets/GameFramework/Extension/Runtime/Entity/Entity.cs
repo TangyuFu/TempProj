@@ -9,10 +9,37 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public sealed class Entity : EntityLogic
     {
-        private int m_EntityHash;
+        private int m_UniqueId;
+
+        private int m_EntityId;
+
         private int m_EntityTypeId;
+
         private Transform m_OldParent;
-        private Transform m_Transform;
+
+        private GameObject m_Root;
+
+        private Transform m_RootTransform;
+
+        /// <summary>
+        /// 实体唯一标识符。
+        /// </summary>
+        public int UniqueId => m_UniqueId;
+
+        /// <summary>
+        /// 实体 ID 。
+        /// </summary>
+        public int EntityId => m_EntityId;
+
+        /// <summary>
+        /// 实体类型 ID 。
+        /// </summary>
+        public int EntityTypeId => m_EntityTypeId;
+
+        /// <summary>
+        /// 实体根物体。
+        /// </summary>
+        public GameObject Root => m_Root;
 
         /// <summary>
         /// 实体初始化时调用
@@ -22,8 +49,10 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnInit(userData);
 
-            m_Transform = transform;
-            m_EntityHash = GetHashCode();
+            m_Root = gameObject;
+            m_RootTransform = transform;
+            m_UniqueId = GetHashCode();
+            m_EntityId = Entity.Id;
 
             if (userData is EntityData entityData)
             {
@@ -37,11 +66,11 @@ namespace UnityGameFramework.Runtime.Extension
 
                 if (drEntity.From == 3)
                 {
-                    UIExtension.SetTransformFont(m_Transform);
+                    UIExtension.SetTransformFont(m_Root);
                 }
 
                 Entry.Event.FireNow(EntityInitEventArgs.EventId,
-                    EntityInitEventArgs.Create(m_EntityHash, Entity.Id, m_EntityTypeId, this, gameObject, userData));
+                    EntityInitEventArgs.Create(m_UniqueId, m_EntityId, m_EntityTypeId, this, gameObject, userData));
             }
             else
             {
@@ -55,7 +84,7 @@ namespace UnityGameFramework.Runtime.Extension
         public void OnDeinit()
         {
             Entry.Event.FireNow(EntityDeinitEventArgs.EventId,
-                EntityDeinitEventArgs.Create(m_EntityHash, Entity.Id, this, gameObject));
+                EntityDeinitEventArgs.Create(m_UniqueId, Entity.Id, this, gameObject));
         }
 
         /// <summary>
@@ -65,7 +94,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnRecycle();
 
-            Entry.Event.FireNow(EntityRecycleEventArgs.EventId, EntityRecycleEventArgs.Create(m_EntityHash, Entity.Id));
+            Entry.Event.FireNow(EntityRecycleEventArgs.EventId, EntityRecycleEventArgs.Create(m_UniqueId, Entity.Id));
         }
 
         /// <summary>
@@ -79,16 +108,16 @@ namespace UnityGameFramework.Runtime.Extension
             if (userData is EntityData entityData)
             {
                 Transform newParent = entityData.Parent;
-                Transform oldParent = m_Transform.parent;
+                Transform oldParent = m_RootTransform;
                 if (newParent != null && oldParent != newParent)
                 {
                     m_OldParent = oldParent;
-                    m_Transform.SetParent(newParent);
-                    m_Transform.localScale = Vector3.one;
+                    m_RootTransform.SetParent(newParent);
+                    m_RootTransform.localScale = Vector3.one;
                 }
 
                 Entry.Event.FireNow(EntityShowEventArgs.EventId,
-                    EntityShowEventArgs.Create(m_EntityHash, Entity.Id, this, gameObject, userData));
+                    EntityShowEventArgs.Create(m_UniqueId, Entity.Id, this, gameObject, userData));
 
                 ReferencePool.Release(entityData);
             }
@@ -109,12 +138,12 @@ namespace UnityGameFramework.Runtime.Extension
 
             if (m_OldParent != null)
             {
-                m_Transform.SetParent(m_OldParent);
+                m_RootTransform.SetParent(m_OldParent);
                 m_OldParent = null;
             }
 
             Entry.Event.FireNow(EntityHideEventArgs.EventId,
-                EntityHideEventArgs.Create(m_EntityHash, Entity.Id, isShutdown, userData));
+                EntityHideEventArgs.Create(m_UniqueId, Entity.Id, isShutdown, userData));
         }
 
         /// <summary>
@@ -128,7 +157,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnAttached(childEntity, parentTransform, userData);
 
             Entry.Event.FireNow(EntityAttachedEventArgs.EventId,
-                EntityAttachedEventArgs.Create(m_EntityHash, Entity.Id, childEntity, parentTransform, userData));
+                EntityAttachedEventArgs.Create(m_UniqueId, Entity.Id, childEntity, parentTransform, userData));
         }
 
         /// <summary>
@@ -141,7 +170,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnDetached(childEntity, userData);
 
             Entry.Event.FireNow(EntityDetachedEventArgs.EventId,
-                EntityDetachedEventArgs.Create(m_EntityHash, Entity.Id, childEntity, userData));
+                EntityDetachedEventArgs.Create(m_UniqueId, Entity.Id, childEntity, userData));
         }
 
         /// <summary>
@@ -155,7 +184,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
             Entry.Event.FireNow(EntityAttachToEventArgs.EventId,
-                EntityAttachToEventArgs.Create(m_EntityHash, Entity.Id, parentEntity, parentTransform, userData));
+                EntityAttachToEventArgs.Create(m_UniqueId, Entity.Id, parentEntity, parentTransform, userData));
         }
 
         /// <summary>
@@ -168,7 +197,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnDetachFrom(parentEntity, userData);
 
             Entry.Event.FireNow(EntityDetachFromEventArgs.EventId,
-                EntityDetachFromEventArgs.Create(m_EntityHash, Entity.Id, parentEntity, userData));
+                EntityDetachFromEventArgs.Create(m_UniqueId, Entity.Id, parentEntity, userData));
         }
 
         /// <summary>

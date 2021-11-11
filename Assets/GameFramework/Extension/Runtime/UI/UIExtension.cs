@@ -201,7 +201,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// 设置字体。
         /// </summary>
         /// <param name="root">根目录。</param>
-        public static void SetTransformFont(Transform root)
+        public static void SetTransformFont(GameObject root)
         {
             root.GetComponentsInChildren(true, s_Texts);
             foreach (var text in s_Texts)

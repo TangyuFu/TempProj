@@ -16,23 +16,23 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int FormHash { get; private set; }
+        public int UniqueId { get; private set; }
 
         public int FormId { get; private set; }
 
-        public GameObject FormGO { get; private set; }
+        public GameObject Root { get; private set; }
 
         public UIForm UIForm { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormInitEventArgs Create(int formHash, int formId, UIForm uiForm, GameObject formGO,
+        public static UIFormInitEventArgs Create(int uniqueId, int formId, UIForm uiForm, GameObject formGO,
             object userData)
         {
             UIFormInitEventArgs uiFormInitEventArgs = ReferencePool.Acquire<UIFormInitEventArgs>();
-            uiFormInitEventArgs.FormHash = formHash;
+            uiFormInitEventArgs.UniqueId = uniqueId;
             uiFormInitEventArgs.FormId = formId;
-            uiFormInitEventArgs.FormGO = formGO;
+            uiFormInitEventArgs.Root = formGO;
             uiFormInitEventArgs.UIForm = uiForm;
             uiFormInitEventArgs.UserData = userData;
             return uiFormInitEventArgs;
@@ -40,9 +40,9 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            FormHash = 0;
+            UniqueId = 0;
             FormId = 0;
-            FormGO = null;
+            Root = null;
             UIForm = null;
             UserData = null;
         }

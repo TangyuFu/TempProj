@@ -3,35 +3,35 @@
 namespace UnityGameFramework.Runtime.Extension
 {
     /// <summary>
-    /// UIForm 代表者泛型。
+    /// UIForm 代表者。
     /// </summary>
-    /// <typeparam name="TView">MVC 界面。</typeparam>
-    /// <typeparam name="TProp">MVC 属性。。</typeparam>
-    public abstract class UIFormPresenter<TView, TProp> : IUIFormPresenter
-        where TProp : MVCProp
-        where TView : MVCView<TProp>, new()
+    public abstract class UIFormPresenter : IUIFormPresenter
     {
-        protected TProp m_Prop;
+        /// <summary>
+        /// 界面唯一标识符。
+        /// </summary>
+        public int UniqueId { get; private set; }
 
-        protected TView m_View;
+        /// <summary>
+        /// 界面 ID 。
+        /// </summary>
+        public int FormId { get; private set; }
 
-        public virtual void OnInit(GameObject target, object userData)
+        /// <summary>
+        /// 界面根物体。
+        /// </summary>
+        public GameObject Root { get; private set; }
+
+        public virtual void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root,
+            object userData)
         {
-            m_Prop = target.GetComponent<TProp>();
-            if (m_Prop == null)
-            {
-                Log.Error($"Failed to get MVCProp '{typeof(TProp)}' from MVCView '{typeof(TView)}'.");
-                return;
-            }
-
-            m_View = new TView();
-            m_View.Init(m_Prop);
+            UniqueId = uniqueId;
+            FormId = formId;
+            Root = root;
         }
 
         public virtual void OnDeinit()
         {
-            m_View.Deinit();
-            m_View = null;
         }
 
         public virtual void OnRecycle()

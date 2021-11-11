@@ -19,6 +19,12 @@ namespace UnityGameFramework.Runtime.Extension
 
         private Transform m_Parent;
 
+        private Vector3 m_Position;
+
+        private Vector3 m_Scale;
+
+        private Quaternion m_Rotation;
+
         /// <summary>
         /// 实体编号。
         /// </summary>
@@ -56,6 +62,33 @@ namespace UnityGameFramework.Runtime.Extension
         }
 
         /// <summary>
+        /// 实体本地位置。
+        /// </summary>
+        public Vector3 Position
+        {
+            get => m_Position;
+            set => m_Position = value;
+        }
+
+        /// <summary>
+        /// 实体本地缩放。
+        /// </summary>
+        public Vector3 Scale
+        {
+            get => m_Scale;
+            set => m_Scale = value;
+        }
+
+        /// <summary>
+        /// 实体本地旋转。
+        /// </summary>
+        public Quaternion Rotation
+        {
+            get => m_Rotation;
+            set => m_Rotation = value;
+        }
+
+        /// <summary>
         /// 清理实体数据。
         /// </summary>
         public virtual void Clear()
@@ -64,6 +97,9 @@ namespace UnityGameFramework.Runtime.Extension
             m_TypeId = default;
             m_DrEntity = default;
             m_Parent = default;
+            m_Position = default;
+            m_Scale = default;
+            m_Rotation = default;
         }
     }
 }

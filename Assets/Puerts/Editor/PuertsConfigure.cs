@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using GameFramework;
 using Puerts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
-using Entity = UnityGameFramework.Runtime.Extension.Entity;
-using UIForm = UnityGameFramework.Runtime.Extension.UIForm;
 
 [Configure]
 public class PuertsConfigure
@@ -26,7 +23,7 @@ public class PuertsConfigure
             typeof(Type),
             typeof(List<>),
             typeof(Dictionary<,>),
-            
+
             typeof(Debug),
             typeof(Time),
             typeof(GameObject),
@@ -35,7 +32,7 @@ public class PuertsConfigure
             typeof(Camera),
             typeof(Light),
             typeof(ParticleSystem),
-            
+
             typeof(RectTransform),
             typeof(Image),
             typeof(RawImage),
@@ -60,7 +57,7 @@ public class PuertsConfigure
             // Entity
             typeof(EntityComponent),
             typeof(UnityGameFramework.Runtime.Entity),
-            typeof(Entity),
+            typeof(UnityGameFramework.Runtime.Extension.Entity),
             typeof(ShowEntitySuccessEventArgs),
             typeof(ShowEntityFailureEventArgs),
             typeof(HideEntityCompleteEventArgs),
@@ -91,7 +88,7 @@ public class PuertsConfigure
             // UI
             typeof(UIComponent),
             typeof(UnityGameFramework.Runtime.UIForm),
-            typeof(UIForm),
+            typeof(UnityGameFramework.Runtime.Extension.UIForm),
             typeof(OpenUIFormSuccessEventArgs),
             typeof(OpenUIFormFailureEventArgs),
             typeof(CloseUIFormCompleteEventArgs),

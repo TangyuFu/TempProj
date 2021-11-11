@@ -3,40 +3,42 @@
 namespace UnityGameFramework.Runtime.Extension
 {
     /// <summary>
-    /// Entity 代表者泛型。
+    /// Entity 代表者。
     /// </summary>
     /// <typeparam name="TView">MVC 界面。</typeparam>
     /// <typeparam name="TProp">MVC 属性。。</typeparam>
-    public abstract class EntityPresenter<TView, TProp> : IEntityPresenter
-        where TProp : MVCProp
-        where TView : MVCView<TProp>, new()
+    public abstract class EntityPresenter : IEntityPresenter
     {
+        /// <summary>
+        /// 获取实体唯一标识符。
+        /// </summary>
+        public int UniqueId { get; private set; }
+
+        /// <summary>
+        /// 获取实体 Id。
+        /// </summary>
         public int EntityId { get; private set; }
-        
-        public GameObject Target { get; private set; }
 
-        protected TProp m_Prop;
+        /// <summary>
+        /// 获取实体类型 ID 。
+        /// </summary>
+        public int EntityTypeId { get; private set; }
 
-        protected TView m_View;
+        /// <summary>
+        /// 获取实体代表者的根物体。
+        /// </summary>
+        public GameObject Root { get; private set; }
 
-        public virtual void OnInit(GameObject target, object userData)
+        public void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
+            object userData)
         {
-            Target = target;
-            m_Prop = target.GetComponent<TProp>();
-            if (m_Prop == null)
-            {
-                Log.Error($"Failed to get MVCProp '{typeof(TProp)}' from MVCView '{typeof(TView)}'.");
-                return;
-            }
-
-            m_View = new TView();
-            m_View.Init(m_Prop);
+            UniqueId = uniqueId;
+            EntityId = entityId;
+            Root = root;
         }
 
         public virtual void OnDeinit()
         {
-            m_View.Deinit();
-            m_View = null;
         }
 
         public virtual void OnRecycle()
