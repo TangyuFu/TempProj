@@ -29,7 +29,7 @@ namespace TempProj
             
             // Entry.UI.OpenUIForm(UIFormId.SceneForm);
             // Entry.UI.OpenUIForm(UIFormId.MaskForm);
-            // Entry.UI.OpenUIForm(UIFormId.TipForm);
+            Entry.UI.OpenUIForm(UIFormId.TipForm);
             Entry.UI.OpenUIForm(UIFormId.MainForm);
         }
 

@@ -15,15 +15,15 @@ namespace UnityGameFramework.Runtime.Extension
 
         private int m_TypeId = 0;
 
-        private DREntity m_DrEntity;
+        private DREntity m_DrEntity = null;
 
-        private Transform m_Parent;
+        private Transform m_Parent = null;
 
-        private Vector3 m_Position;
+        private Vector3 m_Position = Vector3.zero;
 
-        private Vector3 m_Scale;
+        private Vector3 m_Scale = Vector3.one;
 
-        private Quaternion m_Rotation;
+        private Quaternion m_Rotation = Quaternion.identity;
 
         /// <summary>
         /// 实体编号。
@@ -97,9 +97,9 @@ namespace UnityGameFramework.Runtime.Extension
             m_TypeId = default;
             m_DrEntity = default;
             m_Parent = default;
-            m_Position = default;
-            m_Scale = default;
-            m_Rotation = default;
+            m_Position = Vector3.zero;
+            m_Scale = Vector3.one;
+            m_Rotation = Quaternion.identity;
         }
     }
 }

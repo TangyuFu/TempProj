@@ -5,11 +5,11 @@ using UnityGameFramework.Runtime.Extension;
 namespace TempProj
 {
     [Identity((int) UIFormId.TipForm)]
-    public class TipPresenter : UIFormPresenter<TipView, TipProp>
+    public class TipPresenter : UIFormPresenter
     {
-        public override void OnInit(GameObject gameObject, object userData)
+        public override void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root, object userData)
         {
-            base.OnInit(gameObject, userData);
+            base.OnInit(uniqueId, formId, uiForm, root, userData);
 
             Entry.Event.Subscribe(TipEventArgs.EventId, OnTip);
         }
@@ -30,7 +30,7 @@ namespace TempProj
                 TipItemEntityData tipItemEntityData = TipItemEntityData.Create(tipEventArgs.Content);
                 tipItemEntityData.EntityId = entityId;
                 tipItemEntityData.TypeId = typeId;
-                tipItemEntityData.Parent = m_Prop.RootTransform;
+                tipItemEntityData.Parent = Root.transform;
                 Entry.Entity.ShowEntity(tipItemEntityData);
             }
         }

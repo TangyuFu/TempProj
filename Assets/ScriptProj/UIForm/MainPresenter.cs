@@ -31,7 +31,8 @@ namespace TempProj
         
         private void OpenGMForm(GameObject go)
         {
-            Entry.UI.OpenUIForm(UIFormId.GMForm);
+            // Entry.UI.OpenUIForm(UIFormId.GMForm);
+            Entry.Event.Fire(null, TipEventArgs.Create("hahahhahhhhahah"));
         }
 
         private void OpenSettingForm(GameObject go)

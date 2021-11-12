@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
+using Entity = UnityGameFramework.Runtime.Extension.Entity;
 
 namespace TempProj
 {
     [Identity(30000001)]
-    public class TipItemPresenter : EntityPresenter<TipItemView, TipItemProp>
+    public class TipItemPresenter : EntityPresenter
     {
         private float m_Duration = 1f;
-        private Vector3 m_FromPosition = Vector3.up;
-        private Vector3 m_ToPosition = Vector3.up * 500;
-        private Color32 m_FromColor = Color.white * 0.2f;
-        private Color32 m_ToColor = Color.white;
 
-        public override void OnInit(GameObject target, object userData)
+        public void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
+            object userData)
         {
-            base.OnInit(target, userData);
-
+            base.OnInit(uniqueId, entityId, entity, root, userData);
             if (userData is TipItemEntityData tipItemData)
             {
-                m_View.OnComplete = HideSelf;
-                m_View.SetTweener(m_ToPosition, m_ToColor, m_Duration);
             }
             else
             {
@@ -40,7 +35,7 @@ namespace TempProj
 
             if (userData is TipItemEntityData tipItemData)
             {
-                m_View.Refresh(tipItemData.Content, m_FromPosition, m_FromColor);
+                // m_View.Refresh(tipItemData.Content, m_FromPosition, m_FromColor);
             }
             else
             {

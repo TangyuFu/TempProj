@@ -95,6 +95,9 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="index">对应的位置。</param>
         public void AddAtIndex(TEntityData entityData, int index)
         {
+            m_EntityIds.Insert(index, entityData.EntityId);
+            m_EntityPresenters.Add(null);
+            Entry.Entity.ShowEntity(entityData);
         }
 
         /// <summary>

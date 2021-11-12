@@ -209,9 +209,9 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormInitEventArgs uiFormInitEventArgs)
             {
-                int formHash = uiFormInitEventArgs.UniqueId;
+                int uniqueId = uiFormInitEventArgs.UniqueId;
                 int formId = uiFormInitEventArgs.FormId;
-                if (!m_UIFormPresenters.TryGetValue(formHash, out var presenter))
+                if (!m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     if (m_UIFormPresenterTypes.TryGetValue(formId, out var presenterType))
                     {
@@ -223,7 +223,7 @@ namespace UnityGameFramework.Runtime.Extension
                             return;
                         }
 
-                        m_UIFormPresenters.Add(formHash, presenter);
+                        m_UIFormPresenters.Add(uniqueId, presenter);
                     }
                     else
                     {
@@ -234,7 +234,8 @@ namespace UnityGameFramework.Runtime.Extension
                 else
                 {
                     Log.Error(
-                        $"UI form hash '{formHash}' id '{formId}' has not deinit.");
+                        $"UI form unique id '{uniqueId}' form id '{formId}' has not deinit.");
+                    return;
                 }
 
                 presenter.OnInit(uiFormInitEventArgs.UniqueId, uiFormInitEventArgs.FormId, uiFormInitEventArgs.UIForm,
@@ -246,11 +247,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormDeinitEventArgs uiFormDeinitEventArgs)
             {
-                int formHash = uiFormDeinitEventArgs.UniqueId;
-                if (m_UIFormPresenters.TryGetValue(formHash, out var presenter))
+                int uniqueId = uiFormDeinitEventArgs.UniqueId;
+                int formId = uiFormDeinitEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnDeinit();
-                    m_UIFormPresenters.Remove(formHash);
+                    m_UIFormPresenters.Remove(uniqueId);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -259,9 +266,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormRecycleEventArgs uiFormRecycleEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormRecycleEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormRecycleEventArgs.UniqueId;
+                int formId = uiFormRecycleEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnRecycle();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -270,9 +284,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormOpenEventArgs uiFormOpenEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormOpenEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormOpenEventArgs.UniqueId;
+                int formId = uiFormOpenEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnOpen(uiFormOpenEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -281,9 +302,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormCloseEventArgs uiFormCloseEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormCloseEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormCloseEventArgs.UniqueId;
+                int formId = uiFormCloseEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnClose(uiFormCloseEventArgs.IsShutdown, uiFormCloseEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -292,9 +320,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormPauseEventArgs uiFormPauseEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormPauseEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormPauseEventArgs.UniqueId;
+                int formId = uiFormPauseEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnPause();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -303,9 +338,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormResumeEventArgs uiFormResumeEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormResumeEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormResumeEventArgs.UniqueId;
+                int formId = uiFormResumeEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnResume();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -314,9 +356,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormCoverEventArgs uiFormCoverEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormCoverEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormCoverEventArgs.UniqueId;
+                int formId = uiFormCoverEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnCover();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -325,9 +374,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormRevealEventArgs uiFormRevealEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormRevealEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormRevealEventArgs.UniqueId;
+                int formId = uiFormRevealEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnReveal();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -336,9 +392,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormRefocusEventArgs uiFormRefocusEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormRefocusEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormRefocusEventArgs.UniqueId;
+                int formId = uiFormRefocusEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnRefocus(uiFormRefocusEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -347,9 +410,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormUpdateEventArgs uiFormUpdateEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormUpdateEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormUpdateEventArgs.UniqueId;
+                int formId = uiFormUpdateEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnUpdate(uiFormUpdateEventArgs.ElapseSeconds, uiFormUpdateEventArgs.RealElapseSeconds);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -358,10 +428,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is UIFormDepthChangedEventArgs uiFormDepthChangedEventArgs)
             {
-                if (m_UIFormPresenters.TryGetValue(uiFormDepthChangedEventArgs.UniqueId, out var presenter))
+                int uniqueId = uiFormDepthChangedEventArgs.UniqueId;
+                int formId = uiFormDepthChangedEventArgs.FormId;
+                if (m_UIFormPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnDepthChanged(uiFormDepthChangedEventArgs.UIGroupDepth,
                         uiFormDepthChangedEventArgs.DepthInUIGroup);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no ui form unique id '{uniqueId}' form id '{formId}'.");
                 }
             }
         }
@@ -370,9 +447,9 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityInitEventArgs entityInitEventArgs)
             {
-                int entityHash = entityInitEventArgs.UniqueId;
+                int uniqueId = entityInitEventArgs.UniqueId;
                 int entityTypeId = entityInitEventArgs.EntityTypeId;
-                if (!m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                if (!m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     if (m_EntityPresenterTypes.TryGetValue(entityTypeId, out var presenterType))
                     {
@@ -384,7 +461,7 @@ namespace UnityGameFramework.Runtime.Extension
                             return;
                         }
 
-                        m_EntityPresenters.Add(entityHash, presenter);
+                        m_EntityPresenters.Add(uniqueId, presenter);
                     }
                     else
                     {
@@ -395,7 +472,8 @@ namespace UnityGameFramework.Runtime.Extension
                 else
                 {
                     Log.Error(
-                        $"Entity hash '{entityHash}' type id '{entityTypeId}' has not deinit.");
+                        $"Entity unique id '{uniqueId}' type id '{entityTypeId}' has not deinit.");
+                    return;
                 }
 
                 presenter.OnInit(entityInitEventArgs.UniqueId, entityInitEventArgs.EntityId, entityInitEventArgs.Entity,
@@ -407,11 +485,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityDeinitEventArgs entityDeinitEventArgs)
             {
-                int entityHash = entityDeinitEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityDeinitEventArgs.UniqueId;
+                int entityId = entityDeinitEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnDeinit();
-                    m_EntityPresenters.Remove(entityHash);
+                    m_EntityPresenters.Remove(uniqueId);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -420,10 +504,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityRecycleEventArgs entityRecycleEventArgs)
             {
-                int entityHash = entityRecycleEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityRecycleEventArgs.UniqueId;
+                int entityId = entityRecycleEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnRecycle();
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -432,8 +522,9 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityShowEventArgs entityShowEventArgs)
             {
-                int entityHash = entityShowEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityShowEventArgs.UniqueId;
+                int entityId = entityShowEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnShow(entityShowEventArgs.EntityId, entityShowEventArgs.UserData);
 
@@ -442,6 +533,11 @@ namespace UnityGameFramework.Runtime.Extension
                         entityList.OnShow(entityShowEventArgs.EntityId, presenter);
                     }
                 }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
+                }
             }
         }
 
@@ -449,8 +545,9 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityHideEventArgs entityHideEventArgs)
             {
-                int entityHash = entityHideEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityHideEventArgs.UniqueId;
+                int entityId = entityHideEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnHide(entityHideEventArgs.IsShutdown, entityHideEventArgs.UserData);
 
@@ -459,6 +556,11 @@ namespace UnityGameFramework.Runtime.Extension
                         entityList.OnHide(entityHideEventArgs.EntityId, presenter);
                     }
                 }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
+                }
             }
         }
 
@@ -466,11 +568,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityAttachedEventArgs entityAttachedEventArgs)
             {
-                int entityHash = entityAttachedEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityAttachedEventArgs.UniqueId;
+                int entityId = entityAttachedEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnAttached(entityAttachedEventArgs.ChildEntity, entityAttachedEventArgs.ParentTransform,
                         entityAttachedEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -479,10 +587,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityDetachedEventArgs entityDetachedEventArgs)
             {
-                int entityHash = entityDetachedEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityDetachedEventArgs.UniqueId;
+                int entityId = entityDetachedEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnDetached(entityDetachedEventArgs.ChildEntity, entityDetachedEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -491,11 +605,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityAttachToEventArgs entityAttachToEventArgs)
             {
-                int entityHash = entityAttachToEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityAttachToEventArgs.UniqueId;
+                int entityId = entityAttachToEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnAttachTo(entityAttachToEventArgs.ParentEntity, entityAttachToEventArgs.ParentTransform,
                         entityAttachToEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -504,11 +624,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityAttachToEventArgs entityAttachToEventArgs)
             {
-                int entityHash = entityAttachToEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityAttachToEventArgs.UniqueId;
+                int entityId = entityAttachToEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnAttachTo(entityAttachToEventArgs.ParentEntity, entityAttachToEventArgs.ParentTransform,
                         entityAttachToEventArgs.UserData);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }
@@ -517,10 +643,16 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (eventArgs is EntityUpdateEventArgs entityUpdateEventArgs)
             {
-                int entityHash = entityUpdateEventArgs.UniqueId;
-                if (m_EntityPresenters.TryGetValue(entityHash, out var presenter))
+                int uniqueId = entityUpdateEventArgs.UniqueId;
+                int entityId = entityUpdateEventArgs.EntityId;
+                if (m_EntityPresenters.TryGetValue(uniqueId, out var presenter))
                 {
                     presenter.OnUpdate(entityUpdateEventArgs.ElapseSeconds, entityUpdateEventArgs.RealElapseSeconds);
+                }
+                else
+                {
+                    Log.Error(
+                        $"Has no entity unique id '{uniqueId}' entity id '{entityId}'.");
                 }
             }
         }

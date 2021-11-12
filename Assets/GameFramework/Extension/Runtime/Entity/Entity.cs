@@ -113,7 +113,9 @@ namespace UnityGameFramework.Runtime.Extension
                 {
                     m_OldParent = oldParent;
                     m_RootTransform.SetParent(newParent);
-                    m_RootTransform.localScale = Vector3.one;
+                    m_RootTransform.localPosition = entityData.Position;
+                    m_RootTransform.localScale = entityData.Scale;
+                    m_RootTransform.rotation = entityData.Rotation;
                 }
 
                 Entry.Event.FireNow(EntityShowEventArgs.EventId,

@@ -14,7 +14,23 @@ namespace UnityGameFramework.Runtime.Extension
         // 正值用于和服务器通信的实体（如玩家角色、NPC、怪等，服务器只产生正值）
         // 负值用于本地生成的临时实体（如特效、FakeObject等）
         private static int s_SerialId = 0;
+        
+        /// <summary>
+        /// 产生实体编号，客户端只会产生负值，正值由服务端生成并且需同步。
+        /// </summary>
+        /// <param name="entityComponent">实体组件。</param>
+        /// <returns>产生的实体编号。</returns>
+        public static int GenerateSerialId(this EntityComponent entityComponent)
+        {
+            return --s_SerialId;
+        }
 
+        /// <summary>
+        /// 获取实体。
+        /// </summary>
+        /// <param name="entityComponent">实体组件。</param>
+        /// <param name="entityId">实体 Id 。</param>
+        /// <returns>获取的实体</returns>
         public static Entity GetEntity(this EntityComponent entityComponent, int entityId)
         {
             Runtime.Entity entity = entityComponent.GetEntity(entityId);
@@ -30,7 +46,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// 隐藏实体。
         /// </summary>
         /// <param name="entityComponent">实体组件。</param>
-        /// <param name="entity">逻辑实体。</param>
+        /// <param name="entity">实体。</param>
         public static void HideEntity(this EntityComponent entityComponent, Entity entity)
         {
             entityComponent.HideEntity(entity.Entity);
@@ -111,14 +127,5 @@ namespace UnityGameFramework.Runtime.Extension
             entityComponent.ShowEntity(entityData.EntityId, typeof(Entity), assetName, entityGroup, priority, entityData);
         }
 
-        /// <summary>
-        /// 产生实体编号，客户端只会产生负值，正值由服务端生成并且需同步。
-        /// </summary>
-        /// <param name="entityComponent">实体组件。</param>
-        /// <returns>产生的实体编号。</returns>
-        public static int GenerateSerialId(this EntityComponent entityComponent)
-        {
-            return --s_SerialId;
-        }
     }
 }
