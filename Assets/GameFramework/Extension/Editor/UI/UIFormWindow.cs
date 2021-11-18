@@ -195,15 +195,15 @@ namespace UnityGameFramework.Editor.Extension.UI
                 return;
             }
 
-            ComponentMark mark = gameObject.GetComponent<ComponentMark>();
+            ComponentMask mask = gameObject.GetComponent<ComponentMask>();
             EditorGUILayout.BeginHorizontal();
             {
                 GUILayout.Space(space * 20);
                 gameObject.name = EditorGUILayout.TextField(gameObject.name, GUILayout.Width(100));
                 GUILayout.Space(10);
-                if (mark)
+                if (mask)
                 {
-                    SerializedObject serializedObject = new SerializedObject(mark);
+                    SerializedObject serializedObject = new SerializedObject(mask);
                     SerializedProperty component = serializedObject.FindProperty("m_Components");
                     SerializedProperty exported = serializedObject.FindProperty("m_Exported");
                     SerializedProperty click = serializedObject.FindProperty("m_Click");
@@ -217,8 +217,8 @@ namespace UnityGameFramework.Editor.Extension.UI
                 {
                     if (EUtility.GUILayout.Toggle("Exported", false, GUILayout.Width(80)))
                     {
-                        mark = gameObject.AddComponent<ComponentMark>();
-                        mark.Exported = true;
+                        mask = gameObject.AddComponent<ComponentMask>();
+                        mask.Exported = true;
                     }
                 }
             }

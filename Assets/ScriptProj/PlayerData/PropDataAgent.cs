@@ -13,13 +13,39 @@ namespace TempProj
     {
         public override bool Local { get; } = true;
 
-        protected override PropData DefaultData { get; } = new PropData
+        protected override PropData DefaultData { get; } = new()
         {
-            ItemIds = {10000001, 10000002, 10000003, 20000001, 30000001},
-            ItemCounts = {1, 2, 3, 4, 5}
+            DataList = new List<PropItemData>
+            {
+                new()
+                {
+                    Id = 10000001,
+                    Count = 1,
+                },
+                new()
+                {
+                    Id = 10000002,
+                    Count = 2,
+                },
+                new()
+                {
+                    Id = 10000003,
+                    Count = 3,
+                },
+                new()
+                {
+                    Id = 20000001,
+                    Count = 4,
+                },
+                new()
+                {
+                    Id = 30000001,
+                    Count = 5,
+                }
+            }
         };
 
-        private readonly Dictionary<int, PropItemData> m_Items = new Dictionary<int, PropItemData>();
+        private readonly Dictionary<int, PropItemData> m_Items = new();
 
         private IDataTable<DRPropGroup> m_DtPropGroup;
 
@@ -36,16 +62,14 @@ namespace TempProj
                 return false;
             }
 
-            for (int i = 0; i < Data.ItemIds.Count; i++)
+            for (int i = 0; i < Data.DataList.Count; i++)
             {
-                int itemId = Data.ItemIds[i];
-                int itemCount = Data.ItemCounts[i];
-                PropItemData itemData = CreateItemData(itemId, itemCount);
-                m_Items.Add(itemId, itemData);
+                PropItemData rawData = Data.DataList[i];
+                PropItemData itemData = InternalCreateItemData(rawData.Id, rawData.Count, rawData.IsNew);
+                m_Items.Add(rawData.Id, itemData);
             }
-
-            Data.ItemIds.Clear();
-            Data.ItemCounts.Clear();
+            
+            Data.DataList.Clear();
             return true;
         }
 
@@ -53,10 +77,7 @@ namespace TempProj
         {
             foreach (var item in m_Items)
             {
-                int itemId = item.Key;
-                int itemCount = item.Value.ItemCount;
-                Data.ItemIds.Add(itemId);
-                Data.ItemCounts.Add(itemCount);
+                Data.DataList.Add(item.Value);
             }
 
             return base.Save();
@@ -89,33 +110,19 @@ namespace TempProj
             foreach (var kv in m_Items)
             {
                 PropItemData itemData = kv.Value;
-                if (itemData.ItemCount > 0)
+                if (itemData.Count > 0)
                 {
-                    results.Add(new PropItemData(itemData.ItemId, itemData.ItemCount, itemData.DrBackpackGroup,
-                        itemData.DrBackpack));
+                    PropItemData propItemData = new PropItemData
+                    {
+                        IsNew = itemData.IsNew,
+                        Id = itemData.Id,
+                        Count = itemData.Count,
+                        DrPropGroup = itemData.DrPropGroup,
+                        DrProp = itemData.DrProp,
+                    };
+                    results.Add(propItemData);
                 }
             }
-        }
-
-        /// <summary>
-        /// 获取道具数量。
-        /// </summary>
-        /// <param name="itemId">道具 Id。</param>
-        /// <returns>道具数量。</returns>
-        public int GetItemCount(int itemId)
-        {
-            return m_Items.ContainsKey(itemId) ? m_Items[itemId].ItemCount : 0;
-        }
-
-        /// <summary>
-        /// 设置道具数量。
-        /// </summary>
-        /// <param name="itemId">道具 Id。</param>
-        /// <param name="itemCount">道具数量。</param>
-        public void SetItemCount(int itemId, int itemCount)
-        {
-            PropItemData itemData = InternalGetItemData(itemId);
-            itemData.ItemCount = itemCount;
         }
 
         /// <summary>
@@ -124,7 +131,7 @@ namespace TempProj
         /// <param name="itemId">道具 Id。</param>
         /// <param name="compCount">对比数量。</param>
         /// <returns>道具是否足够。</returns>
-        public bool CheckItemEnough(int itemId, int compCount)
+        public bool IsItemEnough(int itemId, int compCount)
         {
             if (compCount < 0)
             {
@@ -135,35 +142,65 @@ namespace TempProj
         }
 
         /// <summary>
+        /// 获取道具数量。
+        /// </summary>
+        /// <param name="itemId">道具 Id。</param>
+        /// <returns>道具数量。</returns>
+        public int GetItemCount(int itemId)
+        {
+            return m_Items.ContainsKey(itemId) ? m_Items[itemId].Count : 0;
+        }
+
+        /// <summary>
+        /// 设置道具数量。
+        /// </summary>
+        /// <param name="itemId">道具 Id。</param>
+        /// <param name="itemCount">道具数量。</param>
+        public void SetItemCount(int itemId, int itemCount)
+        {
+            PropItemData itemData = InternalGetItemData(itemId);
+            itemData.Count = itemCount;
+        }
+
+        /// <summary>
         /// 增加道具。
         /// </summary>
         /// <param name="itemId">道具 Id。</param>
-        /// <param name="itemCount">增加数量。</param>
-        public void AddItemCount(int itemId, int itemCount)
+        /// <param name="addCount">增加数量。</param>
+        public void AddItemCount(int itemId, int addCount)
         {
-            if (itemCount < 0)
+            if (addCount < 0)
             {
-                Log.Warning($"Add item count with '{itemCount}' less than 0");
+                Log.Error($"Add item count '{addCount}' less than 0");
+                return;
             }
 
             PropItemData itemData = InternalGetItemData(itemId);
-            itemData.ItemCount += itemCount;
+            itemData.Count += addCount;
         }
 
         /// <summary>
         /// 减少道具数量。
         /// </summary>
         /// <param name="itemId">道具 Id。</param>
-        /// <param name="itemCount">减少数量。</param>
-        public void RemoveItemCount(int itemId, int itemCount)
+        /// <param name="subCount">减少数量。</param>
+        public void SubItemCount(int itemId, int subCount)
         {
-            if (itemCount < 0)
+            if (subCount < 0)
             {
-                Log.Warning($"Remove item count with '{itemCount}' less than 0");
+                Log.Error($"Sub item count '{subCount}' less than 0");
+                return;
             }
 
             PropItemData itemData = InternalGetItemData(itemId);
-            itemData.ItemCount -= itemCount;
+            if (subCount > itemData.Count)
+            {
+                Log.Error($"Sub too many item count '{subCount}', only left '{itemData.Count}'.");
+            }
+            else
+            {
+                itemData.Count -= subCount;
+            }
         }
 
         /// <summary>
@@ -174,32 +211,31 @@ namespace TempProj
             m_Items.Clear();
         }
 
-        public PropItemData CreateItemData(int itemId, int itemCount)
+        private PropItemData InternalCreateItemData(int itemId, int itemCount, bool isNew)
         {
-            if (m_Items.TryGetValue(itemId, out var itemData))
+            DRProp drProp = m_DtProp[itemId];
+            if (drProp == null)
             {
-                PropItemData propItemData = new PropItemData(itemId, itemCount, itemData.DrBackpackGroup, itemData.DrBackpack);
-                return propItemData;
+                Log.Error($"Invalid prop id '{itemId}', check prop config table.");
+                return default;
             }
-            else
+
+            DRPropGroup drPropGroup = m_DtPropGroup[drProp.GroupId];
+            if (drPropGroup == null)
             {
-                DRProp drBackpack = m_DtProp[itemId];
-                if (drBackpack == null)
-                {
-                    Log.Error($"Invalid prop id '{itemId}', check prop config table.");
-                    return default;
-                }
-
-                DRPropGroup drBackpackGroup = m_DtPropGroup[drBackpack.GroupId];
-                if (drBackpackGroup == null)
-                {
-                    Log.Error($"Invalid prop group id '{drBackpack.GroupId}', check prop group config table.");
-                    return default;
-                }
-
-                PropItemData propItemData = new PropItemData(itemId, itemCount, drBackpackGroup, drBackpack);
-                return propItemData;
+                Log.Error($"Invalid prop group id '{drProp.GroupId}', check prop group config table.");
+                return default;
             }
+
+            PropItemData propItemData = new PropItemData
+            {
+                IsNew = isNew,
+                Id = itemId,
+                Count = itemCount,
+                DrPropGroup = drPropGroup,
+                DrProp = drProp,
+            };
+            return propItemData;
         }
 
         /// <summary>
@@ -211,7 +247,7 @@ namespace TempProj
         {
             if (!m_Items.TryGetValue(itemId, out var itemData))
             {
-                itemData = CreateItemData(itemId, 0);
+                itemData = InternalCreateItemData(itemId, 0, false);
                 m_Items.Add(itemId, itemData);
             }
 

@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3811222249102179278}
   - component: {fileID: 6211747035822126356}
   m_Layer: 5
-  m_Name: SettingBtn
+  m_Name: Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 3736422415092833488}
   - component: {fileID: 208018059863038816}
   m_Layer: 5
-  m_Name: PropBtn
+  m_Name: Prop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 5076935491686780502}
   - component: {fileID: 4763208471622795346}
   m_Layer: 5
-  m_Name: GMBtn
+  m_Name: GM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Backpack
+  m_text: Prop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d31373ec41498a24f951c44692b0fc11, type: 2}
   m_sharedMaterial: {fileID: -6231009021025540609, guid: d31373ec41498a24f951c44692b0fc11,

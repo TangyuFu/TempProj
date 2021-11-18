@@ -15,9 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-
-        public int FormId { get; private set; }
+        public CustomUIFormLogic Logic { get; private set; }
 
         public float ElapseSeconds { get; private set; }
 
@@ -25,26 +23,24 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormUpdateEventArgs Create(int uniqueId, int formId, float elapseSeconds,
+        public static UIFormUpdateEventArgs Create(CustomUIFormLogic logic, float elapseSeconds,
             float realElapseSeconds,
             object userData)
         {
-            UIFormUpdateEventArgs uiFormUpdateEventArgs = ReferencePool.Acquire<UIFormUpdateEventArgs>();
-            uiFormUpdateEventArgs.UniqueId = uniqueId;
-            uiFormUpdateEventArgs.FormId = formId;
-            uiFormUpdateEventArgs.ElapseSeconds = elapseSeconds;
-            uiFormUpdateEventArgs.RealElapseSeconds = realElapseSeconds;
-            uiFormUpdateEventArgs.UserData = userData;
-            return uiFormUpdateEventArgs;
+            UIFormUpdateEventArgs eventArgs = ReferencePool.Acquire<UIFormUpdateEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.ElapseSeconds = elapseSeconds;
+            eventArgs.RealElapseSeconds = realElapseSeconds;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = 0;
-            FormId = 0;
-            ElapseSeconds = 0f;
-            RealElapseSeconds = 0f;
-            UserData = null;
+            Logic = default;
+            ElapseSeconds = default;
+            RealElapseSeconds = default;
+            UserData = default;
         }
     }
 }

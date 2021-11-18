@@ -14,27 +14,23 @@ namespace UnityGameFramework.Runtime.Extension
         public UIFormRefocusEventArgs()
         {
         }
-
-        public int UniqueId { get; private set; }
-
-        public int FormId { get; private set; }
+        
+        public CustomUIFormLogic Logic { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormRefocusEventArgs Create(int uniqueId, int formId, object userData)
+        public static UIFormRefocusEventArgs Create(CustomUIFormLogic logic, object userData)
         {
-            UIFormRefocusEventArgs uiFormRefocusEventArgs = ReferencePool.Acquire<UIFormRefocusEventArgs>();
-            uiFormRefocusEventArgs.UniqueId = uniqueId;
-            uiFormRefocusEventArgs.FormId = formId;
-            uiFormRefocusEventArgs.UserData = userData;
-            return uiFormRefocusEventArgs;
+            UIFormRefocusEventArgs eventArgs = ReferencePool.Acquire<UIFormRefocusEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = 0;
-            FormId = 0;
-            UserData = null;
+            Logic = default;
+            UserData = default;
         }
     }
 }

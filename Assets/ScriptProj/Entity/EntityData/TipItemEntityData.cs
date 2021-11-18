@@ -6,7 +6,7 @@ namespace TempProj
     /// <summary>
     /// 提示项数据。
     /// </summary>
-    public class TipItemEntityData : EntityData
+    public class TipItemEntityData : CustomEntityData
     {
         public TipItemEntityData()
         {

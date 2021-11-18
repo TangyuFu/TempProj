@@ -15,30 +15,26 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-
-        public int FormId { get; private set; }
+        public CustomUIFormLogic Logic { get; private set; }
 
         public bool IsShutdown { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormCloseEventArgs Create(int uniqueId, int formId, bool isShutdown, object userData)
+        public static UIFormCloseEventArgs Create(CustomUIFormLogic logic, bool isShutdown, object userData)
         {
-            UIFormCloseEventArgs uiFormCloseEventArgs = ReferencePool.Acquire<UIFormCloseEventArgs>();
-            uiFormCloseEventArgs.UniqueId = uniqueId;
-            uiFormCloseEventArgs.FormId = formId;
-            uiFormCloseEventArgs.IsShutdown = isShutdown;
-            uiFormCloseEventArgs.UserData = userData;
-            return uiFormCloseEventArgs;
+            UIFormCloseEventArgs eventArgs = ReferencePool.Acquire<UIFormCloseEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.IsShutdown = isShutdown;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            FormId = 0;
-            UniqueId = 0;
-            IsShutdown = false;
-            UserData = null;
+            Logic = default;
+            IsShutdown = default;
+            UserData = default;
         }
     }
 }

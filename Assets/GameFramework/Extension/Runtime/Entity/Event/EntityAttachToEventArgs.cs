@@ -16,34 +16,30 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
+        public CustomEntityLogic Logic { get; private set; }
 
-        public int EntityId { get; private set; }
-
-        public EntityLogic ParentEntity { get; private set; }
+        public CustomEntityLogic ParentLogic { get; private set; }
 
         public Transform ParentTransform { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static EntityAttachToEventArgs Create(int uniqueId, int entityId, EntityLogic parentEntity,
+        public static EntityAttachToEventArgs Create(CustomEntityLogic logic, CustomEntityLogic parentLogic,
             Transform parentTransform,
             object userData)
         {
-            EntityAttachToEventArgs entityAttachToEventArgs = ReferencePool.Acquire<EntityAttachToEventArgs>();
-            entityAttachToEventArgs.UniqueId = uniqueId;
-            entityAttachToEventArgs.EntityId = entityId;
-            entityAttachToEventArgs.UserData = userData;
-            entityAttachToEventArgs.ParentEntity = parentEntity;
-            entityAttachToEventArgs.ParentTransform = parentTransform;
-            return entityAttachToEventArgs;
+            EntityAttachToEventArgs eventArgs = ReferencePool.Acquire<EntityAttachToEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.ParentLogic = parentLogic;
+            eventArgs.ParentTransform = parentTransform;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            EntityId = default;
-            UniqueId = default;
-            ParentEntity = default;
+            Logic = default;
+            ParentLogic = default;
             ParentTransform = default;
             UserData = default;
         }

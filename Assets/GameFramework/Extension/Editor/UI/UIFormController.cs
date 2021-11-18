@@ -259,11 +259,11 @@ namespace UnityGameFramework.Editor.Extension.UI
         private string GenScript(FormInfo formInfo, string template)
         {
             StringBuilder sb = new StringBuilder();
-            ComponentMark[] exporters = formInfo.Prefab.GetComponentsInChildren<ComponentMark>(true);
+            ComponentMask[] exporters = formInfo.Prefab.GetComponentsInChildren<ComponentMask>(true);
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (exporter.gameObject == formInfo.Prefab)
                 {
                     exporter.Exported = false;
@@ -340,7 +340,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             return template;
         }
 
-        private string GenComponentInit(ComponentMark[] exporters)
+        private string GenComponentInit(ComponentMask[] exporters)
         {
             if (exporters == null || exporters.Length == 0)
             {
@@ -350,7 +350,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (!exporter.Exported)
                 {
                     continue;
@@ -375,7 +375,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             return sb.ToString();
         }
 
-        private string GenClickInit(ComponentMark[] exporters)
+        private string GenClickInit(ComponentMask[] exporters)
         {
             if (exporters == null || exporters.Length == 0)
             {
@@ -385,7 +385,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (!exporter.Exported || !exporter.Click)
                 {
                     continue;
@@ -400,7 +400,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             return sb.ToString();
         }
 
-        private string GenComponentDeinit(ComponentMark[] exporters)
+        private string GenComponentDeinit(ComponentMask[] exporters)
         {
             if (exporters == null || exporters.Length == 0)
             {
@@ -410,7 +410,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (!exporter.Exported)
                 {
                     continue;
@@ -433,7 +433,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             return sb.ToString();
         }
 
-        private string GenClickDeinit(ComponentMark[] exporters)
+        private string GenClickDeinit(ComponentMask[] exporters)
         {
             if (exporters == null || exporters.Length == 0)
             {
@@ -443,7 +443,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (!exporter.Exported || !exporter.Click)
                 {
                     continue;
@@ -458,14 +458,14 @@ namespace UnityGameFramework.Editor.Extension.UI
             return sb.ToString();
         }
 
-        private string InsertClickHandler(string text, string formName, ComponentMark[] exporters)
+        private string InsertClickHandler(string text, string formName, ComponentMask[] exporters)
         {
             const string clickInsertPlaceholder = "-- $CLICK_INSERT_PLACEHOLDER$";
             int index = text.IndexOf(clickInsertPlaceholder, StringComparison.Ordinal);
             index += clickInsertPlaceholder.Length;
             for (int i = 0; i < exporters.Length; i++)
             {
-                ComponentMark exporter = exporters[i];
+                ComponentMask exporter = exporters[i];
                 if (!exporter.Exported || !exporter.Click)
                 {
                     continue;

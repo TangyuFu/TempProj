@@ -31,7 +31,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="entityComponent">实体组件。</param>
         /// <param name="entityId">实体 Id 。</param>
         /// <returns>获取的实体</returns>
-        public static Entity GetEntity(this EntityComponent entityComponent, int entityId)
+        public static CustomEntityLogic GetEntity(this EntityComponent entityComponent, int entityId)
         {
             Runtime.Entity entity = entityComponent.GetEntity(entityId);
             if (entity == null)
@@ -39,51 +39,51 @@ namespace UnityGameFramework.Runtime.Extension
                 return null;
             }
 
-            return (Entity) entity.Logic;
+            return (CustomEntityLogic) entity.Logic;
         }
 
         /// <summary>
         /// 隐藏实体。
         /// </summary>
         /// <param name="entityComponent">实体组件。</param>
-        /// <param name="entity">实体。</param>
-        public static void HideEntity(this EntityComponent entityComponent, Entity entity)
+        /// <param name="customEntityLogic">实体。</param>
+        public static void HideEntity(this EntityComponent entityComponent, CustomEntityLogic customEntityLogic)
         {
-            entityComponent.HideEntity(entity.Entity);
+            entityComponent.HideEntity(customEntityLogic.Entity);
         }
 
         /// <summary>
         /// 附着实体。
         /// </summary>
         /// <param name="entityComponent">实体组件。</param>
-        /// <param name="entity">要附着的逻辑实体。</param>
+        /// <param name="customEntityLogic">要附着的逻辑实体。</param>
         /// <param name="ownerId">被附着的实体 Id。</param>
         /// <param name="parentTransformPath">被附着的 Transform 路径。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public static void AttachEntity(this EntityComponent entityComponent, Entity entity, int ownerId,
+        public static void AttachEntity(this EntityComponent entityComponent, CustomEntityLogic customEntityLogic, int ownerId,
             string parentTransformPath = null, object userData = null)
         {
-            entityComponent.AttachEntity(entity.Entity, ownerId, parentTransformPath, userData);
+            entityComponent.AttachEntity(customEntityLogic.Entity, ownerId, parentTransformPath, userData);
         }
 
         /// <summary>
         /// 显示实体。
         /// </summary>
         /// <param name="entityComponent">实体组件。</param>
-        /// <param name="entityData">实体数据。</param>
-        public static void ShowEntity(this EntityComponent entityComponent, EntityData entityData)
+        /// <param name="customEntityData">实体数据。</param>
+        public static void ShowEntity(this EntityComponent entityComponent, CustomEntityData customEntityData)
         {
-            if (entityData == null)
+            if (customEntityData == null)
             {
                 Log.Error($"Invalid entity data '{null}'.");
                 return;
             }
 
             IDataTable<DREntity> dtEntity = Entry.DataTable.GetDataTable<DREntity>();
-            DREntity drEntity = dtEntity.GetDataRow(entityData.TypeId);
+            DREntity drEntity = dtEntity.GetDataRow(customEntityData.TypeId);
             if (drEntity == null)
             {
-                Log.Error("Can not load entity id '{0}' from data table.", entityData.TypeId.ToString());
+                Log.Error("Can not load entity id '{0}' from data table.", customEntityData.TypeId.ToString());
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace UnityGameFramework.Runtime.Extension
             DREntityGroup drEntityGroup = dtEntityGroup.GetDataRow(drEntity.GroupId);
             if (drEntityGroup == null)
             {
-                Log.Error($"Entity id '{entityData.TypeId}' has no group id '{drEntity.GroupId}'.");
+                Log.Error($"Entity id '{customEntityData.TypeId}' has no group id '{drEntity.GroupId}'.");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace UnityGameFramework.Runtime.Extension
                     drEntityGroup.Capacity, drEntityGroup.ExpireTime, drEntityGroup.Priority);
             }
 
-            entityData.DrEntity = drEntity;
+            customEntityData.DrEntity = drEntity;
             string assetName = null;
             switch (drEntity.From)
             {
@@ -124,7 +124,7 @@ namespace UnityGameFramework.Runtime.Extension
 
             string entityGroup = drEntityGroup.GroupName;
             int priority = drEntity.Priority;
-            entityComponent.ShowEntity(entityData.EntityId, typeof(Entity), assetName, entityGroup, priority, entityData);
+            entityComponent.ShowEntity(customEntityData.EntityId, typeof(CustomEntityLogic), assetName, entityGroup, priority, customEntityData);
         }
 
     }

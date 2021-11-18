@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UnityGameFramework.Runtime.Extension
 {
@@ -7,8 +8,8 @@ namespace UnityGameFramework.Runtime.Extension
         int Priority { get; }
         string Name { get; }
         string[] ArgNames { get; }
-        string[] Args { get; set; }
-        string[] ActionNames { get; }
-        Action[] Actions { get; }
+        string[][] DefaultArgs { get; }
+        string[] InputArgs { get; set; }
+        Action Action { get; }
     }
 }

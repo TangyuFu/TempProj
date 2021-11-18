@@ -25,18 +25,20 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// 获取实体代表者的根物体。
         /// </summary>
-        GameObject Root { get; }
+        Transform Root { get; }
+        
+        /// <summary>
+        /// 获取实体。
+        /// </summary>
+        CustomEntityLogic Logic { get; }
         
         /// <summary>
         /// 初始化时调用。
         /// </summary>
-        /// <param name="uniqueId">实体唯一标识符。</param>
-        /// <param name="entityId">实体 ID 。</param>
-        /// <param name="entity">实体。</param>
+        /// <param name="logic">实体。</param>
         /// <param name="root">实体根物体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
-            object userData);
+        void OnInit(CustomEntityLogic logic, Transform root, object userData);
 
         /// <summary>
         /// 反初始化时调用。
@@ -51,9 +53,8 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// 显示时调用，
         /// </summary>
-        /// <param name="entityId">实体序列化 Id。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void OnShow(int entityId, object userData);
+        void OnShow(object userData);
 
         /// <summary>
         /// 隐藏时调用。
@@ -98,5 +99,10 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="elapseSeconds">游戏逻辑流逝时间。</param>
         /// <param name="realElapseSeconds">游戏真实流逝时间。</param>
         void OnUpdate(float elapseSeconds, float realElapseSeconds);
+
+        /// <summary>
+        /// 隐藏当前实体。
+        /// </summary>
+        void Hide();
     }
 }

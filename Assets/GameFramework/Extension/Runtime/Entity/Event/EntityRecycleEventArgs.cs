@@ -15,22 +15,24 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
+        public CustomEntityLogic Logic { get; private set; }
 
-        public int EntityId { get; private set; }
+        public object UserData { get; private set; }
 
-        public static EntityRecycleEventArgs Create(int uniqueId, int entityId)
+
+        public static EntityRecycleEventArgs Create(CustomEntityLogic logic,
+            object userData)
         {
-            EntityRecycleEventArgs entityRecycleEventArgs = ReferencePool.Acquire<EntityRecycleEventArgs>();
-            entityRecycleEventArgs.UniqueId = uniqueId;
-            entityRecycleEventArgs.EntityId = entityId;
-            return entityRecycleEventArgs;
+            EntityRecycleEventArgs eventArgs = ReferencePool.Acquire<EntityRecycleEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = default;
-            EntityId = default;
+            Logic = default;
+            UserData = default;
         }
     }
 }

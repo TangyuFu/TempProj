@@ -11,7 +11,7 @@ namespace UnityGameFramework.Runtime.Extension
     /// <typeparam name="TEntityData">列表元素实体数据。</typeparam>
     public sealed class EntityList<TEntityPresenter, TEntityData> : IEntityList
         where TEntityPresenter : class, IEntityPresenter
-        where TEntityData : EntityData
+        where TEntityData : CustomEntityData
     {
         private readonly List<TEntityPresenter> m_EntityPresenters = new List<TEntityPresenter>();
 
@@ -54,7 +54,7 @@ namespace UnityGameFramework.Runtime.Extension
             m_EntityPresenters[index] = entityPresenter as TEntityPresenter;
         }
 
-        public void OnHide(int serialId, IEntityPresenter entityPresenter)
+        public void OnHide(int entityId, IEntityPresenter entityPresenter)
         {
             // int index = m_SerialIds.FindIndex(id => serialId == id);
             // if (index == -1)
@@ -180,6 +180,11 @@ namespace UnityGameFramework.Runtime.Extension
             return GetAtIndex(index);
         }
 
+        public int GetIndex(int entityId)
+        {
+            return m_EntityIds.IndexOf(entityId);
+        }
+        
         /// <summary>
         /// 获取实体代表者。
         /// </summary>

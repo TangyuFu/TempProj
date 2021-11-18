@@ -15,28 +15,24 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-        
-        public int EntityId { get; private set; }
+        public CustomEntityLogic Logic { get; private set; }
 
         public bool IsShutdown { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static EntityHideEventArgs Create(int uniqueId, int entityId, bool isShutdown, object userData)
+        public static EntityHideEventArgs Create(CustomEntityLogic logic, bool isShutdown, object userData)
         {
-            EntityHideEventArgs entityHideEventArgs = ReferencePool.Acquire<EntityHideEventArgs>();
-            entityHideEventArgs.EntityId = entityId;
-            entityHideEventArgs.UniqueId = uniqueId;
-            entityHideEventArgs.UserData = userData;
-            entityHideEventArgs.IsShutdown = isShutdown;
-            return entityHideEventArgs;
+            EntityHideEventArgs eventArgs = ReferencePool.Acquire<EntityHideEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.UserData = userData;
+            eventArgs.IsShutdown = isShutdown;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            EntityId = default;
-            UniqueId = default;
+            Logic = default;
             IsShutdown = default;
             UserData = default;
         }

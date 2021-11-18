@@ -12,56 +12,56 @@ namespace UnityGameFramework.Extension.Runtime
     /// </summary>
     public static class ResourceExtension
     {
-        private static Action<string, object> m_SuccessCallback;
-        private static Action<string, string> m_FailureCallback;
-        private static LoadAssetCallbacks m_LoadAssetCallbacks;
-
-        /// <summary>
-        /// 脚本资源注册回调函数。
-        /// </summary>
-        /// <param name="resourceComponent">资源组件。</param>
-        /// <param name="successCallback">加载资源成功回调事件。</param>
-        /// <param name="failureCallback">加载资源失败回调事件。</param>
-        public static void ScriptRegisterCallbacks(this ResourceComponent resourceComponent,
-            Action<string, object> successCallback,
-            Action<string, string> failureCallback)
-        {
-            m_SuccessCallback = successCallback;
-            m_FailureCallback = failureCallback;
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(
-                delegate(string name, object asset, float duration, object data)
-                {
-                    m_SuccessCallback?.Invoke(name, asset);
-                },
-                delegate(string name, LoadResourceStatus status, string message, object data)
-                {
-                    m_FailureCallback?.Invoke(name, message);
-                });
-        }
-
-        /// <summary>
-        /// 脚本加载资源。
-        /// </summary>
-        /// <param name="resourceComponent">资源组件。</param>
-        /// <param name="assetName">资源名称。</param>
-        public static void ScriptLoadAsset(this ResourceComponent resourceComponent, string assetName)
-        {
-            resourceComponent.LoadAsset(assetName, typeof(UnityEngine.Object), 0, m_LoadAssetCallbacks,
-                null);
-        }
-
-        /// <summary>
-        /// 脚本加载资源。
-        /// </summary>
-        /// <param name="resourceComponent">资源组件。</param>
-        /// <param name="assetType">资源类型。</param>
-        /// <param name="assetName">资源名称。</param>
-        /// <param name="priority">加载优先级。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public static void ScriptLoadAsset(this ResourceComponent resourceComponent,Type assetType,  string assetName, int priority, object userData)
-        {
-            resourceComponent.LoadAsset(assetName, assetType, 0, m_LoadAssetCallbacks,0);
-        }
+        // private static Action<string, object> m_SuccessCallback;
+        // private static Action<string, string> m_FailureCallback;
+        // private static LoadAssetCallbacks m_LoadAssetCallbacks;
+        //
+        // /// <summary>
+        // /// 脚本资源注册回调函数。
+        // /// </summary>
+        // /// <param name="resourceComponent">资源组件。</param>
+        // /// <param name="successCallback">加载资源成功回调事件。</param>
+        // /// <param name="failureCallback">加载资源失败回调事件。</param>
+        // public static void ScriptRegisterCallbacks(this ResourceComponent resourceComponent,
+        //     Action<string, object> successCallback,
+        //     Action<string, string> failureCallback)
+        // {
+        //     m_SuccessCallback = successCallback;
+        //     m_FailureCallback = failureCallback;
+        //     m_LoadAssetCallbacks = new LoadAssetCallbacks(
+        //         delegate(string name, object asset, float duration, object data)
+        //         {
+        //             m_SuccessCallback?.Invoke(name, asset);
+        //         },
+        //         delegate(string name, LoadResourceStatus status, string message, object data)
+        //         {
+        //             m_FailureCallback?.Invoke(name, message);
+        //         });
+        // }
+        //
+        // /// <summary>
+        // /// 脚本加载资源。
+        // /// </summary>
+        // /// <param name="resourceComponent">资源组件。</param>
+        // /// <param name="assetName">资源名称。</param>
+        // public static void ScriptLoadAsset(this ResourceComponent resourceComponent, string assetName)
+        // {
+        //     resourceComponent.LoadAsset(assetName, typeof(UnityEngine.Object), 0, m_LoadAssetCallbacks,
+        //         null);
+        // }
+        //
+        // /// <summary>
+        // /// 脚本加载资源。
+        // /// </summary>
+        // /// <param name="resourceComponent">资源组件。</param>
+        // /// <param name="assetType">资源类型。</param>
+        // /// <param name="assetName">资源名称。</param>
+        // /// <param name="priority">加载优先级。</param>
+        // /// <param name="userData">用户自定义数据。</param>
+        // public static void ScriptLoadAsset(this ResourceComponent resourceComponent,Type assetType,  string assetName, int priority, object userData)
+        // {
+        //     resourceComponent.LoadAsset(assetName, assetType, 0, m_LoadAssetCallbacks,0);
+        // }
 
         // /// <summary>
         // /// 脚本加载图集精灵。

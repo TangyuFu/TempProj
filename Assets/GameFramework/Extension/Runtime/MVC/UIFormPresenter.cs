@@ -20,14 +20,20 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// 界面根物体。
         /// </summary>
-        public GameObject Root { get; private set; }
+        public Transform Root { get; private set; }
 
-        public virtual void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root,
+        /// <summary>
+        /// 获取界面。
+        /// </summary>
+        public CustomUIFormLogic Logic { get; private set; }
+
+        public virtual void OnInit(int uniqueId, int formId, CustomUIFormLogic customUIFormLogic, Transform root,
             object userData)
         {
             UniqueId = uniqueId;
             FormId = formId;
             Root = root;
+            Logic = customUIFormLogic;
         }
 
         public virtual void OnDeinit()
@@ -72,6 +78,11 @@ namespace UnityGameFramework.Runtime.Extension
 
         public virtual void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
         {
+        }
+
+        public virtual void Close()
+        {
+            Entry.UI.CloseUIForm(Logic.UIForm);
         }
     }
 }

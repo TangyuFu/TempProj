@@ -40,6 +40,7 @@ namespace UnityGameFramework.Runtime.Extension
                             Operators.Add(@operator);
                         }
                     }
+                    Operators.Sort((a, b) => a.Priority - b.Priority);
                 }
 
                 return m_Operators;

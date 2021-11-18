@@ -15,26 +15,22 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-
-        public int FormId { get; private set; }
+        public CustomUIFormLogic Logic { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static UIFormResumeEventArgs Create(int uniqueId, int formId, object userData)
+        public static UIFormResumeEventArgs Create(CustomUIFormLogic logic, object userData)
         {
-            UIFormResumeEventArgs uiFormResumeEventArgs = ReferencePool.Acquire<UIFormResumeEventArgs>();
-            uiFormResumeEventArgs.UniqueId = uniqueId;
-            uiFormResumeEventArgs.FormId = formId;
-            uiFormResumeEventArgs.UserData = userData;
-            return uiFormResumeEventArgs;
+            UIFormResumeEventArgs eventArgs = ReferencePool.Acquire<UIFormResumeEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = 0;
-            FormId = 0;
-            UserData = null;
+            Logic = default;
+            UserData = default;
         }
     }
 }

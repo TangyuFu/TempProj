@@ -79,7 +79,7 @@ namespace GameFramework.Runtime.Extension
         }
 
         public static int? PlaySound(this SoundComponent soundComponent, int soundId,
-            UnityGameFramework.Runtime.Extension.Entity bindingEntity = null,
+            UnityGameFramework.Runtime.Extension.CustomEntityLogic bindingCustomEntityLogic = null,
             object userData = null)
         {
             IDataTable<DRSound> dtSound = Entry.DataTable.GetDataTable<DRSound>();
@@ -97,7 +97,7 @@ namespace GameFramework.Runtime.Extension
             playSoundParams.SpatialBlend = drSound.SpatialBlend;
             return soundComponent.PlaySound(UUtility.Asset.GetSoundPath(drSound.AssetName), "Sound",
                 Constant.AssetPriority.SoundAsset, playSoundParams,
-                bindingEntity != null ? bindingEntity.Entity : null,
+                bindingCustomEntityLogic != null ? bindingCustomEntityLogic.Entity : null,
                 userData);
         }
 

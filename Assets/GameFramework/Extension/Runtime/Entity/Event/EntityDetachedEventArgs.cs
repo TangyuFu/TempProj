@@ -15,30 +15,26 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
+        public CustomEntityLogic Logic { get; private set; }
 
-        public int EntityId { get; private set; }
-
-        public EntityLogic ChildEntity { get; private set; }
+        public CustomEntityLogic ChildLogic { get; private set; }
 
         public object UserData { get; private set; }
 
-        public static EntityDetachedEventArgs Create(int uniqueId, int entityId, EntityLogic childEntity,
+        public static EntityDetachedEventArgs Create(CustomEntityLogic logic, CustomEntityLogic childLogic,
             object userData)
         {
-            EntityDetachedEventArgs entityDetachedEventArgs = ReferencePool.Acquire<EntityDetachedEventArgs>();
-            entityDetachedEventArgs.UniqueId = uniqueId;
-            entityDetachedEventArgs.EntityId = entityId;
-            entityDetachedEventArgs.UserData = userData;
-            entityDetachedEventArgs.ChildEntity = childEntity;
-            return entityDetachedEventArgs;
+            EntityDetachedEventArgs eventArgs = ReferencePool.Acquire<EntityDetachedEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.ChildLogic = childLogic;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = default;
-            EntityId = default;
-            ChildEntity = default;
+            Logic = default;
+            ChildLogic = default;
             UserData = default;
         }
     }

@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         private LoadAssetCallbacks m_LoadAssetCallbacks;
 
-        private readonly Dictionary<int, LoadAssetInfo> m_LoadAssetInfos = new Dictionary<int, LoadAssetInfo>();
+        private readonly Dictionary<int, LoadAssetInfo> m_LoadAssetInfos = new();
 
         /// <summary>
         /// 初始化 R 组件。
@@ -28,11 +28,6 @@ namespace UnityGameFramework.Runtime.Extension
             base.Awake();
 
             m_LoadAssetCallbacks = new LoadAssetCallbacks(OnLoadAssetSuccess, OnLoadAssetFailure);
-        }
-
-        public void RegisterCallback()
-        {
-            
         }
 
         /// <summary>
@@ -88,6 +83,8 @@ namespace UnityGameFramework.Runtime.Extension
                 {
                     loadAssetInfo.FailureCallback(assetName, errorMessage, loadAssetInfo.UserData);
                     m_LoadAssetInfos.Remove(info.SerialId);
+
+                    Log.Warning($"Failed to Load asset '{assetName}' with status '{status}' error '{errorMessage}'.");
                 }
             }
         }
@@ -100,7 +97,7 @@ namespace UnityGameFramework.Runtime.Extension
             int totalCount, object userData)
         {
         }
-        
+
         internal override int Priority { get; } = ComponentPriority.R;
 
         internal override void Poll(float elapseSeconds, float realElapseSeconds)

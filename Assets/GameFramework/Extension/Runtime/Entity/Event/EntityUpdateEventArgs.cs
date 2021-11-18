@@ -15,9 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-
-        public int EntityId { get; private set; }
+        public CustomEntityLogic Logic { get; private set; }
 
         public float ElapseSeconds { get; private set; }
 
@@ -25,13 +23,12 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static EntityUpdateEventArgs Create(int uniqueId, int entityId, float elapseSeconds,
+        public static EntityUpdateEventArgs Create(CustomEntityLogic logic, float elapseSeconds,
             float realElapseSeconds,
             object userData)
         {
             EntityUpdateEventArgs entityUpdateEventArgs = ReferencePool.Acquire<EntityUpdateEventArgs>();
-            entityUpdateEventArgs.UniqueId = uniqueId;
-            entityUpdateEventArgs.EntityId = entityId;
+            entityUpdateEventArgs.Logic = logic;
             entityUpdateEventArgs.ElapseSeconds = elapseSeconds;
             entityUpdateEventArgs.RealElapseSeconds = realElapseSeconds;
             entityUpdateEventArgs.UserData = userData;
@@ -40,8 +37,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public override void Clear()
         {
-            UniqueId = default;
-            EntityId = default;
+            Logic = default;
             ElapseSeconds = default;
             RealElapseSeconds = default;
             UserData = default;

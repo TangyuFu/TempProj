@@ -3,4 +3,4 @@
 3	UIDefault	60	64	60	0
 4	UIEffect	60	64	60	0
 5	UITip	60	8	60	0
-6	UIBackekpack	120	64	60	0
+6	UIProp	120	64	60	0

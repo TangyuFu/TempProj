@@ -5,36 +5,36 @@ namespace UnityGameFramework.Runtime.Extension
     /// <summary>
     /// Entity 代表者。
     /// </summary>
-    /// <typeparam name="TView">MVC 界面。</typeparam>
-    /// <typeparam name="TProp">MVC 属性。。</typeparam>
     public abstract class EntityPresenter : IEntityPresenter
     {
         /// <summary>
         /// 获取实体唯一标识符。
         /// </summary>
-        public int UniqueId { get; private set; }
+        public int UniqueId => Logic.UniqueId; 
 
         /// <summary>
         /// 获取实体 Id。
         /// </summary>
-        public int EntityId { get; private set; }
+        public int EntityId => Logic.EntityId;
 
         /// <summary>
         /// 获取实体类型 ID 。
         /// </summary>
-        public int EntityTypeId { get; private set; }
+        public int EntityTypeId => Logic.EntityTypeId;
 
         /// <summary>
         /// 获取实体代表者的根物体。
         /// </summary>
-        public GameObject Root { get; private set; }
+        public Transform Root => Logic.Root;
 
-        public void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
-            object userData)
+        /// <summary>
+        /// 获取实体。
+        /// </summary>
+        public CustomEntityLogic Logic { get; private set; }
+
+        public virtual void OnInit(CustomEntityLogic logic, Transform root, object userData)
         {
-            UniqueId = uniqueId;
-            EntityId = entityId;
-            Root = root;
+            Logic = logic;
         }
 
         public virtual void OnDeinit()
@@ -45,9 +45,8 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public virtual void OnShow(int entityId, object userData)
+        public virtual void OnShow(object userData)
         {
-            EntityId = entityId;
         }
 
         public virtual void OnHide(bool isShutdown, object userData)
@@ -72,6 +71,11 @@ namespace UnityGameFramework.Runtime.Extension
 
         public virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
+        }
+
+        public virtual void Hide()
+        {
+            Entry.Entity.HideEntity(Logic);
         }
     }
 }

@@ -1,2 +1,2 @@
 30000001	3	5	TipItem	0
-30000002	3	6	BackpackItem	0
+30000002	3	6	PropItem	0

@@ -20,17 +20,22 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// 界面根物体。
         /// </summary>
-        GameObject Root { get; }
+        Transform Root { get; }
+
+        /// <summary>
+        /// 获取界面。
+        /// </summary>
+        CustomUIFormLogic Logic { get; }
 
         /// <summary>
         /// 初始化时调用。
         /// </summary>
         /// <param name="uniqueId">界面唯一标识符。</param>
         /// <param name="formId">界面 ID 。</param>
-        /// <param name="uiForm">界面。</param>
+        /// <param name="customUIFormLogic">界面。</param>
         /// <param name="root">界面根物体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void OnInit(int uniqueId, int formId, UIForm uiForm, GameObject root,
+        void OnInit(int uniqueId, int formId, CustomUIFormLogic customUIFormLogic, Transform root,
             object userData);
 
         /// <summary>
@@ -95,5 +100,10 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="uiGroupDepth">界面组深度。</param>
         /// <param name="depthInUIGroup">界面在界面组中的深度。</param>
         void OnDepthChanged(int uiGroupDepth, int depthInUIGroup);
+
+        /// <summary>
+        /// 隐藏当前界面。
+        /// </summary>
+        void Close();
     }
 }

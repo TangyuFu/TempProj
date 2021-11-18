@@ -15,8 +15,8 @@
         /// <summary>
         /// 实体隐藏时调用。
         /// </summary>
-        /// <param name="serialId">实体 Id。</param>
+        /// <param name="entityId">实体 Id。</param>
         /// <param name="entityPresenter">实体代表者。</param>
-        void OnHide(int serialId, IEntityPresenter entityPresenter);
+        void OnHide(int entityId, IEntityPresenter entityPresenter);
     }
 }

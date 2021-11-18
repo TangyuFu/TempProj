@@ -1,38 +1,19 @@
-﻿using UnityGameFramework.Runtime.Extension.DataTable;
+﻿using Newtonsoft.Json;
+using UnityGameFramework.Runtime.Extension.DataTable;
 
 namespace TempProj
 {
-    /// <summary>
-    /// 背包道具数据。
-    /// </summary>
-    public struct PropItemData
+    [JsonObject(MemberSerialization.OptOut)]
+    public class PropItemData
     {
-        public PropItemData(int itemId, int itemCount, DRPropGroup drBackpackGroup, DRProp drBackpack)
-        {
-            ItemId = itemCount;
-            ItemCount = itemCount;
-            DrBackpackGroup = drBackpackGroup;
-            DrBackpack = drBackpack;
-        }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// 道具 Id。
-        /// </summary>
-        public int ItemId { get; }
+        public int Count { get; set; }
+        
+        public bool IsNew { get; set; }
 
-        /// <summary>
-        /// 道具数量。
-        /// </summary>
-        public int ItemCount { get; set; }
+        [JsonIgnore] public DRPropGroup DrPropGroup { get; set; }
 
-        /// <summary>
-        /// 道具组配置。
-        /// </summary>
-        public DRPropGroup DrBackpackGroup { get; }
-
-        /// <summary>
-        /// 道具配置。
-        /// </summary>
-        public DRProp DrBackpack { get; }
+        [JsonIgnore] public DRProp DrProp { get; set; }
     }
 }

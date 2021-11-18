@@ -8,7 +8,6 @@ namespace TempProj
     /// </summary>
     public class PropData : PlayerData
     {
-        public List<int> ItemIds = new List<int>();
-        public List<int> ItemCounts = new List<int>();
+        public List<PropItemData> DataList = new List<PropItemData>();
     }
 }

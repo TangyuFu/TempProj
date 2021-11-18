@@ -33,7 +33,7 @@
         /// <summary>
         /// 背景界面。
         /// </summary>
-        BackpackForm = 203,
+        PropForm = 203,
 
         /// <summary>
         /// 引导界面。

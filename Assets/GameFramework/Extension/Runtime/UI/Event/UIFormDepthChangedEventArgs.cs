@@ -15,9 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
         }
 
-        public int UniqueId { get; private set; }
-
-        public int FormId { get; private set; }
+        public CustomUIFormLogic Logic { get; private set; }
 
         public int UIGroupDepth { get; private set; }
 
@@ -25,27 +23,23 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormDepthChangedEventArgs Create(int uniqueId, int formId, int uiGroupDepth,
-            int depthInUIGroup,
+        public static UIFormDepthChangedEventArgs Create(CustomUIFormLogic logic, int uiGroupDepth, int depthInUIGroup,
             object userData)
         {
-            UIFormDepthChangedEventArgs uiFormDepthChangedEventArgs =
-                ReferencePool.Acquire<UIFormDepthChangedEventArgs>();
-            uiFormDepthChangedEventArgs.UniqueId = uniqueId;
-            uiFormDepthChangedEventArgs.FormId = formId;
-            uiFormDepthChangedEventArgs.UIGroupDepth = uiGroupDepth;
-            uiFormDepthChangedEventArgs.DepthInUIGroup = depthInUIGroup;
-            uiFormDepthChangedEventArgs.UserData = userData;
-            return uiFormDepthChangedEventArgs;
+            UIFormDepthChangedEventArgs eventArgs = ReferencePool.Acquire<UIFormDepthChangedEventArgs>();
+            eventArgs.Logic = logic;
+            eventArgs.UIGroupDepth = uiGroupDepth;
+            eventArgs.DepthInUIGroup = depthInUIGroup;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         public override void Clear()
         {
-            UniqueId = 0;
-            FormId = 0;
-            UIGroupDepth = 0;
-            DepthInUIGroup = 0;
-            UserData = null;
+            Logic = default;
+            UIGroupDepth = default;
+            DepthInUIGroup = default;
+            UserData = default;
         }
     }
 }

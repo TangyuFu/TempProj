@@ -3,6 +3,7 @@ using GameFramework.DataTable;
 using GameFramework.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityGameFramework.Runtime.Extension.DataTable;
 
 namespace UnityGameFramework.Runtime.Extension
@@ -12,6 +13,8 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public static class UIExtension
     {
+        #region About UIForm, Open Close & Get Functions
+
         private static Dictionary<string, int> m_CachedFormIds;
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="uiComponent">UI 界面。</param>
         /// <param name="uiFormId">界面 Id。</param>
         /// <returns>获取的界面。</returns>
-        public static UIForm GetUIFormWithId(this UIComponent uiComponent, int uiFormId)
+        public static CustomUIFormLogic GetUIFormWithId(this UIComponent uiComponent, int uiFormId)
         {
             IDataTable<DRUIForm> dtUIForm = Entry.DataTable.GetDataTable<DRUIForm>();
             DRUIForm drUIForm = dtUIForm.GetDataRow(uiFormId);
@@ -106,7 +109,7 @@ namespace UnityGameFramework.Runtime.Extension
                 return null;
             }
 
-            return (UIForm) uiForm.Logic;
+            return (CustomUIFormLogic) uiForm.Logic;
         }
 
         /// <summary>
@@ -168,6 +171,9 @@ namespace UnityGameFramework.Runtime.Extension
                 drUIForm.PauseCoveredUIForm, userData);
         }
 
+        #endregion
+
+        #region About Font, Set Get & Set Transform Functions
 
         private static TMP_FontAsset m_Font;
 
@@ -201,7 +207,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// 设置字体。
         /// </summary>
         /// <param name="root">根目录。</param>
-        public static void SetTransformFont(GameObject root)
+        public static void SetTransformFont(Transform root)
         {
             root.GetComponentsInChildren(true, s_Texts);
             foreach (var text in s_Texts)
@@ -214,6 +220,10 @@ namespace UnityGameFramework.Runtime.Extension
                 }
             }
         }
+
+        #endregion
+
+        #region About Dialog, Open Funcitons
 
         /// <summary>
         /// 打开对话框。
@@ -236,5 +246,36 @@ namespace UnityGameFramework.Runtime.Extension
         {
             dialogParams.OnClickConfirm?.Invoke(dialogParams.UserData);
         }
+
+        #endregion
+
+        #region About Utilities, Set Sprite, Set Gray Functions
+
+        /// <summary>
+        /// 设置 Image 的 Sprite。
+        /// </summary>
+        /// <param name="image">要设置的 Image 。</param>
+        /// <param name="assetPath">要设置的 Sprite 的资源路径。</param>
+        public static void SetSprite(Image image, string assetPath)
+        {
+            Entry.R.LoadAsset(assetPath, typeof(Sprite),
+                (assetName, asset, userData) =>
+                {
+                    if (asset is Sprite sprite)
+                    {
+                        image.sprite = sprite;
+                    }
+                });
+        }
+
+        public static void SetGray(Image image, bool isGray)
+        {
+        }
+
+        public static void SetGray(TMP_Text text, bool isGray)
+        {
+        }
+
+        #endregion
     }
 }

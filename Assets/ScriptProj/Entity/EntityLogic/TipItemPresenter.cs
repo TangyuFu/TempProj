@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
-using Entity = UnityGameFramework.Runtime.Extension.Entity;
 
 namespace TempProj
 {
@@ -10,10 +10,17 @@ namespace TempProj
     {
         private float m_Duration = 1f;
 
-        public void OnInit(int uniqueId, int entityId, Entity entity, GameObject root,
+        private readonly Vector3 m_FromPosition = Vector3.up * -300;
+
+        private readonly Vector3 m_ToPosition = Vector3.up * 0;
+
+        private Tweener m_Timer;
+
+        public override void OnInit(CustomEntityLogic logic, Transform root,
             object userData)
         {
-            base.OnInit(uniqueId, entityId, entity, root, userData);
+            base.OnInit(logic, root, userData);
+
             if (userData is TipItemEntityData tipItemData)
             {
             }
@@ -22,36 +29,37 @@ namespace TempProj
                 Log.Error("Invalid tip item data.");
                 return;
             }
+
+            m_Timer = root.DOLocalMove(m_ToPosition, m_Duration).SetAutoKill(false).OnComplete(Hide);
+            m_Timer.Pause();
         }
 
         public override void OnDeinit()
         {
+            m_Timer.Kill();
+            m_Timer = null;
+
             base.OnDeinit();
         }
 
-        public override void OnShow(int entityId, object userData)
+        public override void OnShow(object userData)
         {
-            base.OnShow(entityId, userData);
+            base.OnShow(userData);
 
             if (userData is TipItemEntityData tipItemData)
             {
-                // m_View.Refresh(tipItemData.Content, m_FromPosition, m_FromColor);
+                Root.localPosition = m_FromPosition;
+                m_Timer.Restart();
             }
             else
             {
                 Log.Error("Invalid tip item data.");
-                return;
             }
         }
 
         public override void OnHide(bool isShutdown, object userData)
         {
             base.OnHide(isShutdown, userData);
-        }
-
-        private void HideSelf()
-        {
-            Entry.Entity.HideEntity(EntityId);
         }
     }
 }

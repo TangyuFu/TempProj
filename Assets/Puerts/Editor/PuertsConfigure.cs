@@ -57,7 +57,7 @@ public class PuertsConfigure
             // Entity
             typeof(EntityComponent),
             typeof(UnityGameFramework.Runtime.Entity),
-            typeof(UnityGameFramework.Runtime.Extension.Entity),
+            typeof(UnityGameFramework.Runtime.Extension.CustomEntityLogic),
             typeof(ShowEntitySuccessEventArgs),
             typeof(ShowEntityFailureEventArgs),
             typeof(HideEntityCompleteEventArgs),
@@ -88,7 +88,7 @@ public class PuertsConfigure
             // UI
             typeof(UIComponent),
             typeof(UnityGameFramework.Runtime.UIForm),
-            typeof(UnityGameFramework.Runtime.Extension.UIForm),
+            typeof(UnityGameFramework.Runtime.Extension.CustomUIFormLogic),
             typeof(OpenUIFormSuccessEventArgs),
             typeof(OpenUIFormFailureEventArgs),
             typeof(CloseUIFormCompleteEventArgs),

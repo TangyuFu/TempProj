@@ -27,8 +27,9 @@ namespace TempProj
 
             // Entry.Script.TurnOn();
             
-            // Entry.UI.OpenUIForm(UIFormId.SceneForm);
-            // Entry.UI.OpenUIForm(UIFormId.MaskForm);
+            Entry.UI.OpenUIForm(UIFormId.SceneForm);
+            Entry.UI.OpenUIForm(UIFormId.GuideForm);
+            Entry.UI.OpenUIForm(UIFormId.MaskForm);
             Entry.UI.OpenUIForm(UIFormId.TipForm);
             Entry.UI.OpenUIForm(UIFormId.MainForm);
         }
