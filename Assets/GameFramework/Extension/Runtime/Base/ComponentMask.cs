@@ -91,7 +91,7 @@ namespace UnityGameFramework.Runtime.Extension
         private SerializedProperty m_Path = null;
         private SerializedProperty m_Click = null;
 
-        private ComponentMask _mComponentMask;
+        private ComponentMask m_ComponentMask;
         private string[] m_ComponentOptions;
         private int m_AddIndex = 0;
         private int m_RemoveIndex = 0;
@@ -103,14 +103,14 @@ namespace UnityGameFramework.Runtime.Extension
             m_Path = serializedObject.FindProperty("m_Path");
             m_Click = serializedObject.FindProperty("m_Click");
 
-            _mComponentMask = target as ComponentMask;
-            if (_mComponentMask == null)
+            m_ComponentMask = target as ComponentMask;
+            if (m_ComponentMask == null)
             {
                 Log.Error("Invalid component mark.");
                 return;
             }
 
-            m_ComponentOptions = _mComponentMask.GetComponents<Component>().Where(t => t != _mComponentMask)
+            m_ComponentOptions = m_ComponentMask.GetComponents<Component>().Where(t => t != m_ComponentMask)
                 .Select(t => t.GetType().FullName).ToArray();
         }
 
@@ -126,13 +126,13 @@ namespace UnityGameFramework.Runtime.Extension
             m_AddIndex = EditorGUILayout.Popup("Add Component", m_AddIndex, m_ComponentOptions);
             if (GUILayout.Button("Add"))
             {
-                _mComponentMask.Add(m_ComponentOptions[m_AddIndex]);
+                m_ComponentMask.Add(m_ComponentOptions[m_AddIndex]);
             }
 
             m_RemoveIndex = EditorGUILayout.Popup("Remove Component", m_RemoveIndex, m_ComponentOptions);
             if (GUILayout.Button("Remove"))
             {
-                _mComponentMask.Remove(m_ComponentOptions[m_RemoveIndex]);
+                m_ComponentMask.Remove(m_ComponentOptions[m_RemoveIndex]);
             }
 
             serializedObject.ApplyModifiedProperties();

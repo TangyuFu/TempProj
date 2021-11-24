@@ -9,7 +9,7 @@ namespace UnityGameFramework.Editor.Extension.UI
     /// </summary>
     public sealed class UIFormWindow : EditorWindow
     {
-        [MenuItem("Game Framework/Extension/UI Form", true, 200)]
+        [MenuItem("Game Framework/Extension/UI Form & Entity", true, 200)]
         private static bool OpenValidate()
         {
             if (EditorApplication.isPlaying || EditorApplication.isCompiling || EditorApplication.isUpdating)
@@ -20,7 +20,7 @@ namespace UnityGameFramework.Editor.Extension.UI
             return true;
         }
 
-        [MenuItem("Game Framework/Extension/UI Form", false, 200)]
+        [MenuItem("Game Framework/Extension/UI Form & Entity", false, 200)]
         private static void Open()
         {
             GetWindow<UIFormWindow>("UI Form").position
