@@ -124,17 +124,16 @@ namespace UnityGameFramework.Runtime.Extension
                 Log.Warning("Send packet invalid.");
                 return false;
             }
-
-            m_CachedStream.SetLength(m_CachedStream.Capacity); // 此行防止 Array.Copy 的数据无法写入
+            
             m_CachedStream.Position = 0L;
 
-            SCDefault scDefault = packet as SCDefault;
-            byte[] data = scDefault?.Data;
+            CSDefault csDefault = packet as CSDefault;
+            byte[] data = csDefault?.Data;
+            BinaryWriter binaryWriter = new BinaryWriter(m_CachedStream, Encoding.ASCII);
+            binaryWriter.Write((ushort)(data?.Length ?? 0));
+            binaryWriter.Write((ushort)packet.Id);
             if (data != null)
             {
-                BinaryWriter binaryWriter = new BinaryWriter(m_CachedStream, Encoding.ASCII);
-                binaryWriter.Write((ushort)data.Length);
-                binaryWriter.Write((ushort)packet.Id);
                 binaryWriter.Write(data);
             }
             // CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
@@ -143,8 +142,14 @@ namespace UnityGameFramework.Runtime.Extension
             //
             // Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
             // ReferencePool.Release(packet);
-
-            m_CachedStream.WriteTo(destination);
+            // m_CachedStream.Position = 0L;
+            // byte[] bytes = m_CachedStream.ToArray();
+            // Log.Debug(m_CachedStream.Position);
+            // Log.Debug(m_CachedStream.Length);
+            // destination.Write(bytes);
+            // destination.Write(m_CachedStream.GetBuffer(), 0, m_CachedStream.Position);
+            Log.Debug(BitConverter.ToString(m_CachedStream.GetBuffer(), 0, (int)m_CachedStream.Position));
+            destination.Write(m_CachedStream.GetBuffer(), 0, (int)m_CachedStream.Position);
             return true;
         }
 
@@ -162,9 +167,11 @@ namespace UnityGameFramework.Runtime.Extension
             BinaryReader binaryReader = new BinaryReader(source);
             ushort length = binaryReader.ReadUInt16();
             ushort id = binaryReader.ReadUInt16();
-            SCPacketHeader header = new SCPacketHeader();
-            header.Id = 1;
-            header.PacketLength = length;
+            SCPacketHeader header = new SCPacketHeader
+            {
+                Id = id, 
+                PacketLength = length
+            };
             return header;
         }
 
@@ -187,14 +194,16 @@ namespace UnityGameFramework.Runtime.Extension
                 return null;
             }
 
-            SCDefault packet = new SCDefault();
+            SCDefault scDefault = new SCDefault();
             // packet.Data = new byte[]
             if (scPacketHeader.IsValid)
             {
                 Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
                 if (packetType != null)
                 {
-                    packet.Data = source.Read();
+                    byte[] bytes = new byte[scPacketHeader.PacketLength];
+                    int len = source.Read(bytes, 0, bytes.Length);
+                    scDefault.Data = bytes;
                 }
                 else
                 {
@@ -207,7 +216,7 @@ namespace UnityGameFramework.Runtime.Extension
             }
 
             ReferencePool.Release(scPacketHeader);
-            return packet;
+            return scDefault;
         }
 
         private Type GetServerToClientPacketType(int id)

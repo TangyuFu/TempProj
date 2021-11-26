@@ -1,7 +1,7 @@
 ﻿using System.Net;
+using System.Text;
 using GameFramework.Event;
 using GameFramework.Network;
-using UnityEngine;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
@@ -44,7 +44,8 @@ namespace TempProj
             Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
             Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
             m_NetworkChannel = Entry.Network.CreateNetworkChannel("main", ServiceType.Tcp, new NetworkChannelHelper());
-            m_NetworkChannel.Connect(IPAddress.Parse("127.0.0.0"), 13000);
+            Log.Debug("----------------------");
+            m_NetworkChannel.Connect(IPAddress.Parse("127.0.0.1"), 13000);
         }
 
         private INetworkChannel m_NetworkChannel;
@@ -61,8 +62,8 @@ namespace TempProj
             Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.",
                 ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(),
                 ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
-            
-            m_NetworkChannel.Send(new CSDefault());
+            CSDefault csDefault = new CSDefault {Data = Encoding.ASCII.GetBytes("abc")};
+            m_NetworkChannel.Send(csDefault);
         }
 
         private void OnNetworkClosed(object sender, GameEventArgs e)

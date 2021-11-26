@@ -1,6 +1,6 @@
 ﻿namespace UnityGameFramework.Runtime.Extension
 {
-    public class SCDefault : CSPacketBase
+    public class SCDefault : SCPacketBase
     {
         public SCDefault()
         {
