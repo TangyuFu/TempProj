@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
-using UnityGameFramework.Runtime.Extension.DataTable;
+using TempProj.DataTable;
 
 namespace TempProj
 {
-    [Identity(30000002)]
+    [Identity(10000002)]
     public class PropItemPresenter : EntityPresenter
     {
         private Action<PropItemPresenter> m_ClickCallback;
@@ -67,7 +67,7 @@ namespace TempProj
 
         public void SetIcon(string assetPath)
         {
-            UIExtension.SetSprite(m_Icon_Image, assetPath);
+            UnityGameFramework.Runtime.Extension.UIExtension.SetSprite(m_Icon_Image, assetPath);
         }
 
         public void SetCount(string text)

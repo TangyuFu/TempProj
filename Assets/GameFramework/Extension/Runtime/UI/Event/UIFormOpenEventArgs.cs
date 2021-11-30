@@ -19,7 +19,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         public object UserData { get; private set; }
 
-        public static UIFormOpenEventArgs Create(int uniqueId, int formId, CustomUIFormLogic logic, object userData)
+        public static UIFormOpenEventArgs Create(CustomUIFormLogic logic, object userData)
         {
             UIFormOpenEventArgs eventArgs = ReferencePool.Acquire<UIFormOpenEventArgs>();
             eventArgs.Logic = logic;

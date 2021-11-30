@@ -8,7 +8,7 @@ namespace UnityGameFramework.Runtime.Extension
     public sealed class LocalDataAgent : PlayerDataAgent<LocalData>
     {
         public override bool Local { get; } = true;
-        protected override LocalData DefaultData { get; } = new LocalData();
+        protected override LocalData DefaultData { get; } = new();
 
         /// <summary>
         /// 语言。

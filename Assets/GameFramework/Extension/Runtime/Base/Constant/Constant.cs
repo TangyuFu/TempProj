@@ -5,6 +5,6 @@
     /// </summary>
     public static partial class Constant
     {
-        public const string ProjectNameSpace = "TempProj";
+        public const string ProjectNamespace = "TempProj";
     }
 }

@@ -10,7 +10,7 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public static class DataTableExtension
     {
-        public const string DataRowNamespace = "UnityGameFramework.Runtime.Extension.DataTable";
+        public const string DataRowNamespace = "TempProj.DataTable";
         internal static readonly char[] DataSplitSeparators = {'\t'};
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// </summary>
         /// <param name="dataTableComponent">数据表组件。</param>
         /// <param name="dataTableName">数据表名称。</param>
-        /// <param name="dataTableAssetName">数据表资源名称</param>
+        /// <param name="dataTableAssetName">数据表资源名称。</param>
         /// <param name="userData">用户自定义数据。</param>
         public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName,
             string dataTableAssetName, object userData)
@@ -37,6 +37,20 @@ namespace UnityGameFramework.Runtime.Extension
                 return;
             }
 
+            DataTableBase dataTable = dataTableComponent.CreateDataTable(dataRowType);
+            dataTable.ReadData(dataTableAssetName, Constant.AssetPriority.DataTableAsset, userData);
+        }
+
+        /// <summary>
+        /// 加载数据表。
+        /// </summary>
+        /// <param name="dataTableComponent">数据表组件。</param>
+        /// <param name="dataRowType">数据行类型。</param>
+        /// <param name="dataTableAssetName">数据表资源名称。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        public static void LoadDataTable(this DataTableComponent dataTableComponent, Type dataRowType,
+            string dataTableAssetName, object userData)
+        {
             DataTableBase dataTable = dataTableComponent.CreateDataTable(dataRowType);
             dataTable.ReadData(dataTableAssetName, Constant.AssetPriority.DataTableAsset, userData);
         }

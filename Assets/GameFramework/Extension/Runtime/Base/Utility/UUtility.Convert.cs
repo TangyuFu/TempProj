@@ -27,7 +27,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid byte '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 return Bytes2Hex(bytes, 0, bytes.Length, space, capital);
@@ -47,7 +47,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 if (startIndex < 0 || length < 0 || startIndex + length > bytes.Length)
@@ -90,7 +90,7 @@ namespace UnityGameFramework.Runtime.Extension
 
                 if (space == null)
                 {
-                    throw new GameFrameworkException($"Invalid space '{null}'.");
+                    throw new GameFrameworkException($"Invalid space '{space}'.");
                 }
 
                 int count = (hex.Length - 2) / (2 + space.Length) + 1;
@@ -148,7 +148,7 @@ namespace UnityGameFramework.Runtime.Extension
 
                 if (encoding == null)
                 {
-                    throw new GameFrameworkException($"Invalid encoding '{null}'.");
+                    throw new GameFrameworkException($"Invalid encoding '{encoding}'.");
                 }
 
                 return encoding.GetBytes(str);
@@ -214,12 +214,12 @@ namespace UnityGameFramework.Runtime.Extension
                 if (charStartIndex < 0 || charLength < 0 || charStartIndex + charLength > str.Length)
                 {
                     throw new GameFrameworkException(
-                        $"Invalid char offset '{charStartIndex}' or count '{charLength}'.");
+                        $"Invalid char start index '{charStartIndex}' or char length '{charLength}'.");
                 }
 
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 if (bytesStartIndex > bytes.Length - 1)
@@ -246,7 +246,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 return Bytes2String(bytes, 0, bytes.Length);
@@ -262,7 +262,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 return Bytes2String(bytes, 0, bytes.Length, encoding);
@@ -292,7 +292,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 if (startIndex < 0 || length < 0 || startIndex + length > bytes.Length)

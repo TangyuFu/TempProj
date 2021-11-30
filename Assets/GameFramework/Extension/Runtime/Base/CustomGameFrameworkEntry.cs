@@ -9,8 +9,7 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     internal static class CustomGameFrameworkEntry
     {
-        private static readonly GameFrameworkLinkedList<CustomGameFrameworkComponent> s_CustomGameFrameworkComponents =
-            new GameFrameworkLinkedList<CustomGameFrameworkComponent>();
+        private static readonly GameFrameworkLinkedList<CustomGameFrameworkComponent> s_Components = new();
 
         /// <summary>
         /// 所有自定义游戏框架组件轮询。
@@ -19,7 +18,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         internal static void Update(float elapseSeconds, float realElapseSeconds)
         {
-            foreach (CustomGameFrameworkComponent component in s_CustomGameFrameworkComponents)
+            foreach (CustomGameFrameworkComponent component in s_Components)
             {
                 component.Poll(elapseSeconds, realElapseSeconds);
             }
@@ -30,14 +29,14 @@ namespace UnityGameFramework.Runtime.Extension
         /// </summary>
         public static void Shutdown()
         {
-            for (LinkedListNode<CustomGameFrameworkComponent> current = s_CustomGameFrameworkComponents.Last;
+            for (LinkedListNode<CustomGameFrameworkComponent> current = s_Components.Last;
                 current != null;
                 current = current.Previous)
             {
                 current.Value.Shutdown();
             }
 
-            s_CustomGameFrameworkComponents.Clear();
+            s_Components.Clear();
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>要获取的自定义游戏框架组件。</returns>
         public static CustomGameFrameworkComponent GetComponent(Type type)
         {
-            foreach (CustomGameFrameworkComponent component in s_CustomGameFrameworkComponents)
+            foreach (CustomGameFrameworkComponent component in s_Components)
             {
                 if (component.GetType() == type)
                 {
@@ -81,7 +80,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="component">要注册的自定义游戏框架组件。</param>
         public static void RegisterComponent(CustomGameFrameworkComponent component)
         {
-            LinkedListNode<CustomGameFrameworkComponent> current = s_CustomGameFrameworkComponents.First;
+            LinkedListNode<CustomGameFrameworkComponent> current = s_Components.First;
             while (current != null)
             {
                 if (component.Priority > current.Value.Priority)
@@ -94,11 +93,11 @@ namespace UnityGameFramework.Runtime.Extension
 
             if (current != null)
             {
-                s_CustomGameFrameworkComponents.AddBefore(current, component);
+                s_Components.AddBefore(current, component);
             }
             else
             {
-                s_CustomGameFrameworkComponents.AddLast(component);
+                s_Components.AddLast(component);
             }
         }
     }

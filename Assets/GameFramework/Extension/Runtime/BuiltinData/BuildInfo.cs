@@ -11,11 +11,6 @@
         public string Version;
 
         /// <summary>
-        /// 游戏内部版本。
-        /// </summary>
-        public int InternalVersion;
-
-        /// <summary>
         /// 渠道号。
         /// </summary>
         public string Channel;

@@ -103,88 +103,22 @@ namespace UnityGameFramework.Runtime.Extension
             # region ------------------------------------------------------------------------------------------ DataTable
 
             /// <summary>
-            /// 资源数据表目录。
+            /// 资源数据表目录。s
             /// </summary>
-            public const string RTablePath = RPath + "/TableProj";
+            public const string RTablePath = RPath + "/DataTables";
 
-            public const string RTableExcelPath = RTablePath + "/Excel";
-            
-            public const string RTableClientPath = RTablePath + "/Client";
-            public const string RTableClientDataPath = RTableClientPath + "/Data";
-            public const string RTableClientScriptPath = RTableClientPath + "/Script";
-            
-            public const string RTableServerPath = RTablePath + "/Server";
-            public const string RTableServerDataPath = RTableServerPath + "/Data";
-            public const string RTableServerScriptPath = RTableServerPath + "/Script";
-            
-            public const string RTableJsonPath = RTablePath + "/Json";
-            
-            public const string RTableLanguagePath = RTablePath + "/Language";
-            
-            /// <summary>
-            /// 获取数据表 Excel 路径。
-            /// </summary>
-            /// <param name="name">数据表 Excel 名称。</param>
-            /// <param name="ext">数据表 Excel 后缀名。</param>
-            /// <returns>数据表 Excel 路径。</returns>
-            public static string GetTableExcelPath(string name, string ext = "xlsx")
-            {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableExcelPath, name, ext);
-            }
+            public const string RTableDataPath = RTablePath + "/Data";
+            public const string RTableLanguagePath = RTablePath + "/Languages";
 
             /// <summary>
-            /// 获取数据表前端数据路径。
+            /// 获取数据表数据路径。
             /// </summary>
-            /// <param name="name">数据表前端数据名称。</param>
-            /// <param name="ext">数据表前端数据后缀名。</param>
-            /// <returns>数据表前端数据路径。</returns>
-            public static string GetTableClientDataPath(string name, string ext = "txt")
+            /// <param name="name">数据表数据名称。</param>
+            /// <param name="ext">数据表数据后缀名。</param>
+            /// <returns>数据表数据路径。</returns>
+            public static string GetTableDataPath(string name, string ext = "txt")
             {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableClientDataPath, name, ext);
-            }
-            
-            /// <summary>
-            /// 获取数据表前端脚本路径。
-            /// </summary>
-            /// <param name="name">数据表前端脚本名称。</param>
-            /// <param name="ext">数据表前端脚本后缀名。</param>
-            /// <returns>数据表前端脚本路径。</returns>
-            public static string GetTableClientScriptPath(string name, string ext = "cs")
-            {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableClientScriptPath, name, ext);
-            }
-
-            /// <summary>
-            /// 获取数据表后端数据路径。
-            /// </summary>
-            /// <param name="name">数据表后端数据名称。</param>
-            /// <param name="ext">数据表后端数据后缀名。</param>
-            /// <returns>数据表后端数据路径。</returns>
-            public static string GetTableServerDataPath(string name, string ext = "txt")
-            {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableServerDataPath, name, ext);
-            }
-
-            /// <summary>
-            /// 获取数据表后端脚本路径。
-            /// </summary>
-            /// <param name="name">数据表后端脚本名称。</param>
-            /// <param name="ext">数据表后端脚本后缀名。</param>
-            /// <returns>数据表后端脚本路径。</returns>
-            public static string GetTableServerScriptPath(string name, string ext = "txt")
-            {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableServerScriptPath, name, ext);
-            }
-
-            /// <summary>
-            /// 获取数据表 JSON 路径。
-            /// </summary>
-            /// <param name="name">数据表 JSON 名称。</param>
-            /// <param name="ext">数据表 JSON 后缀名。</param>
-            /// <returns>数据表 JSON 路径。</returns>
-            public static string GetTableJsonPath(string name, string ext = "json")
-            {
-                return Utility.Text.Format("{0}/{1}.{2}", RTableJsonPath, name, ext);
+                return Utility.Text.Format("{0}/{1}.{2}", RTableDataPath, name, ext);
             }
 
             /// <summary>
@@ -197,7 +131,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RTableLanguagePath, name, ext);
             }
-            
+
             # endregion
 
             # region ------------------------------------------------------------------------------------------ UI
@@ -213,6 +147,8 @@ namespace UnityGameFramework.Runtime.Extension
             public const string RUIFormPath = RUIPath + "/Forms";
             public const string RUISpritePath = RUIPath + "/Sprites";
             public const string RUITexturePath = RUIPath + "/Textures";
+            public const string RUITimelinePath = RUIPath + "/Timelines";
+            public const string RUIAnimatorPath = RUIPath + "/Animators";
 
             /// <summary>
             /// 获取 UI 图集精灵资源路径。
@@ -247,14 +183,14 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RUIFontPath, name, ext);
             }
-            
+
             /// <summary>
             /// 获取 UI 控件实体路径。
             /// </summary>
             /// <param name="name">小控件实体名称</param>
             /// <param name="ext">小控件实体后缀名。</param>
             /// <returns>UI 小控件实体路径。</returns>
-            public static string GetUIItemPath(string name, string ext = "prefab")
+            public static string GetUIEntitiesPath(string name, string ext = "prefab")
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RUIEntityPath, name, ext);
             }
@@ -269,7 +205,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RUIFormPath, name, ext);
             }
-            
+
             /// <summary>
             /// 获取 UI 精灵资源路径。
             /// </summary>
@@ -280,7 +216,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RUISpritePath, name, ext);
             }
-            
+
             /// <summary>
             /// 获取 UI 纹理资源路径。
             /// </summary>
@@ -291,7 +227,29 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RUITexturePath, name, ext);
             }
-            
+
+            /// <summary>
+            /// 获取 UI 时间线资源路径。
+            /// </summary>
+            /// <param name="name">时间线资源名称。</param>
+            /// <param name="ext">时间线资源后缀名。</param>
+            /// <returns>时间线资源路径。</returns>
+            public static string GetUITimelinePath(string name, string ext = "playable")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", RUITimelinePath, name, ext);
+            }
+
+            /// <summary>
+            /// 获取 UI 动画控制器资源路径。
+            /// </summary>
+            /// <param name="name">动画控制器资源名称。</param>
+            /// <param name="ext">动画控制器资源后缀名。</param>
+            /// <returns>动画控制器资源路径。</returns>
+            public static string GetUIAnimatorPath(string name, string ext = "controller")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", RUIAnimatorPath, name, ext);
+            }
+
             # endregion
 
             # region ------------------------------------------------------------------------------------------ Effect
@@ -300,8 +258,9 @@ namespace UnityGameFramework.Runtime.Extension
             /// 资源特效目录。
             /// </summary>
             public const string REffectPath = RPath + "/EffetProj";
-            public const string REffectEntityPath = REffectPath + "/Entities";
+
             public const string REffectPrefabPath = REffectPath + "/Prefabs";
+            public const string REffectEntityPath = REffectPath + "/Entities";
             public const string REffectAnimationPath = REffectPath + "/Animations";
             public const string REffectAnimatorPath = REffectPath + "/Animators";
             public const string REffectTexturePath = REffectPath + "/Textures";
@@ -326,7 +285,40 @@ namespace UnityGameFramework.Runtime.Extension
             /// <returns>特效实体路径。</returns>
             public static string GetEffectEntityPath(string name, string ext = "prefab")
             {
-                return Utility.Text.Format("{0}/{1}.{2}", REffectEntityPath, name, ext);
+                return Utility.Text.Format("{0}/{1}.{2}", REffectPrefabPath, name, ext);
+            }
+            
+            /// <summary>
+            /// 获取特效动画控制器路径。
+            /// </summary>
+            /// <param name="name">特效动画控制器名称。</param>
+            /// <param name="ext">特效动画控制器后缀名。</param>
+            /// <returns>特效动画控制器路径。</returns>
+            public static string GetEffectAnimatorPath(string name, string ext = "controller")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", REffectAnimatorPath, name, ext);
+            }
+            
+            /// <summary>
+            /// 获取特效纹理路径。
+            /// </summary>
+            /// <param name="name">特效纹理名称。</param>
+            /// <param name="ext">特效纹理后缀名。</param>
+            /// <returns>特效纹理路径。</returns>
+            public static string GetEffectTexturePath(string name, string ext = "png")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", REffectTexturePath, name, ext);
+            }
+            
+            /// <summary>
+            /// 获取特效材质路径。
+            /// </summary>
+            /// <param name="name">特效材质名称。</param>
+            /// <param name="ext">特效材质后缀名。</param>
+            /// <returns>特效材质路径。</returns>
+            public static string GetEffectMaterialPath(string name, string ext = "mat")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", REffectMaterialPath, name, ext);
             }
 
             # endregion
@@ -337,13 +329,14 @@ namespace UnityGameFramework.Runtime.Extension
             /// 资源模型目录。
             /// </summary>
             public const string RModelPath = RPath + "/ModelProj";
+
             public const string RModelEntityPath = RModelPath + "/Entities";
             public const string RModelPrefabPath = RModelPath + "/Prefabs";
             public const string RModelAnimationPath = RModelPath + "/Animations";
             public const string RModelAnimatorPath = RModelPath + "/Animators";
             public const string RModelTexturePath = RModelPath + "/Textures";
             public const string RModelMaterialPath = RModelPath + "/Materials";
-            
+
             /// <summary>
             /// 获取模型预制件路径。
             /// </summary>
@@ -365,6 +358,40 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 return Utility.Text.Format("{0}/{1}.{2}", RModelEntityPath, name, ext);
             }
+
+            /// <summary>
+            /// 获取特效动画控制器路径。
+            /// </summary>
+            /// <param name="name">特效动画控制器名称。</param>
+            /// <param name="ext">特效动画控制器后缀名。</param>
+            /// <returns>特效动画控制器路径。</returns>
+            public static string GetModelAnimatorPath(string name, string ext = "controller")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", RModelAnimatorPath, name, ext);
+            }
+            
+            /// <summary>
+            /// 获取特效纹理路径。
+            /// </summary>
+            /// <param name="name">特效纹理名称。</param>
+            /// <param name="ext">特效纹理后缀名。</param>
+            /// <returns>特效纹理路径。</returns>
+            public static string GetModelTexturePath(string name, string ext = "png")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", RModelTexturePath, name, ext);
+            }
+            
+            /// <summary>
+            /// 获取特效材质路径。
+            /// </summary>
+            /// <param name="name">特效材质名称。</param>
+            /// <param name="ext">特效材质后缀名。</param>
+            /// <returns>特效材质路径。</returns>
+            public static string GetModelMaterialPath(string name, string ext = "mat")
+            {
+                return Utility.Text.Format("{0}/{1}.{2}", RModelMaterialPath, name, ext);
+            }
+            
             # endregion
         }
     }

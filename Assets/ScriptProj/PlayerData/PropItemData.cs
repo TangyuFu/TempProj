@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using UnityGameFramework.Runtime.Extension.DataTable;
+using TempProj.DataTable;
 
 namespace TempProj
 {

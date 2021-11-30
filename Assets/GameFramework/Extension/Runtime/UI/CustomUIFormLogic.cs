@@ -1,7 +1,5 @@
-﻿using GameFramework.DataTable;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityGameFramework.Runtime.Extension.DataTable;
 
 namespace UnityGameFramework.Runtime.Extension
 {
@@ -10,28 +8,17 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public sealed class CustomUIFormLogic : UIFormLogic
     {
-        private int m_UniqueId;
-
-        private int m_FormId;
-
-        private Transform m_Root;
-
         private CanvasRenderSorter m_Sorter;
 
         /// <summary>
         /// 界面唯一标识符。
         /// </summary>
-        public int UniqueId => m_UniqueId;
-
-        /// <summary>
-        /// 界面 ID 。
-        /// </summary>
-        public int FormId => m_FormId;
+        public int UniqueId { get; private set; }
 
         /// <summary>
         /// 界面根物体。
         /// </summary>
-        public Transform Root => m_Root;
+        public Transform Root { get; private set; }
 
         /// <summary>
         /// 界面初始化。
@@ -41,24 +28,17 @@ namespace UnityGameFramework.Runtime.Extension
         {
             base.OnInit(userData);
 
-            m_Root = transform;
-            m_UniqueId = GetHashCode();
-            m_FormId = UIExtension.GetFormId(UIForm.UIFormAssetName);
+            Root = transform;
+            // Initialize TMP_Text if it is not empty.
+            UIExtension.SetTransformFont(Root);
+            UniqueId = GetHashCode();
 
+            // Initialize canvas.
             GraphicRaycaster graphicRaycaster = gameObject.GetOrAddComponent<GraphicRaycaster>();
             Canvas canvas = gameObject.GetOrAddComponent<Canvas>();
             canvas.overrideSorting = true;
             m_Sorter = gameObject.GetOrAddComponent<CanvasRenderSorter>();
             m_Sorter.RenderSorterMode = RenderSorterMode.Relative;
-
-            UIExtension.SetTransformFont(m_Root);
-
-            IDataTable<DRUIForm> dtUIForm = Entry.DataTable.GetDataTable<DRUIForm>();
-            DRUIForm drUIForm = dtUIForm.GetDataRow(m_FormId);
-            if (drUIForm.IsLocked)
-            {
-                Entry.UI.SetUIFormInstanceLocked(UIForm, true);
-            }
 
             Entry.Event.FireNow(UIFormInitEventArgs.EventId, UIFormInitEventArgs.Create(this, userData));
         }
@@ -90,7 +70,7 @@ namespace UnityGameFramework.Runtime.Extension
             base.OnOpen(userData);
 
             Entry.Event.FireNow(UIFormOpenEventArgs.EventId,
-                UIFormOpenEventArgs.Create(m_UniqueId, m_FormId, this, userData));
+                UIFormOpenEventArgs.Create(this, userData));
         }
 
         /// <summary>

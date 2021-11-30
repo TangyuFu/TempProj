@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (updateInterval < 0)
             {
-                throw new GameFrameworkException($"Fps update interval '{updateInterval}' must be greater than 0.");
+                throw new GameFrameworkException($"Fps updateInterval '{updateInterval}' must be greater than 0.");
             }
 
             m_UpdateInterval = updateInterval;
@@ -34,7 +34,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (value < 0)
                 {
-                    throw new GameFrameworkException($"Fps update interval '{value}' must be greater than 0.");
+                    throw new GameFrameworkException($"Fps updateInterval '{value}' must be greater than 0.");
                 }
 
                 m_UpdateInterval = value;

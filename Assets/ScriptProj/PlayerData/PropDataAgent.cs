@@ -2,7 +2,7 @@
 using GameFramework.DataTable;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
-using UnityGameFramework.Runtime.Extension.DataTable;
+using TempProj.DataTable;
 
 namespace TempProj
 {

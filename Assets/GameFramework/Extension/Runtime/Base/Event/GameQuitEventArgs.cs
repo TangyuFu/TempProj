@@ -31,8 +31,8 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>创建的游戏退出事件。</returns>
         public static GameQuitEventArgs Create()
         {
-            GameQuitEventArgs gameQuitEventArgs = ReferencePool.Acquire<GameQuitEventArgs>();
-            return gameQuitEventArgs;
+            GameQuitEventArgs eventArgs = ReferencePool.Acquire<GameQuitEventArgs>();
+            return eventArgs;
         }
 
         /// <summary>

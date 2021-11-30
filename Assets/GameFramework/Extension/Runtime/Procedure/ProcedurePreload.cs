@@ -1,10 +1,11 @@
-﻿using GameFramework;
+﻿using System;
+using GameFramework;
 using GameFramework.Event;
 using GameFramework.Resource;
 using System.Collections.Generic;
+using System.Reflection;
 using TempProj;
 using TMPro;
-using UnityEngine;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
 namespace UnityGameFramework.Runtime.Extension
@@ -14,26 +15,9 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public class ProcedurePreload : ProcedureBase
     {
-        public static readonly string[] DataTableNames = new string[]
-        {
-            "UIForm",
-            "UIFormGroup",
-            "Entity",
-            "EntityGroup",
-            "SoundGroup",
-            "Sound",
-            "UISound",
-            "Music",
-            "PropGroup",
-            "Prop",
-            "PropResource",
-            "PropEquipment",
-            "PropActivity",
-        };
-
-        private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
-
         public override bool UseNativeDialog => true;
+
+        private readonly Dictionary<string, bool> m_LoadedFlag = new();
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -77,14 +61,20 @@ namespace UnityGameFramework.Runtime.Extension
         private void PreloadResources()
         {
             // Preload data tables
-            foreach (string dataTableName in DataTableNames)
+            Type dataTableBaseType = typeof(DataRowBase);
+            Assembly assembly = Assembly.Load("Assembly-CSharp");
+            Type[] types = assembly.GetTypes();
+            foreach (var type in types)
             {
-                LoadDataTable(dataTableName);
+                if (dataTableBaseType.IsAssignableFrom(type) && !type.IsAbstract)
+                {
+                    LoadDataTable(type);
+                }
             }
 
             // Remove preset language
             Entry.Localization.RemoveAllRawStrings();
-            
+
             // Preload dictionaries
             LoadDictionary("Language");
 
@@ -92,9 +82,17 @@ namespace UnityGameFramework.Runtime.Extension
             LoadFont("DefaultFont");
         }
 
+        private void LoadDataTable(Type dataRowType)
+        {
+            string dataRowTypeName = dataRowType.Name;
+            string dataTableAssetName = UUtility.Asset.GetTableDataPath(dataRowTypeName.Substring(2));
+            m_LoadedFlag.Add(dataTableAssetName, false);
+            Entry.DataTable.LoadDataTable(dataRowType, dataTableAssetName, this);
+        }
+
         private void LoadDataTable(string dataTableName)
         {
-            string dataTableAssetName = UUtility.Asset.GetTableClientDataPath(dataTableName);
+            string dataTableAssetName = UUtility.Asset.GetTableDataPath(dataTableName);
             m_LoadedFlag.Add(dataTableAssetName, false);
             Entry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this);
         }
@@ -119,7 +117,7 @@ namespace UnityGameFramework.Runtime.Extension
                     (assetName, asset, duration, userData) =>
                     {
                         m_LoadedFlag[Utility.Text.Format("Font.{0}", fontName)] = true;
-                        UIExtension.SetFont((TMP_FontAsset) asset);
+                        UIExtension.Font = (TMP_FontAsset) asset;
                         Log.Info("Load font '{0}' OK.", fontName);
                     },
                     (assetName, status, errorMessage, userData) =>

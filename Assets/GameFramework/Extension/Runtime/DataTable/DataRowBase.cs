@@ -1,5 +1,4 @@
 ﻿using GameFramework.DataTable;
-using UnityGameFramework.Runtime;
 
 namespace UnityGameFramework.Runtime.Extension
 {

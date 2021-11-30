@@ -10,68 +10,68 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public static partial class Extension
     {
-        private static readonly List<Transform> s_CachedTransforms = new List<Transform>();
+        private static readonly List<Transform> s_CachedTransforms = new();
 
         /// <summary>
         /// 获取游戏物体是否在场景中。
         /// </summary>
-        /// <param name="go">要判定的游戏物体。</param>
+        /// <param name="gameObject">要判定的游戏物体。</param>
         /// <returns>游戏物体是否在场景中。</returns>
-        public static bool IsInScene(this GameObject go)
+        public static bool IsInScene(this GameObject gameObject)
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{go}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
-            return go.scene.IsValid();
+            return gameObject.scene.IsValid();
         }
 
         /// <summary>
         /// 获取或添加组件。
         /// </summary>
         /// <typeparam name="T">要获取或添加的组件。</typeparam>
-        /// <param name="go">要获取或添加组件的游戏物体。</param>
+        /// <param name="gameObject">要获取或添加组件的游戏物体。</param>
         /// <returns>获取或添加的组件。</returns>
-        public static T GetOrAddComponent<T>(this GameObject go) where T : Component
+        public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{go}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
-            T component = go.GetComponent<T>();
-            return component ? component : go.AddComponent<T>();
+            T component = gameObject.GetComponent<T>();
+            return component ? component : gameObject.AddComponent<T>();
         }
 
         /// <summary>
         /// 获取或添加组件。
         /// </summary>
-        /// <param name="go">要获取或添加组件的游戏物体。</param>
+        /// <param name="gameObject">要获取或添加组件的游戏物体。</param>
         /// <param name="type">要获取或添加的组件。</param>
         /// <returns>获取或添加的组件。</returns>
-        public static Component GetOrAddComponent(this GameObject go, Type type)
+        public static Component GetOrAddComponent(this GameObject gameObject, Type type)
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{go}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
-            Component component = go.GetComponent(type);
-            return component ? component : go.AddComponent(type);
+            Component component = gameObject.GetComponent(type);
+            return component ? component : gameObject.AddComponent(type);
         }
 
         /// <summary>
         /// 设置游戏物体的层。
         /// </summary>
-        /// <param name="go">要设置的游戏物体。</param>
+        /// <param name="gameObject">要设置的游戏物体。</param>
         /// <param name="layer">要设置的层。</param>
         /// <param name="recursive">是否设置子物体，默认开启设置所有子物体。</param>
-        public static void SetLayer(this GameObject go, int layer, bool recursive = true)
+        public static void SetLayer(this GameObject gameObject, int layer, bool recursive = true)
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{go}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
             if (layer < 0 || layer > 31)
@@ -81,7 +81,7 @@ namespace UnityGameFramework.Runtime.Extension
 
             if (recursive)
             {
-                go.GetComponentsInChildren(true, s_CachedTransforms);
+                gameObject.GetComponentsInChildren(true, s_CachedTransforms);
                 foreach (var t in s_CachedTransforms)
                 {
                     t.gameObject.layer = layer;
@@ -91,21 +91,21 @@ namespace UnityGameFramework.Runtime.Extension
             }
             else
             {
-                go.layer = layer;
+                gameObject.layer = layer;
             }
         }
 
         /// <summary>
         /// 设置游戏物体的标签。
         /// </summary>
-        /// <param name="go">要设置的游戏物体。</param>
+        /// <param name="gameObject">要设置的游戏物体。</param>
         /// <param name="tag">要设置的标签。</param>
         /// <param name="recursive">是否设置子物体，默认开启设置所有子物体。</param>
-        public static void SetTag(this GameObject go, string tag, bool recursive = true)
+        public static void SetTag(this GameObject gameObject, string tag, bool recursive = true)
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{null}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
             if (string.IsNullOrEmpty(tag))
@@ -115,7 +115,7 @@ namespace UnityGameFramework.Runtime.Extension
 
             if (recursive)
             {
-                go.GetComponentsInChildren(true, s_CachedTransforms);
+                gameObject.GetComponentsInChildren(true, s_CachedTransforms);
                 foreach (var t in s_CachedTransforms)
                 {
                     t.gameObject.tag = tag;
@@ -125,33 +125,32 @@ namespace UnityGameFramework.Runtime.Extension
             }
             else
             {
-                go.tag = tag;
+                gameObject.tag = tag;
             }
         }
 
         /// <summary>
         /// 遍历游戏物体的所有子物体。
         /// </summary>
-        /// <param name="go">要遍历的游戏物体。</param>
+        /// <param name="gameObject">要遍历的游戏物体。</param>
         /// <param name="action">遍历子物体的行为。</param>
         /// <param name="includeSelf">是否包含自身。</param>
-        public static void Foreach(this GameObject go, Action<GameObject> action, bool includeSelf)
+        public static void ForeachChild(this GameObject gameObject, Action<GameObject> action, bool includeSelf)
         {
-            if (go == null)
+            if (!gameObject)
             {
-                throw new GameFrameworkException($"Invalid game object '{null}'.");
+                throw new GameFrameworkException($"Invalid gameObject '{gameObject}'.");
             }
 
             if (action == null)
             {
-                throw new GameFrameworkException("Invalid Action<GameObject>.");
+                throw new GameFrameworkException($"Invalid action '{action}'.");
             }
 
-
-            go.GetComponentsInChildren(true, s_CachedTransforms);
+            gameObject.GetComponentsInChildren(true, s_CachedTransforms);
             foreach (var t in s_CachedTransforms)
             {
-                if (includeSelf || t.gameObject != go)
+                if (!includeSelf && t.gameObject == gameObject)
                 {
                     continue;
                 }

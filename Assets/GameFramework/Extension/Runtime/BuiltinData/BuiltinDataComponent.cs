@@ -11,11 +11,11 @@ namespace UnityGameFramework.Runtime.Extension
     [AddComponentMenu("Game Framework/Builtin Data")]
     public sealed class BuiltinDataComponent : CustomGameFrameworkComponent
     {
+        [SerializeField] private Transform m_UIInstanceRoot = null;
+
         [SerializeField] private TextAsset m_BuildInfoTextAsset = null;
 
         [SerializeField] private TextAsset m_DefaultDictionaryTextAsset = null;
-
-        [SerializeField] private Transform m_UIInstanceRoot = null;
 
         [SerializeField] private SplashForm m_SplashForm = null;
 
@@ -24,6 +24,11 @@ namespace UnityGameFramework.Runtime.Extension
         [SerializeField] private DialogForm m_DialogForm = null;
 
         private BuildInfo m_BuildInfo = null;
+
+        /// <summary>
+        /// 版本构建信息。
+        /// </summary>
+        public BuildInfo BuildInfo => m_BuildInfo;
 
         /// <summary>
         /// 闪屏界面。
@@ -124,10 +129,6 @@ namespace UnityGameFramework.Runtime.Extension
             }
         }
 
-        /// <summary>
-        /// 构建信息。
-        /// </summary>
-        public BuildInfo BuildInfo => m_BuildInfo;
 
         protected override void Awake()
         {

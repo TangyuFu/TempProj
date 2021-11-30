@@ -43,11 +43,10 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>创建的游戏焦点状态改变事件。</returns>
         public static GameFocusChangedEventArgs Create(bool hasFocus, object userData)
         {
-            GameFocusChangedEventArgs gameFocusChangedEventArgs =
-                ReferencePool.Acquire<GameFocusChangedEventArgs>();
-            gameFocusChangedEventArgs.HasFocus = hasFocus;
-            gameFocusChangedEventArgs.UserData = userData;
-            return gameFocusChangedEventArgs;
+            GameFocusChangedEventArgs eventArgs = ReferencePool.Acquire<GameFocusChangedEventArgs>();
+            eventArgs.HasFocus = hasFocus;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         /// <summary>

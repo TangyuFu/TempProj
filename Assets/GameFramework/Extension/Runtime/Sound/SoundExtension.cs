@@ -2,7 +2,7 @@
 using GameFramework.Sound;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
-using UnityGameFramework.Runtime.Extension.DataTable;
+using TempProj.DataTable;
 
 namespace GameFramework.Runtime.Extension
 {

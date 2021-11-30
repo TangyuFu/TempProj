@@ -1,5 +1,7 @@
 ﻿using System;
 using GameFramework;
+using TempProj.DataTable;
+using UnityEngine;
 using UnityGameFramework.Runtime.Extension;
 
 namespace TempProj
@@ -7,7 +9,7 @@ namespace TempProj
     /// <summary>
     /// 背包数据。
     /// </summary>
-    public class PropItemEntityData : CustomEntityData
+    public class PropItemEntityData : EntityData
     {
         public PropItemEntityData()
         {
@@ -38,15 +40,22 @@ namespace TempProj
         /// </summary>
         public Action<PropItemPresenter> ClickCallback { get; set; }
 
-        public static PropItemEntityData Create(int itemId, int itemCount, bool isSelected, Action<PropItemPresenter> clickCallback = null,
+        public static PropItemEntityData Create(Transform parent, int itemId, int itemCount, bool isSelected, Action<PropItemPresenter> clickCallback = null,
             Action<PropItemPresenter> showCallback = null)
         {
             PropItemEntityData propItemEntityData = ReferencePool.Acquire<PropItemEntityData>();
+            int drEntityId = 10000002;
+            DREntity drEntity = Entry.DataTable.GetDataTable<DREntity>().GetDataRow(drEntityId);
+            propItemEntityData.DrEntity = drEntity;
+
+            propItemEntityData.EntityId = Entry.Entity.GenerateSerialId();
+            
             propItemEntityData.ItemId = itemId;
             propItemEntityData.ItemCount = itemCount;
             propItemEntityData.IsSelected = isSelected;
             propItemEntityData.ClickCallback = clickCallback;
             propItemEntityData.ShowCallback = showCallback;
+            propItemEntityData.Parent = parent;
             return propItemEntityData;
         }
 

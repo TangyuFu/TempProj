@@ -31,29 +31,15 @@
         public static BuiltinDataComponent BuiltinData { get; private set; }
 
         /// <summary>
-        /// 获取 MVC 组件。
-        /// </summary>
-        public static MVCComponent MVC { get; private set; }
-
-        /// <summary>
         /// 获取 R 组件。
         /// </summary>
         public static RComponent R { get; private set; }
-
-        /// <summary>
-        /// 获取 GM 组件。
-        /// </summary>
-        public static GMComponent GM { get; private set; }
 
         /// <summary>
         /// 获取时间组件。
         /// </summary>
         public static TimeComponent Time { get; private set; }
 
-        /// <summary>
-        /// 获取时间组件。
-        /// </summary>
-        // public static ConditionComponent Condition { get; private set; }
         private static void InitCustomComponents()
         {
             PlayerData = CustomGameFrameworkEntry.GetComponent<PlayerDataComponent>();
@@ -61,9 +47,7 @@
             Script = CustomGameFrameworkEntry.GetComponent<ScriptComponent>();
             Video = CustomGameFrameworkEntry.GetComponent<VideoComponent>();
             BuiltinData = CustomGameFrameworkEntry.GetComponent<BuiltinDataComponent>();
-            MVC = CustomGameFrameworkEntry.GetComponent<MVCComponent>();
             R = CustomGameFrameworkEntry.GetComponent<RComponent>();
-            GM = CustomGameFrameworkEntry.GetComponent<GMComponent>();
             Time = CustomGameFrameworkEntry.GetComponent<TimeComponent>();
         }
     }

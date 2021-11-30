@@ -13,14 +13,14 @@ namespace UnityGameFramework.Runtime.Extension
     [ExecuteInEditMode]
     public class RectTransformStretchAuxiliary : MonoBehaviour
     {
-        private readonly List<RectTransform> m_RectTransforms = new List<RectTransform>();
+        private readonly List<RectTransform> m_RectTransforms = new();
 
         private void GetAllRectTransforms(List<RectTransform> rectTransforms)
         {
             Scene activeScene = SceneManager.GetActiveScene();
             GameObject[] rootGameObjects = activeScene.GetRootGameObjects();
             Array.ForEach(rootGameObjects,
-                go => { rectTransforms.AddRange(go.GetComponentsInChildren<RectTransform>(false)); });
+                gameObject => { rectTransforms.AddRange(gameObject.GetComponentsInChildren<RectTransform>(false)); });
         }
 
         private void OnDrawGizmos()
@@ -49,7 +49,6 @@ namespace UnityGameFramework.Runtime.Extension
                 {
                     Vector3 start = fourCorners[j];
                     Vector3 end = fourCorners[(j + 1) % 4];
-
                     Handles.DrawAAPolyLine(3, start, end);
                 }
             }
@@ -59,7 +58,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         private Vector3 GetUnitVector3(Vector3 input)
         {
-            return new Vector3(Mathf.Sign(input.x), Mathf.Sign(input.y), Mathf.Sign(input.z));
+            return new(Mathf.Sign(input.x), Mathf.Sign(input.y), Mathf.Sign(input.z));
         }
     }
 }

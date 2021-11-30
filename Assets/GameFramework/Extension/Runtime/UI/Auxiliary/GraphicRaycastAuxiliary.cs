@@ -14,13 +14,14 @@ namespace UnityGameFramework.Runtime.Extension
     [ExecuteInEditMode]
     public class GraphicRaycastAuxiliary : MonoBehaviour
     {
-        private readonly List<Graphic> m_Graphics = new List<Graphic>();
+        private readonly List<Graphic> m_Graphics = new();
 
         private void GetAllGraphics(List<Graphic> graphics)
         {
             Scene activeScene = SceneManager.GetActiveScene();
             GameObject[] rootGameObjects = activeScene.GetRootGameObjects();
-            Array.ForEach(rootGameObjects, go => { graphics.AddRange(go.GetComponentsInChildren<Graphic>(false)); });
+            Array.ForEach(rootGameObjects,
+                gameObject => { graphics.AddRange(gameObject.GetComponentsInChildren<Graphic>(false)); });
         }
 
         private void OnDrawGizmos()
@@ -50,7 +51,6 @@ namespace UnityGameFramework.Runtime.Extension
                 {
                     Vector3 start = fourCorners[j];
                     Vector3 end = fourCorners[(j + 1) % 4];
-
                     Handles.DrawAAPolyLine(3, new Vector3[] {start, end});
                 }
             }
@@ -60,7 +60,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         private Vector3 GetUnitVector3(Vector3 input)
         {
-            return new Vector3(Mathf.Sign(input.x), Mathf.Sign(input.y), Mathf.Sign(input.z));
+            return new(Mathf.Sign(input.x), Mathf.Sign(input.y), Mathf.Sign(input.z));
         }
     }
 }

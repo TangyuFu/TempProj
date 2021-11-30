@@ -43,11 +43,10 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>创建的游戏暂停状态改变事件。</returns>
         public static GamePauseChangedEventArgs Create(bool pauseStatus, object userData)
         {
-            GamePauseChangedEventArgs gamePauseChangedEventArgs =
-                ReferencePool.Acquire<GamePauseChangedEventArgs>();
-            gamePauseChangedEventArgs.PauseStatus = pauseStatus;
-            gamePauseChangedEventArgs.UserData = userData;
-            return gamePauseChangedEventArgs;
+            GamePauseChangedEventArgs eventArgs = ReferencePool.Acquire<GamePauseChangedEventArgs>();
+            eventArgs.PauseStatus = pauseStatus;
+            eventArgs.UserData = userData;
+            return eventArgs;
         }
 
         /// <summary>

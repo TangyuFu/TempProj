@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace UnityGameFramework.Runtime.Extension
 {
@@ -17,5 +18,12 @@ namespace UnityGameFramework.Runtime.Extension
             get => m_Id;
             set => m_Id = value;
         }
+
+        private UnityEvent m_OnClick;
+
+        /// <summary>
+        /// Identity 的 点击事件。
+        /// </summary>
+        public UnityEvent onClick => m_OnClick ??= new UnityEvent();
     }
 }

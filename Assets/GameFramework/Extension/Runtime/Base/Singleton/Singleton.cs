@@ -13,7 +13,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// 单例线程锁。
         /// </summary>
-        private static readonly object m_Locker = new object();
+        private static readonly object m_Locker = new();
 
         private static T m_Instance;
 

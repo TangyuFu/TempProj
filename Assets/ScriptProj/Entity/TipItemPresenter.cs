@@ -5,7 +5,7 @@ using UnityGameFramework.Runtime.Extension;
 
 namespace TempProj
 {
-    [Identity(30000001)]
+    [Identity(10000001)]
     public class TipItemPresenter : EntityPresenter
     {
         private float m_Duration = 1f;

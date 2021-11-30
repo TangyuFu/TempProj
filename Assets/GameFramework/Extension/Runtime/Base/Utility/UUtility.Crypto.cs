@@ -20,7 +20,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 using MD5 md5 = MD5.Create();
@@ -38,7 +38,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 using MD5 md5 = MD5.Create();
@@ -54,7 +54,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (stream == null)
                 {
-                    throw new GameFrameworkException($"Invalid stream '{null}'.");
+                    throw new GameFrameworkException($"Invalid stream '{stream}'.");
                 }
 
                 using MD5 md5 = MD5.Create();
@@ -71,7 +71,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 ComputeXor(bytes, 0, bytes.Length, codes);
@@ -89,7 +89,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'.");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'.");
                 }
 
                 if (startIndex < 0 || length < 0 || startIndex + length > bytes.Length)
@@ -99,7 +99,7 @@ namespace UnityGameFramework.Runtime.Extension
 
                 if (codes == null)
                 {
-                    throw new GameFrameworkException($"Invalid codes '{null}'.");
+                    throw new GameFrameworkException($"Invalid codes '{codes}'.");
                 }
 
                 int codeLen = codes.Length;
@@ -168,7 +168,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (bytes == null)
                 {
-                    throw new GameFrameworkException($"Invalid bytes '{null}'");
+                    throw new GameFrameworkException($"Invalid bytes '{bytes}'");
                 }
 
                 if (startIndex < 0 || length < 0 || startIndex + length > bytes.Length)

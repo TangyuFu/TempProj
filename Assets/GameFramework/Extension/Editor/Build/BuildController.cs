@@ -106,7 +106,6 @@ namespace UnityGameFramework.Editor.Extension.Build
                 BuildInfo remoteBuildInfo = new BuildInfo
                 {
                     Version = m_BuildData.Version,
-                    InternalVersion = m_BuildData.InternalVersion,
                     Channel = m_BuildData.Channel,
                     Url = m_BuildData.Url,
                     WindowsAppUrl = m_BuildData.StandaloneWindowsAppUrl,

@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (string.IsNullOrEmpty(ipAddress))
             {
-                Log.Error($"Invalid ping address '{ipAddress}'.");
+                Log.Error($"Invalid ipAddress '{ipAddress}'.");
                 return;
             }
 

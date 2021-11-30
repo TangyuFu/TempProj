@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.Extension
 {
     /// <summary>
     /// Unity 游戏框架摄像机组件。
-    /// 提供主摄像机、UI 摄像机和 UI 3D 辅助摄像机功能。
+    /// 提供主摄像机、UI 2D 摄像机和 UI 3D 辅助摄像机功能。
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Camera")]
@@ -76,7 +76,7 @@ namespace UnityGameFramework.Runtime.Extension
             //     "iPhone11,6",
             //     "iPhone11,8",
             // };
-            
+
             Vector2 actualResolution = new Vector2(Screen.width, Screen.height);
             Vector2 referenceResolution = m_CanvasScaler.referenceResolution;
             float orthographicSize = m_UI2DCamera.orthographicSize;
