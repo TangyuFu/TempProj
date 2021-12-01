@@ -165,7 +165,7 @@ namespace UnityGameFramework.Runtime.Extension
         {
             if (m_DefaultDictionaryTextAsset == null)
             {
-                string defaultDictionaryPath = "PresetLanguage";
+                string defaultDictionaryPath = "DefaultLanguage";
                 m_DefaultDictionaryTextAsset = Resources.Load<TextAsset>(defaultDictionaryPath);
                 if (m_DefaultDictionaryTextAsset == null)
                 {

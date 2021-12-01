@@ -1,12 +1,14 @@
 ﻿namespace UnityGameFramework.Runtime.Extension
 {
-    public class SCHeartBeat : SCPacketBase
+    public class SCPacket : SCPacketBase
     {
-        public SCHeartBeat()
+        public SCPacket()
         {
         }
 
         public override int Id => 0;
+        
+        public byte[] Data { get; set; }
 
         public override void Clear()
         {

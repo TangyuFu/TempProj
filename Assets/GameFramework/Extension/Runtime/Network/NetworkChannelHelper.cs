@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using DG.Tweening;
 using GameFramework;
 using GameFramework.Event;
 using GameFramework.Network;
@@ -11,14 +12,14 @@ namespace UnityGameFramework.Runtime.Extension
 {
     public class NetworkChannelHelper : INetworkChannelHelper
     {
-        private readonly Dictionary<int, Type> m_ServerToClientPacketTypes = new Dictionary<int, Type>();
-        private readonly MemoryStream m_CachedStream = new MemoryStream(1024 * 8);
+        private readonly Dictionary<int, Type> m_ServerToClientPacketTypes = new();
+        private readonly MemoryStream m_CachedStream = new(1024 * 8);
         private INetworkChannel m_NetworkChannel = null;
 
         /// <summary>
         /// 获取消息包头长度。
         /// </summary>
-        public int PacketHeaderLength => sizeof(int);
+        public int PacketHeaderLength => sizeof(ushort);
 
         /// <summary>
         /// 初始化网络频道辅助器。
@@ -60,12 +61,11 @@ namespace UnityGameFramework.Runtime.Extension
                 }
             }
 
-            Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
-            Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
-            Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId,
-                OnNetworkMissHeartBeat);
-            Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
-            Entry.Event.Subscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
+            Entry.Event.Subscribe(NetworkConnectedEventArgs.EventId, OnNetworkConnected);
+            Entry.Event.Subscribe(NetworkClosedEventArgs.EventId, OnNetworkClosed);
+            Entry.Event.Subscribe(NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
+            Entry.Event.Subscribe(NetworkErrorEventArgs.EventId, OnNetworkError);
+            Entry.Event.Subscribe(NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
         }
 
         /// <summary>
@@ -73,13 +73,11 @@ namespace UnityGameFramework.Runtime.Extension
         /// </summary>
         public void Shutdown()
         {
-            Entry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
-            Entry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
-            Entry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId,
-                OnNetworkMissHeartBeat);
-            Entry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
-            Entry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId,
-                OnNetworkCustomError);
+            Entry.Event.Unsubscribe(NetworkConnectedEventArgs.EventId, OnNetworkConnected);
+            Entry.Event.Unsubscribe(NetworkClosedEventArgs.EventId, OnNetworkClosed);
+            Entry.Event.Unsubscribe(NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
+            Entry.Event.Unsubscribe(NetworkErrorEventArgs.EventId, OnNetworkError);
+            Entry.Event.Unsubscribe(NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
 
             m_NetworkChannel = null;
         }
@@ -99,7 +97,8 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>是否发送心跳消息包成功。</returns>
         public bool SendHeartBeat()
         {
-            // m_NetworkChannel.Send(ReferencePool.Acquire<CSHeartBeat>());
+            CSPacket packet = ReferencePool.Acquire<CSPacket>();
+            m_NetworkChannel.Send(packet);
             return true;
         }
 
@@ -112,44 +111,25 @@ namespace UnityGameFramework.Runtime.Extension
         /// <returns>是否序列化成功。</returns>
         public bool Serialize<T>(T packet, Stream destination) where T : Packet
         {
-            PacketBase packetImpl = packet as PacketBase;
-            if (packetImpl == null)
+            CSPacket csPacket = packet as CSPacket;
+            if (csPacket == null)
             {
                 Log.Warning("Packet is invalid.");
                 return false;
             }
 
-            if (packetImpl.PacketType != PacketType.ClientToServer)
-            {
-                Log.Warning("Send packet invalid.");
-                return false;
-            }
-            
             m_CachedStream.Position = 0L;
-
-            CSDefault csDefault = packet as CSDefault;
-            byte[] data = csDefault?.Data;
+            byte[] data = csPacket.Data;
             BinaryWriter binaryWriter = new BinaryWriter(m_CachedStream, Encoding.ASCII);
-            binaryWriter.Write((ushort)(data?.Length ?? 0));
-            binaryWriter.Write((ushort)packet.Id);
+            // 写入长度 - 2 byte
+            binaryWriter.Write((ushort) (data?.Length ?? 0));
+            // 写入数据
             if (data != null)
             {
                 binaryWriter.Write(data);
             }
-            // CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
-            // Serializer.Serialize(m_CachedStream, packetHeader);
-            // ReferencePool.Release(packetHeader);
-            //
-            // Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
-            // ReferencePool.Release(packet);
-            // m_CachedStream.Position = 0L;
-            // byte[] bytes = m_CachedStream.ToArray();
-            // Log.Debug(m_CachedStream.Position);
-            // Log.Debug(m_CachedStream.Length);
-            // destination.Write(bytes);
-            // destination.Write(m_CachedStream.GetBuffer(), 0, m_CachedStream.Position);
-            Log.Debug(BitConverter.ToString(m_CachedStream.GetBuffer(), 0, (int)m_CachedStream.Position));
-            destination.Write(m_CachedStream.GetBuffer(), 0, (int)m_CachedStream.Position);
+            Log.Debug("Sent: {0}",BitConverter.ToString(m_CachedStream.GetBuffer(), 0, (int) m_CachedStream.Position));
+            destination.Write(m_CachedStream.GetBuffer(), 0, (int) m_CachedStream.Position);
             return true;
         }
 
@@ -164,14 +144,12 @@ namespace UnityGameFramework.Runtime.Extension
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
 
-            BinaryReader binaryReader = new BinaryReader(source);
-            ushort length = binaryReader.ReadUInt16();
-            ushort id = binaryReader.ReadUInt16();
-            SCPacketHeader header = new SCPacketHeader
-            {
-                Id = id, 
-                PacketLength = length
-            };
+            byte[] bytes = new byte[2];
+            source.Read(bytes, 0, 2);
+            SCPacketHeader header = ReferencePool.Acquire<SCPacketHeader>();
+            header.PacketLength = BitConverter.ToUInt16(bytes);
+            header.Id = 0;
+            Log.Debug("Received header: {0}", BitConverter.ToString(bytes));
             return header;
         }
 
@@ -187,53 +165,38 @@ namespace UnityGameFramework.Runtime.Extension
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
 
-            SCPacketHeader scPacketHeader = packetHeader as SCPacketHeader;
-            if (scPacketHeader == null)
+            if (!(packetHeader is SCPacketHeader scPacketHeader))
             {
                 Log.Warning("Packet header is invalid.");
                 return null;
             }
 
-            SCDefault scDefault = new SCDefault();
-            // packet.Data = new byte[]
-            if (scPacketHeader.IsValid)
+            SCPacket scPacket = new SCPacket();
+            Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
+            if (packetType != null)
             {
-                Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
-                if (packetType != null)
-                {
-                    byte[] bytes = new byte[scPacketHeader.PacketLength];
-                    int len = source.Read(bytes, 0, bytes.Length);
-                    scDefault.Data = bytes;
-                }
-                else
-                {
-                    Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.Id.ToString());
-                }
+                byte[] bytes = new byte[scPacketHeader.PacketLength];
+                int len = source.Read(bytes, 0, bytes.Length);
+                scPacket.Data = bytes;
+                Log.Debug("Received packet: {0}", BitConverter.ToString(bytes));
             }
             else
             {
-                Log.Warning("Packet header is invalid.");
+                Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.Id.ToString());
             }
 
             ReferencePool.Release(scPacketHeader);
-            return scDefault;
+            return scPacket;
         }
 
         private Type GetServerToClientPacketType(int id)
         {
-            Type type = null;
-            if (m_ServerToClientPacketTypes.TryGetValue(id, out type))
-            {
-                return type;
-            }
-
-            return null;
+            return m_ServerToClientPacketTypes.TryGetValue(id, out var type) ? type : null;
         }
 
         private void OnNetworkConnected(object sender, GameEventArgs e)
         {
-            UnityGameFramework.Runtime.NetworkConnectedEventArgs ne =
-                (UnityGameFramework.Runtime.NetworkConnectedEventArgs) e;
+            NetworkConnectedEventArgs ne = (NetworkConnectedEventArgs) e;
             if (ne.NetworkChannel != m_NetworkChannel)
             {
                 return;
@@ -242,12 +205,22 @@ namespace UnityGameFramework.Runtime.Extension
             Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.",
                 ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(),
                 ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
+            
+            INetworkChannel networkChannel = ne.NetworkChannel;
+            CSPacket csPacket = ReferencePool.Acquire<CSPacket>();
+            csPacket.Data = new byte[] {1, 2, 3};
+            networkChannel.Send(csPacket);
+            // DOTween.To(() => 1, value => { }, 1, 5).SetLoops(-1).OnStepComplete(() =>
+            // {
+            //     CSPacket csPacket = ReferencePool.Acquire<CSPacket>();
+            //     csPacket.Data = new byte[] {1, 2, 3};
+            //     networkChannel.Send(csPacket);
+            // });
         }
 
         private void OnNetworkClosed(object sender, GameEventArgs e)
         {
-            UnityGameFramework.Runtime.NetworkClosedEventArgs
-                ne = (UnityGameFramework.Runtime.NetworkClosedEventArgs) e;
+            NetworkClosedEventArgs ne = (NetworkClosedEventArgs) e;
             if (ne.NetworkChannel != m_NetworkChannel)
             {
                 return;
@@ -258,8 +231,7 @@ namespace UnityGameFramework.Runtime.Extension
 
         private void OnNetworkMissHeartBeat(object sender, GameEventArgs e)
         {
-            UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs ne =
-                (UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs) e;
+            NetworkMissHeartBeatEventArgs ne = (NetworkMissHeartBeatEventArgs) e;
             if (ne.NetworkChannel != m_NetworkChannel)
             {
                 return;
@@ -268,17 +240,16 @@ namespace UnityGameFramework.Runtime.Extension
             Log.Info("Network channel '{0}' miss heart beat '{1}' times.", ne.NetworkChannel.Name,
                 ne.MissCount.ToString());
 
-            if (ne.MissCount < 2)
+            // Close network channel when miss count is two.
+            if (ne.MissCount > 1)
             {
-                return;
+                ne.NetworkChannel.Close();
             }
-
-            ne.NetworkChannel.Close();
         }
 
         private void OnNetworkError(object sender, GameEventArgs e)
         {
-            UnityGameFramework.Runtime.NetworkErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkErrorEventArgs) e;
+            NetworkErrorEventArgs ne = (NetworkErrorEventArgs) e;
             if (ne.NetworkChannel != m_NetworkChannel)
             {
                 return;
@@ -292,12 +263,14 @@ namespace UnityGameFramework.Runtime.Extension
 
         private void OnNetworkCustomError(object sender, GameEventArgs e)
         {
-            UnityGameFramework.Runtime.NetworkCustomErrorEventArgs ne =
-                (UnityGameFramework.Runtime.NetworkCustomErrorEventArgs) e;
+            NetworkCustomErrorEventArgs ne = (NetworkCustomErrorEventArgs) e;
             if (ne.NetworkChannel != m_NetworkChannel)
             {
                 return;
             }
+
+            Log.Info("Network channel '{0}' custom error, custom error data is '{1}'.", ne.NetworkChannel.Name,
+                ne.CustomErrorData.ToString());
         }
     }
 }

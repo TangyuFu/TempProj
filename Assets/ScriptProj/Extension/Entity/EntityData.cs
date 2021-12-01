@@ -127,9 +127,9 @@ namespace TempProj
             m_DrEntityGroup = default;
             m_DrEntity = default;
             m_Parent = default;
-            m_Position = default;
-            m_Scale = default;
-            m_Rotation = default;
+            m_Position = Vector3.zero;
+            m_Scale = Vector3.one;
+            m_Rotation = Quaternion.identity;
         }
     }
 }

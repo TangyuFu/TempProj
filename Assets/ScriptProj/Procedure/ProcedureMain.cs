@@ -1,4 +1,6 @@
-﻿using UnityGameFramework.Runtime;
+﻿using System.Net;
+using GameFramework.Network;
+using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.Extension;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -33,8 +35,13 @@ namespace TempProj
             Entry.UI.OpenCustomUIForm(UIFormId.MaskForm);
             Entry.UI.OpenCustomUIForm(UIFormId.TipForm);
             Entry.UI.OpenCustomUIForm(UIFormId.MainForm);
+
+            channel = Entry.Network.CreateNetworkChannel("Main", ServiceType.Tcp, new NetworkChannelHelper());
+            channel.Connect(IPAddress.Parse("127.0.0.1"), 13000);
+            channel.HeartBeatInterval = 10f;
         }
 
+        private INetworkChannel channel;
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
             base.OnLeave(procedureOwner, isShutdown);

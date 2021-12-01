@@ -30,7 +30,7 @@ namespace TempProj
         /// <summary>
         /// 获取实体代表者的根物体。
         /// </summary>
-        public Transform Root => Logic.Root;
+        public Transform Root { get; private set; }
 
         /// <summary>
         /// 获取实体。
@@ -40,6 +40,8 @@ namespace TempProj
         public virtual void OnInit(CustomEntityLogic logic, Transform root, object userData)
         {
             Logic = logic;
+            Root = root;
+            Log.Debug(root.parent);
             
             if (userData is EntityData entityData)
             {
@@ -51,16 +53,6 @@ namespace TempProj
                     {
                         UnityGameFramework.Runtime.Extension.UIExtension.SetTransformFont(Root);
                     }
-                }
-                Transform newParent = entityData.Parent;
-                Transform oldParent = root;
-                if (newParent != null && oldParent != newParent)
-                {
-                    m_OldParent = oldParent;
-                    root.SetParent(newParent);
-                    root.localPosition = entityData.Position;
-                    root.localScale = entityData.Scale;
-                    root.rotation = entityData.Rotation;
                 }
             }
             else
@@ -79,16 +71,39 @@ namespace TempProj
 
         public virtual void OnShow(object userData)
         {
+            if (userData is EntityData entityData)
+            {
+                EntityTypeId = entityData.TypeId;
+                DREntity drEntity = entityData.DrEntity;
+                if (drEntity != null)
+                {
+                    if (drEntity.From == 1)
+                    {
+                        UnityGameFramework.Runtime.Extension.UIExtension.SetTransformFont(Root);
+                    }
+                }
+                Transform newParent = entityData.Parent;
+                Transform oldParent = Root.parent;
+                if (oldParent != newParent)
+                {
+                    m_OldParent = oldParent;
+                    Root.SetParent(newParent);
+                    Root.localPosition = entityData.Position;
+                    Root.localScale = entityData.Scale;
+                    Root.rotation = entityData.Rotation;
+                }
+            }
+            else
+            {
+                Log.Error($"Invalid entity data. Show entity with '{nameof(EntityExtension.ShowEntity)}'.");
+            }
             // Entity data will be released after initialized, do not keep reference of entity data.
         }
 
         public virtual void OnHide(bool isShutdown, object userData)
         {
-            if (m_OldParent != null)
-            {
-                Root.SetParent(m_OldParent);
-                m_OldParent = null;
-            }
+            Root.SetParent(m_OldParent);
+            m_OldParent = null;
         }
 
         public virtual void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
@@ -113,7 +128,7 @@ namespace TempProj
 
         public virtual void Hide()
         {
-            Entry.Entity.HideCustomEntity(Logic);
+            Entry.Entity.HideEntity(Logic.Entity);
         }
     }
 }

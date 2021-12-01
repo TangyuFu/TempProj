@@ -11,8 +11,6 @@ namespace UnityGameFramework.Runtime.Extension
 
         public int PacketLength { get; set; }
 
-        public bool IsValid => PacketType != PacketType.Undefined && Id > 0 && PacketLength >= 0;
-
         public void Clear()
         {
             Id = 0;
