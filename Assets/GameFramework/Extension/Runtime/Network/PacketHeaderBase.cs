@@ -7,13 +7,19 @@ namespace UnityGameFramework.Runtime.Extension
     {
         public abstract PacketType PacketType { get; }
 
-        public int Id { get; set; }
-
+        /// <summary>
+        /// 包长。
+        /// </summary>
         public int PacketLength { get; set; }
+        
+        /// <summary>
+        /// 协议号。
+        /// </summary>
+        public ushort ProtocolId { get; set; }
 
         public void Clear()
         {
-            Id = 0;
+            ProtocolId = 0;
             PacketLength = 0;
         }
     }

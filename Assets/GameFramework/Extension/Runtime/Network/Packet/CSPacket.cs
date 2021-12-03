@@ -8,17 +8,32 @@
 
         public override int Id => 0;
 
-        private byte[] m_Data;
+        private ushort m_ProtocolId;
 
-        public byte[] Data
+        /// <summary>
+        /// 获取或设置协议号。
+        /// </summary>
+        public ushort ProtocolId
         {
-            get => m_Data;
-            set => m_Data = value;
+            get => m_ProtocolId;
+            set => m_ProtocolId = value;
+        }
+        
+        private byte[] m_ProtocolData;
+
+        /// <summary>
+        /// 获取或设置协议数据。
+        /// </summary>
+        public byte[] ProtocolData
+        {
+            get => m_ProtocolData;
+            set => m_ProtocolData = value;
         }
 
         public override void Clear()
         {
-            m_Data = null;
+            m_ProtocolId = 0;
+            m_ProtocolData = null;
         }
     }
 }

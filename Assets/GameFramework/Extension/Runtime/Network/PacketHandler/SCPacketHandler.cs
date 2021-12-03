@@ -10,8 +10,9 @@ namespace UnityGameFramework.Runtime.Extension
         public override void Handle(object sender, Packet packet)
         {
             SCPacket packetImpl = (SCPacket) packet;
-            Log.Info("Receive packet, data: '{0}'.",
-                packetImpl.Data != null ? BitConverter.ToString(packetImpl.Data) : "");
+            Log.Info("Received packet, protocol id {0} protocol data: '{1}'.",
+                packetImpl.ProtocolId,
+                packetImpl.ProtocolData != null ? BitConverter.ToString(packetImpl.ProtocolData) : "");
         }
     }
 }

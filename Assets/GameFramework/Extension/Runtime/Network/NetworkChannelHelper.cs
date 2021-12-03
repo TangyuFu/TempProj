@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using DG.Tweening;
 using GameFramework;
 using GameFramework.Event;
 using GameFramework.Network;
@@ -13,13 +12,20 @@ namespace UnityGameFramework.Runtime.Extension
     public class NetworkChannelHelper : INetworkChannelHelper
     {
         private readonly Dictionary<int, Type> m_ServerToClientPacketTypes = new();
-        private readonly MemoryStream m_CachedStream = new(1024 * 8);
         private INetworkChannel m_NetworkChannel = null;
 
+        private readonly MemoryStream m_SerializeStream = new(1024 * 8);
+        private BinaryWriter m_SerializeWriter;
+
+        private readonly MemoryStream m_DeserializeStream = new(1024 * 8);
+        private BinaryReader m_DeserializeReader;
+
+        private int m_PacketHeaderLength = 4;
+
         /// <summary>
-        /// 获取消息包头长度。
+        /// 获取消息包头长度，由 2 byte 包长度 2 byte 协议号组成。
         /// </summary>
-        public int PacketHeaderLength => sizeof(ushort);
+        public int PacketHeaderLength => m_PacketHeaderLength;
 
         /// <summary>
         /// 初始化网络频道辅助器。
@@ -28,6 +34,9 @@ namespace UnityGameFramework.Runtime.Extension
         public void Initialize(INetworkChannel networkChannel)
         {
             m_NetworkChannel = networkChannel;
+
+            m_SerializeWriter = new(m_SerializeStream, Encoding.ASCII);
+            m_DeserializeReader = new(m_DeserializeStream, Encoding.ASCII);
 
             // 反射注册包和包处理函数。
             Type packetBaseType = typeof(SCPacketBase);
@@ -118,18 +127,23 @@ namespace UnityGameFramework.Runtime.Extension
                 return false;
             }
 
-            m_CachedStream.Position = 0L;
-            byte[] data = csPacket.Data;
-            BinaryWriter binaryWriter = new BinaryWriter(m_CachedStream, Encoding.ASCII);
+            m_SerializeStream.Position = 0L;
+            byte[] data = csPacket.ProtocolData;
+            ushort packetLength = (ushort) (data?.Length ?? 0);
+            ushort protocolId = csPacket.ProtocolId;
             // 写入长度 - 2 byte
-            binaryWriter.Write((ushort) (data?.Length ?? 0));
+            m_SerializeWriter.Write(packetLength);
+            // 写入协议号 - 2 byte
+            m_SerializeWriter.Write(protocolId);
             // 写入数据
             if (data != null)
             {
-                binaryWriter.Write(data);
+                m_SerializeWriter.Write(data);
             }
-            Log.Debug("Sent: {0}",BitConverter.ToString(m_CachedStream.GetBuffer(), 0, (int) m_CachedStream.Position));
-            destination.Write(m_CachedStream.GetBuffer(), 0, (int) m_CachedStream.Position);
+
+            Log.Debug("Sent: packet length {0}, protocol id {1}, protocol data {2}", packetLength, protocolId,
+                BitConverter.ToString(m_SerializeStream.GetBuffer(), 0, (int) m_SerializeStream.Position));
+            destination.Write(m_SerializeStream.GetBuffer(), 0, (int) m_SerializeStream.Position);
             return true;
         }
 
@@ -144,12 +158,31 @@ namespace UnityGameFramework.Runtime.Extension
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
 
-            byte[] bytes = new byte[2];
-            source.Read(bytes, 0, 2);
             SCPacketHeader header = ReferencePool.Acquire<SCPacketHeader>();
-            header.PacketLength = BitConverter.ToUInt16(bytes);
-            header.Id = 0;
-            Log.Debug("Received header: {0}", BitConverter.ToString(bytes));
+            header.ProtocolId = 0;
+            lock (m_DeserializeStream)
+            {
+                m_DeserializeStream.Position = 0L;
+                byte[] buffer = m_DeserializeStream.GetBuffer();
+                int offset = 0;
+                int count;
+                while ((count = source.Read(buffer, offset, m_PacketHeaderLength - offset)) != 0)
+                {
+                    offset += count;
+                    if (offset == m_PacketHeaderLength)
+                    {
+                        break;
+                    }
+                }
+
+                m_DeserializeStream.Position = 0L;
+                header.PacketLength = m_DeserializeReader.ReadUInt16();
+                header.ProtocolId = m_DeserializeReader.ReadUInt16();
+                Log.Debug("Received header: packet length {0}, protocol id {1}, header {2}",
+                    header.PacketLength, header.ProtocolId,
+                    BitConverter.ToString(buffer, 0, m_PacketHeaderLength));
+            }
+
             return header;
         }
 
@@ -171,18 +204,31 @@ namespace UnityGameFramework.Runtime.Extension
                 return null;
             }
 
-            SCPacket scPacket = new SCPacket();
-            Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
+            SCPacket scPacket = ReferencePool.Acquire<SCPacket>();
+            Type packetType = GetServerToClientPacketType(scPacketHeader.ProtocolId);
             if (packetType != null)
             {
-                byte[] bytes = new byte[scPacketHeader.PacketLength];
-                int len = source.Read(bytes, 0, bytes.Length);
-                scPacket.Data = bytes;
-                Log.Debug("Received packet: {0}", BitConverter.ToString(bytes));
+                int packetLength = scPacketHeader.PacketLength;
+                byte[] protocolData = new byte[packetLength];
+                int offset = 0;
+                int count;
+                while ((count = source.Read(protocolData, offset, packetLength - offset)) != 0)
+                {
+                    offset += count;
+                    if (offset == packetLength)
+                    {
+                        break;
+                    }
+                }
+
+                scPacket.ProtocolId = scPacketHeader.ProtocolId;
+                scPacket.ProtocolData = protocolData;
+                Log.Debug("Received packet: protocol id {0}, protocol data {1}", scPacket.ProtocolId,
+                    BitConverter.ToString(protocolData));
             }
             else
             {
-                Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.Id.ToString());
+                Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.ProtocolId.ToString());
             }
 
             ReferencePool.Release(scPacketHeader);
@@ -205,17 +251,11 @@ namespace UnityGameFramework.Runtime.Extension
             Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.",
                 ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(),
                 ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
-            
+
             INetworkChannel networkChannel = ne.NetworkChannel;
             CSPacket csPacket = ReferencePool.Acquire<CSPacket>();
-            csPacket.Data = new byte[] {1, 2, 3};
+            csPacket.ProtocolData = new byte[] {1, 2, 3};
             networkChannel.Send(csPacket);
-            // DOTween.To(() => 1, value => { }, 1, 5).SetLoops(-1).OnStepComplete(() =>
-            // {
-            //     CSPacket csPacket = ReferencePool.Acquire<CSPacket>();
-            //     csPacket.Data = new byte[] {1, 2, 3};
-            //     networkChannel.Send(csPacket);
-            // });
         }
 
         private void OnNetworkClosed(object sender, GameEventArgs e)
