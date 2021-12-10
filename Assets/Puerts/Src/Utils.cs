@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Puerts
 {
@@ -112,7 +114,6 @@ namespace Puerts
                     allMethods = allMethods.Concat(methods).ToArray();
                 }
             }
-
             return allMethods;
         }
         private static bool IsVirtualMethod(MethodInfo memberInfo)

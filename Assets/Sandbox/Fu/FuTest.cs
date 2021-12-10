@@ -1,32 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FuTest : MonoBehaviour
 {
-    private ResourceRequest _request1;
-    private ResourceRequest _request2;
+    public RectTransform RectTransform;
+
+    public Camera WorldCamera;
+
+    public Camera Camera;
+
+    public Transform Transform;
+
+    public Image Image;
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        _request1 = Resources.LoadAsync<GameObject>("SplashForm");
-        _request2 = Resources.LoadAsync<GameObject>("SplashForm1");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        while (!_request1.isDone)
-        {
-            Debug.Log(_request1.progress);
-        }
-        Debug.Log(_request1.asset);
-        
-        
-        // while (!_request2.isDone)
-        // {
-        //     
-        // }
-        // Debug.Log(_request2.asset);
+    }
+
+    [ContextMenu("Debug")]
+    private void D()
+    {
+        var localPosition = Transform.position;
+        var screenPosition = WorldCamera.WorldToScreenPoint(localPosition);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, screenPosition, Camera, out var l);
+        Image.transform.localPosition = l;
     }
 }

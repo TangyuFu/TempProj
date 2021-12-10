@@ -40,6 +40,14 @@ namespace UnityGameFramework.Runtime.Extension
                     try
                     {
                         m_JsEnv = new JsEnv();
+                        m_JsEnv.UsingAction<bool>();
+                        m_JsEnv.UsingAction<int>();
+                        m_JsEnv.UsingAction<float>();
+                        m_JsEnv.UsingAction<Vector2>();
+                        m_JsEnv.UsingAction<Vector3>();
+                        m_JsEnv.UsingAction<RaycastHit>();
+                        m_JsEnv.UsingAction<GameObject>();
+                        m_JsEnv.UsingAction<Transform>();
                         m_JsEnv.Eval(chunk);
                         StartupCallback?.Invoke();
                     }

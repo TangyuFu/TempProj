@@ -20,7 +20,7 @@ public class PuertsConfigure
         new List<Type>
         {
             // --- C# & UnityEngine
-            typeof(Type),
+            // typeof(Type),
             typeof(List<>),
             typeof(Dictionary<,>),
 
