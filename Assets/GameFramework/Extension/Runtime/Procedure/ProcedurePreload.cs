@@ -68,7 +68,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (dataTableBaseType.IsAssignableFrom(type) && !type.IsAbstract)
                 {
-                    LoadDataTable(type);
+                    // LoadDataTable(type);
                 }
             }
 

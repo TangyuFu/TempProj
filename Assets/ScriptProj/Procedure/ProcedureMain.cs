@@ -1,7 +1,4 @@
-﻿using System.Net;
-using GameFramework.Network;
-using UnityGameFramework.Runtime;
-using UnityGameFramework.Runtime.Extension;
+﻿using UnityGameFramework.Runtime.Extension;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
 namespace TempProj
@@ -27,21 +24,16 @@ namespace TempProj
         {
             base.OnEnter(procedureOwner);
 
-            // Entry.Script.TurnOn();
+            Entry.Script.TurnOn();
 
-            PresenterController presenterController = PresenterController.Instance;
-            Entry.UI.OpenCustomUIForm(UIFormId.SceneForm);
-            Entry.UI.OpenCustomUIForm(UIFormId.GuideForm);
-            Entry.UI.OpenCustomUIForm(UIFormId.MaskForm);
-            Entry.UI.OpenCustomUIForm(UIFormId.TipForm);
-            Entry.UI.OpenCustomUIForm(UIFormId.MainForm);
-
-            channel = Entry.Network.CreateNetworkChannel("Main", ServiceType.Tcp, new NetworkChannelHelper());
-            channel.Connect(IPAddress.Parse("127.0.0.1"), 13000);
-            channel.HeartBeatInterval = 10f;
+            // PresenterController presenterController = PresenterController.Instance;
+            // Entry.UI.OpenCustomUIForm(UIFormId.SceneForm);
+            // Entry.UI.OpenCustomUIForm(UIFormId.GuideForm);
+            // Entry.UI.OpenCustomUIForm(UIFormId.MaskForm);
+            // Entry.UI.OpenCustomUIForm(UIFormId.TipForm);
+            // Entry.UI.OpenCustomUIForm(UIFormId.MainForm);
         }
 
-        private INetworkChannel channel;
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
             base.OnLeave(procedureOwner, isShutdown);
