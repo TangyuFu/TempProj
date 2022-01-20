@@ -34,7 +34,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// </summary>
         public void Update()
         {
-            if (m_UnityPing != null && m_UnityPing.isDone)
+            if (m_UnityPing is {isDone: true})
             {
                 m_Ping = m_UnityPing.time;
                 m_UnityPing = new Ping(m_IpAddress);

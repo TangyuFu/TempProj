@@ -16,7 +16,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (m_GameObject == null)
                 {
-                    m_GameObject = gameObject;
+                    m_GameObject = base.gameObject;
                 }
 
                 return m_GameObject;
@@ -29,7 +29,7 @@ namespace UnityGameFramework.Runtime.Extension
             {
                 if (m_Transform == null)
                 {
-                    m_Transform = transform;
+                    m_Transform = base.transform;
                 }
 
                 return m_Transform;

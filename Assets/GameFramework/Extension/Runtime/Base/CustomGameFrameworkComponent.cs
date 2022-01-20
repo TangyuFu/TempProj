@@ -16,7 +16,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// 获取游戏框架组件优先级。
         /// </summary>
         /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        internal virtual int Priority { get; } = ComponentPriority.Default;
+        internal virtual int Priority => ComponentPriority.Default;
 
         /// <summary>
         /// 自定义游戏框架组件轮询。
@@ -36,11 +36,9 @@ namespace UnityGameFramework.Runtime.Extension
             public const int BuiltinData = 0;
             public const int Camera = 0;
             public const int PlayerData = 0;
-            public const int MVC = 0;
             public const int Script = 0;
             public const int Video = 0;
             public const int R = 0;
-            public const int GM = 0;
             public const int Time = 0;
         }
     }

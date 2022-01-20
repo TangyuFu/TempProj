@@ -86,7 +86,7 @@ namespace UnityGameFramework.Runtime.Extension
                     return s;
                 }
 
-                return s.Length == 1 ? s.ToLower() : Utility.Text.Format("{0}{1}", char.ToLower(s[0]), s.Substring(1));
+                return s.Length == 1 ? s.ToLower() : Utility.Text.Format("{0}{1}", char.ToLower(s[0]), s[1..]);
             }
 
             /// <summary>
@@ -101,7 +101,7 @@ namespace UnityGameFramework.Runtime.Extension
                     return s;
                 }
 
-                return s.Length == 1 ? s.ToUpper() : Utility.Text.Format("{0}{1}", char.ToUpper(s[0]), s.Substring(1));
+                return s.Length == 1 ? s.ToUpper() : Utility.Text.Format("{0}{1}", char.ToUpper(s[0]), s[1..]);
             }
         }
     }

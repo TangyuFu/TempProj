@@ -24,6 +24,6 @@ namespace UnityGameFramework.Runtime.Extension
         /// <summary>
         /// Identity 的 点击事件。
         /// </summary>
-        public UnityEvent onClick => m_OnClick ??= new UnityEvent();
+        public UnityEvent OnClick => m_OnClick ??= new UnityEvent();
     }
 }

@@ -19,7 +19,7 @@ namespace UnityGameFramework.Runtime.Extension
         /// <param name="func"></param>
         public Comparer(Func<TKey, TValue> func)
         {
-            m_Func = func ?? throw new NullReferenceException($"Invalid get value function '{func}'.");
+            m_Func = func ?? throw new NullReferenceException($"Invalid function '{func}'.");
         }
 
         /// <summary>

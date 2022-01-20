@@ -7,11 +7,13 @@ namespace UnityGameFramework.Runtime.Extension
     /// </summary>
     public class IdentityAttribute : Attribute
     {
-        public int Id { get; private set; }
+        private int m_Id;
+
+        public int Id => m_Id;
 
         public IdentityAttribute(int id)
         {
-            Id = id;
+            m_Id = id;
         }
     }
 }
