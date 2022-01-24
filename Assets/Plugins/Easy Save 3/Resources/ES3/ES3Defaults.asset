@@ -32,11 +32,15 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Cinemachine
-    - Coffee.UIParticle.Demo
     - Coffee.UIParticle
-    - Coffee.CFX_Demo_With_UIParticle
+    - UIEffect
+    - Coffee.SoftMaskForUGUI
+    - Coffee.UnmaskForUGUI
+    - Coffee.SoftMaskForUGUI_Demo
     - PPv2URPConverters
     - Coffee.UIParticle.Editor
+    - Coffee.SoftMaskForUGUI.Editor
+    - Coffee.UnmaskForUGUI.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
